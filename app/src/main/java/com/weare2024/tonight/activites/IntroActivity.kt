@@ -17,7 +17,7 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        //테스트중
         Glide.with(this).load(R.drawable.cat2).into(binding.ivLogo)
 
         Handler(Looper.getMainLooper()).postDelayed({
