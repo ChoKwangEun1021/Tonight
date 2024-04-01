@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "878517391767",
+    "project_id": "tonight-4315f",
+    "storage_bucket": "tonight-4315f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878517391767:android:784cc63fe82c580dbd34d2",
+        "android_client_info": {
+          "package_name": "com.weare2024.tonight"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9faKWbnpURnI_1_h0NSzMe2mlHURq1VM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
