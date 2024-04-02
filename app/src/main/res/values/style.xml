@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ggol" parent="ThemeOverlay.AppCompat.Light">
+        <item name="fontFamily" >@font/hakgyoansim_bombanghak_r</item>
+    </style>
+
+</resources>

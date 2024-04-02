@@ -21,6 +21,9 @@
             android:name=".activites.BoradDetail"
             android:exported="false" />
         <activity
+            android:name=".activites.ChatingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activites.LoginActivity"
             android:exported="false" />
         <activity
