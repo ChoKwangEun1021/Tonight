@@ -27,4 +27,5 @@ class ChatFragment : Fragment() {
     private fun clickBtn(){
         startActivity(Intent(Intent(context,ChatingActivity::class.java)))
     }
+//
 }
