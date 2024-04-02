@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activites.BoradDetail"
+            android:name=".activites.BoardDetail"
             android:exported="false" />
         <activity
             android:name=".activites.ChatingActivity"
