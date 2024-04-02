@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        //테스트중
+
         supportFragmentManager.beginTransaction().add(R.id.container, HomeFragment()).commit()
 
         binding.bnv.setOnItemSelectedListener {
