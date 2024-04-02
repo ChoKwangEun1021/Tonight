@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activites.SinupActivity"
+            android:exported="false" />
+        <activity
             android:name=".activites.LoginActivity"
             android:exported="false" />
         <activity
