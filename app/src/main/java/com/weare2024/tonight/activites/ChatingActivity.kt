@@ -53,7 +53,7 @@ class ChatingActivity : AppCompatActivity() {
         val nickname = G.name
         val image = G.image
         val msg = binding.et.text.toString()
-        val time = SimpleDateFormat("HH:mm", Locale.KOREA).format(Date())
+        val time = SimpleDateFormat("hh:mm", Locale.KOREA).format(Date())
 
         val item = ChatData(nickname, msg, time, image)
         val chatRef: CollectionReference = Firebase.firestore.collection(room)
