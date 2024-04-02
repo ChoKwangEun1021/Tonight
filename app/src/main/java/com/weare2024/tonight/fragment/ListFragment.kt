@@ -13,6 +13,8 @@ import com.weare2024.tonight.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
+    //0402 2차 커밋&푸쉬
+
     var items: ArrayList<Images> = ArrayList()
 
     private lateinit var binding: FragmentListBinding
