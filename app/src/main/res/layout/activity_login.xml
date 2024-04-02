@@ -16,7 +16,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="@font/hakgyoansim_bombanghak_r"
         android:padding="16dp"
-        android:text="Place Diary"
+        android:text="Tonight"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold" />

@@ -3,7 +3,6 @@ package com.weare2024.tonight.activites
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.databinding.ActivityMyProfile1Binding
-import com.weare2024.tonight.databinding.ActivityMyProfileBirthdayBinding
 
 class MyProfileActivity1 : AppCompatActivity() {
 
