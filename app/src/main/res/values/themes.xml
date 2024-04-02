@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.ToNight" parent="Base.Theme.ToNight" />
+
 </resources>

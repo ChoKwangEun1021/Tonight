@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "367672420567",
+    "project_id": "tonight-project",
+    "storage_bucket": "tonight-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367672420567:android:930a5312022a515ddd2892",
+        "android_client_info": {
+          "package_name": "com.weare2024.tonight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367672420567-fbkop3to3k8luij1tmf1j4d98cuq7vtg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weare2024.tonight",
+            "certificate_hash": "f5a795f99b7049fc55a9a82a8ca1b58fe18fc0e1"
+          }
+        },
+        {
+          "client_id": "367672420567-4k8ab2qikgi4os6qrp5m91r0nm0ua306.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBejN3TPxxqhZRntPWsFKkV5ttRaiNpgzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367672420567-4k8ab2qikgi4os6qrp5m91r0nm0ua306.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
