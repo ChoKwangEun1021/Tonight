@@ -27,6 +27,6 @@ class ChatAdapter(var context: Context,var chatDataItem:List<ChatData> ): Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = chatDataItem[position]
-        //a
+        //aa
     }
 }
