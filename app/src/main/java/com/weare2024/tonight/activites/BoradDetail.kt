@@ -14,6 +14,13 @@ class BoradDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+        binding.request.setOnClickListener { clickRequest() }
+        binding.chat.setOnClickListener { clickChat() }
+    }
+    private fun clickRequest(){
+
+    }
+    private fun clickChat(){
 
     }
 }

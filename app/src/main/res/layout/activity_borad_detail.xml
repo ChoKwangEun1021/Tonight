@@ -46,13 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv">
         <ImageView
-            android:id="@+id/iv_request"
+            android:id="@+id/request"
             android:layout_width="30dp"
             android:layout_height="53dp"
             android:src="@drawable/baseline_request"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="70dp"/>
         <ImageView
+            android:id="@+id/chat"
             android:layout_width="30dp"
             android:layout_height="50dp"
             android:src="@drawable/baseline_send_24"
