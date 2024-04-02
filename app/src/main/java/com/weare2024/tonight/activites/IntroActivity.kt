@@ -21,7 +21,7 @@ class IntroActivity : AppCompatActivity() {
         Glide.with(this).load(R.drawable.cat2).into(binding.ivLogo)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, 2000)
 

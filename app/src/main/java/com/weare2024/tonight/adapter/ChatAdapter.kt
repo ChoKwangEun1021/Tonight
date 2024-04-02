@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
 import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.RecyclerViewMyChatBinding
 import com.weare2024.tonight.databinding.RecyclerViewOtherChatBinding
-import com.weare2024.tonight.firebase.ChatData
+import com.weare2024.tonight.data.ChatData
 
 class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adapter<ViewHolder>() {
 
