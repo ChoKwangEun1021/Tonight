@@ -2,14 +2,11 @@ package com.weare2024.tonight.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.weare2024.tonight.data.Images
-import com.weare2024.tonight.databinding.ActivityChatingBinding.bind
 import com.weare2024.tonight.databinding.ListItemBinding
 
 class ListAdapter(val context: Context, val imageList: List<Images>) : Adapter<ListAdapter.VH>() {
