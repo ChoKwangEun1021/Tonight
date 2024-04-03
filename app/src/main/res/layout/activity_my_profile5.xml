@@ -1,10 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activites.MyProfileActivity5">
+    tools:context=".activites.MyProfileActivity5"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="어떤 일을 하고 계시나요?"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/sghin1"/>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:id="@+id/btn_Student"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="학생"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                android:id="@+id/btn_Arbeit"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="아르바이트"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Student"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                android:id="@+id/btn_Freelancer"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="프리랜서"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Student"/>
+
+            <Button
+                android:id="@+id/btn_Company"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="회사원"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Freelancer"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Arbeit"/>
+
+            <Button
+                android:id="@+id/btn_Self_employment"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="자영업"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Freelancer"/>
+
+            <Button
+                android:id="@+id/btn_Profession"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="전문직"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Self_employment"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Company"/>
+
+            <Button
+                android:id="@+id/btn_Dotor"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="의료직"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Self_employment"/>
+
+            <Button
+                android:id="@+id/btn_Techer"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="교육직"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Dotor"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Profession"/>
+
+            <Button
+                android:id="@+id/btn_Finance"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="금융직"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Dotor"/>
+
+            <Button
+                android:id="@+id/btn_Research"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="연구,기술직"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Finance"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Techer"/>
+
+            <Button
+                android:id="@+id/btn_Public_official"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="공무원"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Finance"/>
+
+            <Button
+                android:id="@+id/btn_Ceo"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="사업가"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Public_official"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Finance"/>
+
+            <Button
+                android:id="@+id/btn_Soldier"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="군인"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Public_official"/>
+
+            <Button
+                android:id="@+id/btn_Job_seeker"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="취업준비생"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_toRightOf="@id/btn_Soldier"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Ceo"/>
+
+            <Button
+                android:id="@+id/btn_Category_Other"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="기타"
+                android:textStyle="bold"
+                android:textColor="@color/sghin1"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/btn_Soldier"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="다음"
+                android:textColor="@color/sghin1"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>

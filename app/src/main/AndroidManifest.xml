@@ -34,13 +34,13 @@
             android:name=".activites.MyProfileActivity4"
             android:exported="false" />
         <activity
-            android:name=".activites.MyProfileActivity3"
-            android:exported="false" />
-        <activity
             android:name=".activites.MyProfileActivity2"
             android:exported="false" />
         <activity
             android:name=".activites.MyProfileActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity3"
             android:exported="false" />
         <activity
             android:name=".activites.SignupActivity"
