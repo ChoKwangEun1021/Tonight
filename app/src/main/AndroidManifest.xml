@@ -22,9 +22,6 @@
             android:name=".activites.SinupActivity"
             android:exported="false" />
         <activity
-            android:name=".activites.BoardDetail"
-            android:exported="false" />
-        <activity
             android:name=".activites.EmailLoginActivity"
             android:exported="false" />
         <activity

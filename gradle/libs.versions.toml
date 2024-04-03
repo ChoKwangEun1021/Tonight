@@ -12,6 +12,10 @@ constraintlayout = "2.1.4"
 glide = "5.0.0-rc01"
 circleimageview = "3.1.0"
 firebaseAuth = "22.3.1"
+retrofit = "2.11.0"
+gson = "2.10.1"
+converterGson = "2.11.0"
+converterScalars = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,6 +29,10 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
+converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "converterScalars" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
