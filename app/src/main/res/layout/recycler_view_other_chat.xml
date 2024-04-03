@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:layout_marginRight="40dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/bg_other_chatgbox">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ciriv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@color/black"
+        app:civ_border_width="1dp"
+        android:layout_alignParentLeft="true"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:layout_toRightOf="@id/ciriv"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메세지 영역"
+        android:background="@drawable/bg_chatgbox"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:layout_alignLeft="@id/tv_name"
+        android:layout_below="@id/tv_name"
+        android:maxWidth="250dp"
+        />
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="16:28"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/tv_msg"
+        android:layout_alignBottom="@id/tv_msg"
+        android:layout_marginRight="8dp"
+        />
+
+
+</RelativeLayout>

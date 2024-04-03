@@ -1,5 +1,8 @@
 package com.weare2024.tonight
 
 class G {
-    val a = 10
+    companion object{
+        val name=""
+        val image=""
+    }
 }
