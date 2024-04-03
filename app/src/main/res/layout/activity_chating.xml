@@ -11,7 +11,7 @@
         android:id="@+id/toolvar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/jihoon"
+        android:background="@drawable/gradient_background"
         app:title="ROME"
         app:titleTextColor="@color/white"
         app:subtitle="nickname"
