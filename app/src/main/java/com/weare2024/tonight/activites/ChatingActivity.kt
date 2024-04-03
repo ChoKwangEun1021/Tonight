@@ -22,7 +22,7 @@ import java.util.Locale
 class ChatingActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityChatingBinding
-    var room: String = "Room #1"
+    var room: String = " Room #1 "
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChatingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -34,6 +34,7 @@ class ChatingActivity : AppCompatActivity() {
         binding.toolvar.subtitle = G.name
         binding.btnSend.setOnClickListener { btnSend() }
         binding.recyclerView.adapter = ChatAdapter(this,msgItem)
+
         val chatRef: CollectionReference = Firebase.firestore.collection(room)
         chatRef.addSnapshotListener { value, error ->
             value?.documentChanges?.forEach {
@@ -54,14 +55,15 @@ class ChatingActivity : AppCompatActivity() {
         val image = G.image
         val msg = binding.et.text.toString()
         val time = SimpleDateFormat("hh:mm", Locale.KOREA).format(Date())
+        val uid =G.uid
 
-        val item = ChatData(nickname, msg, time, image)
+        val item = ChatData(uid,nickname, msg, time, image)
         val chatRef: CollectionReference = Firebase.firestore.collection(room)
         val t = "MSG_" + (SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(Date()))
-        chatRef.document(t).set(item)
-        binding.et.setText("")
+        chatRef.document("s").set(item)
+        binding.et.setText(t)
         val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            getSystemService(Context.INPUT_METHOD_SERVICE)  as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 
 
