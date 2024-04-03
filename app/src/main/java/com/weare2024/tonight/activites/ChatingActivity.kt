@@ -11,6 +11,7 @@ import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.ChatAdapter
 import com.weare2024.tonight.databinding.ActivityChatingBinding
 import com.weare2024.tonight.data.ChatData
+import com.weare2024.tonight.firebase.FBRef
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
