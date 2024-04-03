@@ -1,10 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activites.MyProfileActivity2">
+    tools:context=".activites.MyProfileActivity2"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="성별은 무엇인가요?"
+        android:textStyle="bold"
+        android:textSize="32dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="남성"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="@drawable/btn_choice"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="여성"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="@drawable/btn_choice"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="다음"
+        android:textStyle="bold"
+        android:layout_marginTop="450dp"/>
+
+
+</LinearLayout>
