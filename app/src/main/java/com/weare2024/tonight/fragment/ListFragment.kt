@@ -1,5 +1,6 @@
 package com.weare2024.tonight.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.weare2024.tonight.R
+import com.weare2024.tonight.activites.NewPostActivity
 import com.weare2024.tonight.adapter.ListAdapter
 import com.weare2024.tonight.data.Images
 import com.weare2024.tonight.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
-
-    //0402 2차 커밋&푸쉬
 
     var items: ArrayList<Images> = ArrayList()
 
@@ -56,7 +56,9 @@ class ListFragment : Fragment() {
         binding.recyclerView.adapter= ListAdapter(requireContext(), items)
 
         binding.fab.setOnClickListener {
-            Toast.makeText(context, "글 작성 Activity로 연결", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "글 작성 Activity로 연결", Toast.LENGTH_SHORT).show()
+            val intent= Intent(requireContext(), NewPostActivity::class.java)
+            startActivity(intent)
         }
 
     }
