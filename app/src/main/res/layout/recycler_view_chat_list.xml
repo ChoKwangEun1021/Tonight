@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@color/black"
+        android:layout_margin="8dp"/>
+    <TextView
+        android:id="@+id/tv_last_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="마지지막으로 쓴 채팅"
+        android:textSize="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/civ"
+        android:layout_alignBottom="@id/civ"/>
+    <TextView
+        android:id="@+id/tv_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="내이름"
+        android:layout_marginRight="16dp"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+
+
+</RelativeLayout>
