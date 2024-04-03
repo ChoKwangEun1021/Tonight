@@ -6,10 +6,20 @@
     tools:context=".fragment.HomeFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="HOME FRAGMENT"
+        android:text="테스트중"
+        android:textStyle="bold"
         android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:textAlignment="center"/>
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/recycler_view"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/tv" />
 
 </RelativeLayout>

@@ -1,10 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activites.MyProfileActivity4">
+    tools:context=".activites.MyProfileActivity4"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="거주하는 지역은 어디인가요?"
+        android:textStyle="bold"
+        android:textSize="24dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/sghin1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btn_Seoul"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="서울"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btn_Inchen"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="인천"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_toRightOf="@id/btn_Seoul"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/btn_Sejong"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="세종"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Seoul"/>
+
+        <Button
+            android:id="@+id/btn_Degen"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="대전"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_toRightOf="@id/btn_Sejong"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Inchen"/>
+
+        <Button
+            android:id="@+id/btn_Degu"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="대구"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Sejong"/>
+
+        <Button
+            android:id="@+id/btn_Ulsan"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="울산"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_toRightOf="@id/btn_Degu"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Degen"/>
+
+        <Button
+            android:id="@+id/btn_Gwangju"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="광주"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Degu"/>
+
+        <Button
+            android:id="@+id/btn_Busan"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="부산"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_toRightOf="@id/btn_Gwangju"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Ulsan"/>
+
+        <Button
+            android:id="@+id/btn_Jeju"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="제주"
+            android:textStyle="bold"
+            android:textColor="@color/sghin1"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/btn_Gwangju"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다음"
+            android:textColor="@color/sghin1"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

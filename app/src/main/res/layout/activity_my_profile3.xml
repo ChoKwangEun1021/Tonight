@@ -9,9 +9,40 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <Spinner
-        android:layout_width="wrap_content"
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dropDownWidth="200dp"/>
+        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="회원님의 생일은 언제인가요?"
+        android:textSize="24dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="회원님의 나이 표시에 사용되며, 이휴 변경이 불가능합니다."/>
+
+
+    <DatePicker
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="다음"
+        android:textStyle="bold"
+        android:layout_marginTop="330dp"/>
+
+
 
 </LinearLayout>

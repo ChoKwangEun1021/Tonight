@@ -3,5 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#ffaaaaaa</color>
-    <color name="jihoon">#dd00006f</color>
+    <color name="jihoon">#dd000000</color>
+    <color name="jihoony">#ff2A0066</color>
+    <color name="jihoonw">#ff8d5D5D</color>
+    <color name="jihoonc">#ff00006f</color>
+    <color name="sghin1">#ff000000</color>
+    <color name="sghin2">#ff000000</color>
+    <color name="sghin3">#ff000000</color>
+    <color name="sghin4">#ff000000</color>
+    <color name="sghin5">#ff000000</color>
 </resources>
