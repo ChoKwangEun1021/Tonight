@@ -18,7 +18,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activites.BoardDetail"
+            android:exported="false" />
+        <activity
+            android:name=".activites.EmailLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".activites.ChatingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity5"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity4"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity3"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".activites.MyProfileActivity1"
+            android:exported="false" />
+        <activity
+            android:name=".activites.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".activites.LoginActivity"
