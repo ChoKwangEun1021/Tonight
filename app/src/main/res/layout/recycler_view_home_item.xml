@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/catd" />
+
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_profile"
+            android:text="닉네임"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginStart="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="27"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_toEndOf="@id/tv_nick_name"
+            android:layout_below="@id/iv_profile"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="서울"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_marginStart="20sp"
+            android:layout_below="@id/tv_nick_name" />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>
