@@ -23,11 +23,17 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.btn.setOnClickListener { clickBtn() }
-        binding.btn2.setOnClickListener { clickBtn() }
+        binding.btn2.setOnClickListener { clickBtn2() }
 
     }
+
     private fun clickBtn(){
+
         startActivity(Intent(Intent(context,ChatingActivity::class.java)))
+
     }
-//
+    private fun clickBtn2(){
+
+    }
+
 }
