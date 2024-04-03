@@ -17,12 +17,11 @@
         android:theme="@style/Theme.ToNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
-            android:name=".activites.SinupActivity"
+            android:name=".activites.BoardDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activites.BoardDetail"
+            android:name=".activites.SinupActivity"
             android:exported="false" />
         <activity
             android:name=".activites.EmailLoginActivity"
