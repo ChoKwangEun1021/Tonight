@@ -10,7 +10,6 @@
     android:padding="16dp">
 
     <Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:navigationIcon="@drawable/baseline_arrow_back_24"/>
@@ -18,22 +17,29 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원님의 생일은 언제인가요?"
-        android:textSize="24dp"
-        android:textStyle="bold"/>
+        android:text="성별은 무엇인가요?"
+        android:textStyle="bold"
+        android:textSize="32dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="회원님의 나이 표시에 사용되며, 이휴 변경이 불가능합니다."/>
+        android:text="남성"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="@drawable/btn_choice"
+        android:layout_marginTop="20dp"/>
 
-
-    <DatePicker
-        android:id="@+id/date"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:datePickerMode="spinner"
-        android:calendarViewShown="false"/>
+        android:text="여성"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="@drawable/btn_choice"
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:id="@+id/btn"
@@ -41,8 +47,7 @@
         android:layout_height="wrap_content"
         android:text="다음"
         android:textStyle="bold"
-        android:layout_marginTop="330dp"/>
-
+        android:layout_marginTop="450dp"/>
 
 
 </LinearLayout>

@@ -10,37 +10,39 @@
     android:padding="16dp">
 
     <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:navigationIcon="@drawable/baseline_arrow_back_24"/>
 
-    <ProgressBar
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+        android:text="회원님의 생일은 언제인가요?"
+        android:textSize="24dp"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="000님, 환영해요\n 이제 키를 입력해 볼까요?"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        android:textColor="@color/sghin1"/>
+        android:hint="회원님의 나이 표시에 사용되며, 이휴 변경이 불가능합니다."/>
 
-  <NumberPicker
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginRight="24dp"
-      android:layout_marginLeft="24dp"/>
 
-    <Button
+    <DatePicker
+        android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="다음"
         android:textStyle="bold"
-        android:layout_marginTop="330dp"
-        android:textColor="@color/sghin1"/>
+        android:layout_marginTop="330dp"/>
+
+
 
 </LinearLayout>
