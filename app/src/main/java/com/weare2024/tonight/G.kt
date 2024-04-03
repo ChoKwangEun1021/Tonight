@@ -4,5 +4,6 @@ class G {
     companion object{
         val name=""
         val image=""
+        val uid="ㅂㅂㅂ"
     }
 }
