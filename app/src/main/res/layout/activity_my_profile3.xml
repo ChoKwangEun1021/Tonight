@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activites.MyProfileActivity3"
     android:orientation="vertical"
+    android:background="@drawable/bg_profile_3"
     android:padding="16dp">
 
     <Toolbar
@@ -14,6 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 
     <TextView
         android:layout_width="match_parent"
@@ -41,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="다음"
         android:textStyle="bold"
-        android:layout_marginTop="330dp"/>
+        android:layout_marginTop="300dp"/>
 
 
 

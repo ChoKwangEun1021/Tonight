@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".activites.MyProfileActivity5"
     android:orientation="vertical"
+    android:background="@drawable/bg_profile_5"
     android:padding="16dp">
 
     <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-            android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+        android:navigationIcon="@drawable/baseline_arrow_back_wh" />
 
     <ProgressBar
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
         android:textStyle="bold"
         android:textSize="24dp"
         android:layout_marginTop="30dp"
-        android:textColor="@color/sghin1"/>
+        android:textColor="@color/white"/>
 
 
 
@@ -40,12 +41,12 @@
                 android:id="@+id/btn_Student"
                 android:layout_width="175dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:text="학생"
-                android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                android:layout_marginTop="20dp"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_Arbeit"
@@ -54,8 +55,8 @@
                 android:text="아르바이트"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_toRightOf="@id/btn_Student"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"/>
@@ -67,9 +68,9 @@
                 android:text="프리랜서"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Student"/>
 
             <Button
@@ -79,9 +80,9 @@
                 android:text="회사원"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Freelancer"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Arbeit"/>
@@ -93,9 +94,9 @@
                 android:text="자영업"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Freelancer"/>
 
             <Button
@@ -105,10 +106,10 @@
                 android:text="전문직"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Self_employment"
                 android:layout_marginLeft="30dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Company"/>
 
@@ -119,9 +120,9 @@
                 android:text="의료직"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Self_employment"/>
 
             <Button
@@ -131,10 +132,10 @@
                 android:text="교육직"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Dotor"
                 android:layout_marginLeft="30dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Profession"/>
 
@@ -145,9 +146,9 @@
                 android:text="금융직"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Dotor"/>
 
             <Button
@@ -157,10 +158,10 @@
                 android:text="연구,기술직"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Finance"
                 android:layout_marginLeft="30dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Techer"/>
 
@@ -171,9 +172,9 @@
                 android:text="공무원"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Finance"/>
 
             <Button
@@ -183,10 +184,10 @@
                 android:text="사업가"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Public_official"
                 android:layout_marginLeft="30dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Finance"/>
 
@@ -197,9 +198,9 @@
                 android:text="군인"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Public_official"/>
 
             <Button
@@ -209,10 +210,10 @@
                 android:text="취업준비생"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_toRightOf="@id/btn_Soldier"
                 android:layout_marginLeft="30dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/btn_Ceo"/>
 
@@ -223,9 +224,9 @@
                 android:text="기타"
                 android:textStyle="bold"
                 android:textColor="@color/sghin1"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/sghin5"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_below="@id/btn_Soldier"/>
 
             <Button
