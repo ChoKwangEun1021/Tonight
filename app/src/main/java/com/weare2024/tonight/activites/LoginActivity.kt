@@ -39,7 +39,8 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 startActivity(Intent(this, EmailLoginActivity::class.java))
             }
             R.id.btn_signup -> {
-                startActivity(Intent(this, SignupActivity::class.java))
+                val intent = Intent(this, SignupActivity::class.java)
+                startActivity(intent)
             }
         }
     }

@@ -12,7 +12,5 @@ interface RetrofitService {
 //    @Multipart
 //    @POST("/05Retrofit/insertDB.php")
 //    fun postDataToServer(@PartMap dataPart: Map<String, String>, @Part filePart: MultipartBody.Part?) : Call<String>
-    @Multipart
-    @POST("/Tonight/users/insertDB.php")
-    fun userInsert(@PartMap userData: Map<String, String>) : Call<String>
+
 }

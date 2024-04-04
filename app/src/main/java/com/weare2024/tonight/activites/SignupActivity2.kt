@@ -1,0 +1,135 @@
+package com.weare2024.tonight.activites
+
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import com.weare2024.tonight.R
+import com.weare2024.tonight.databinding.ActivitySignup2Binding
+import com.weare2024.tonight.firebase.FBAuth
+import com.weare2024.tonight.firebase.FBRef
+
+class SignupActivity2 : AppCompatActivity() {
+    private val binding by lazy { ActivitySignup2Binding.inflate(layoutInflater) }
+    private var imgUri: Uri? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+
+        binding.btnRegister.setOnClickListener { clickRegister() }
+        binding.cvProfile.setOnClickListener { getImage() }
+    }
+
+    private fun clickRegister() {
+        val email = intent.getStringExtra("email").toString()
+        val password = intent.getStringExtra("password").toString()
+        val nickName = binding.inputLayoutNickName.editText!!.text.toString()
+
+        if (intent != null && intent.hasExtra("login_type")) {
+            when(intent.getStringExtra("login_type")) {
+
+                "kakao" -> {
+                }
+
+                "naver" -> {
+
+                }
+
+                "google" -> {
+
+                }
+
+                "email" -> {
+
+                    FBAuth.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                        val uid = FBAuth.getUid()
+                        val users = mutableMapOf<String, String>()
+
+                        if (it.isSuccessful) {
+                            FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
+                                users["uid"] = uid
+                                users["email"] = email
+                                users["nickName"] = nickName
+                                users["profileImgUri"] = uid
+                                users["gender"] = "남자"
+                                users["height"] = "187cm"
+                                users["birth"] = "1998.10.21"
+                                users["area"] = "서울"
+                                users["work"] = "개발자"
+
+                                FBRef.userRef.document().set(users).addOnSuccessListener {
+                                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                }
+                                userProfileImgUpload()
+                                startActivity(Intent(this, MainActivity::class.java))
+                            }
+
+                        } else {
+                            Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+
+
+    }
+
+    private fun getImage() {
+        val intent =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) Intent(MediaStore.ACTION_PICK_IMAGES) else Intent(
+                Intent.ACTION_OPEN_DOCUMENT
+            ).setType("image/*")
+        resultLauncher.launch(intent)
+    }
+
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            imgUri = it.data?.data
+            Glide.with(this).load(imgUri).into(binding.cvProfile)
+        }
+    }
+
+    private fun userProfileImgUpload() {
+        var name = ""
+
+        if (intent != null && intent.hasExtra("login_type")) {
+            when (intent.getStringExtra("login_type")) {
+                "kakao" -> {
+                }
+
+                "naver" -> {
+                }
+
+                "google" -> {
+                }
+
+                "email" -> {
+                    name = FBAuth.getUid()
+
+                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
+
+                    imgUri?.apply {
+                        imgRef.putFile(this).addOnSuccessListener {
+                            Log.d("img upload", "이미지 업로드 성공")
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
+}

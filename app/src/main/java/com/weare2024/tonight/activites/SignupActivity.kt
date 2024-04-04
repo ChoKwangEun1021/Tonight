@@ -2,12 +2,18 @@ package com.weare2024.tonight.activites
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.databinding.ActivitySignupBinding
 import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
+import com.weare2024.tonight.network.RetrofitHelper
+import com.weare2024.tonight.network.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
 
@@ -25,7 +31,8 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun clickNext() {
-        val intent = Intent(this, MainActivity::class.java)
+
+        val intent = Intent(this, SignupActivity2::class.java)
 
         email = binding.inputLayoutEmail.editText!!.text.toString()
         password = binding.inputLayoutPassword.editText!!.text.toString()
@@ -38,30 +45,12 @@ class SignupActivity : AppCompatActivity() {
             binding.inputLayoutPasswordConfirm.requestFocus()
             return
         } else {
-            FBAuth.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
-                        val uid = FBAuth.getUid()
-                        val users = mutableMapOf<String, String>()
-                        users["uid"] = uid
-                        users["email"] = email
-                        users["password"] = password
-                        users["nickName"] = "nickName"
-
-                        FBRef.userRef.document().set(users).addOnSuccessListener {
-                            Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-//            intent.putExtra("email", email)
-//            intent.putExtra("password", password)
-//            intent.putExtra("login_type", "email")
-
+            intent.putExtra("email", email)
+            intent.putExtra("password", password)
+            intent.putExtra("login_type", "email")
+            startActivity(intent)
         }
+
     }
+
 }
