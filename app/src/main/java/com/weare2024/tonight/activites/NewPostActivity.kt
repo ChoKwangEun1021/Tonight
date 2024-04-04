@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
+import com.weare2024.tonight.network.RetrofitHelper
 
 class NewPostActivity : AppCompatActivity() {
 
@@ -24,10 +25,15 @@ class NewPostActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.buttonPost.setOnClickListener {
-            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+            insertData()
+//            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.ivPost.setOnClickListener { imagePost() }
+    }
+
+    private fun insertData() {
+        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
     }
 
     private fun imagePost() {
