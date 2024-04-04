@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/menu_detail"
-        android:background="?attr/selectableItemBackground">
+        app:menu="@menu/menu_detail">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -30,20 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/iv_main"
-                android:text="닉네임" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/age"
-                android:layout_toRightOf="@id/nickname"
-                android:text=","
-                android:textSize="40dp" />
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/nickname"
-                android:text="나이"/>
+                android:text="닉네임"
+                android:textSize="18sp"/>
         </RelativeLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -57,7 +45,7 @@
             android:id="@+id/tv_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="하이하이"
+            android:text="하이하이 여기 maxlines 3줄"
             android:background="#B3FFFFFF"
             android:maxLines="3"/>
 
@@ -104,27 +92,41 @@
         android:layout_marginRight="4dp"
         android:layout_alignParentBottom="true"
         android:background="?attr/actionBarItemBackground">
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
             <TextView
                 android:id="@+id/tv_comment_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="다른사람들의 답글\n모음 스크롤뷰로 감쌌음"/>
-        </ScrollView>
-
-        <com.google.android.material.textfield.TextInputLayout
+        </androidx.recyclerview.widget.RecyclerView>
+          <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="닉네임님에게 댓글 추가하기"/>
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
+             <com.google.android.material.textfield.TextInputLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="닉네임님에게 댓글 추가하기"
+                        android:layout_marginRight="30dp"/>
+             </com.google.android.material.textfield.TextInputLayout>
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="end"
+                  android:src="@drawable/baseline_forward_24"
+                  android:layout_alignParentEnd="true"
+                  android:layout_centerInParent="true"/>
+          </RelativeLayout>
     </LinearLayout>
 
+
+    <!-- 버튼 - 엔터 이벤트 구현 -->
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
