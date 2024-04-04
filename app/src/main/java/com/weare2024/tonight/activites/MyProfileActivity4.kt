@@ -1,5 +1,6 @@
 package com.weare2024.tonight.activites
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,6 @@ class MyProfileActivity4 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        binding.btnNext4.setOnClickListener { startActivity(Intent(Intent(this,MyProfileActivity5::class.java)) )}
     }
 }
