@@ -20,13 +20,14 @@ import java.util.Locale
 class ChatingActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityChatingBinding
-    var room: String = " Room #1 "
+    var room: String = " Room #1"
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChatingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         val msgItem: MutableList<ChatData> = mutableListOf()
+
 
         binding.toolvar.title = room
         binding.toolvar.subtitle = G.name
