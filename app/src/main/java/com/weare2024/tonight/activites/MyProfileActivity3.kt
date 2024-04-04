@@ -1,5 +1,6 @@
 package com.weare2024.tonight.activites
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.databinding.ActivityMyProfile3Binding
@@ -12,7 +13,7 @@ class MyProfileActivity3 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
+        binding.btnNext3.setOnClickListener { startActivity(Intent(Intent(this,MyProfileActivity4::class.java)) )}
 
     }
 }

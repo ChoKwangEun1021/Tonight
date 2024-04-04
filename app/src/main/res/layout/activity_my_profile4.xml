@@ -150,6 +150,7 @@
             android:layout_below="@id/btn_Gwangju"/>
 
         <Button
+            android:id="@+id/btn_next4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="다음"

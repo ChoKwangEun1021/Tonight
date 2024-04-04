@@ -48,12 +48,14 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn_next1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="다음"
         android:textStyle="bold"
         android:layout_marginTop="430dp"/>
+
+
 
 
 </LinearLayout>

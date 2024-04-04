@@ -2,18 +2,10 @@ package com.weare2024.tonight.activites
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.databinding.ActivitySignupBinding
-import com.weare2024.tonight.firebase.FBAuth
-import com.weare2024.tonight.firebase.FBRef
-import com.weare2024.tonight.network.RetrofitHelper
-import com.weare2024.tonight.network.RetrofitService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
 
