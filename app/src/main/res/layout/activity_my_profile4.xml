@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".activites.MyProfileActivity4"
     android:orientation="vertical"
+    android:background="@drawable/bg_profile_4"
     android:padding="16dp">
 
     <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+        android:navigationIcon="@drawable/baseline_arrow_back_wh"/>
 
     <ProgressBar
         android:layout_width="match_parent"
@@ -30,18 +31,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        >
+`
 
         <Button
             android:id="@+id/btn_Seoul"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:text="서울"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/sghin4"
             android:layout_marginTop="20dp"/>
 
         <Button
@@ -51,9 +53,9 @@
             android:text="인천"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/sghin4"
             android:layout_toRightOf="@id/btn_Seoul"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"/>
 
@@ -64,8 +66,8 @@
             android:text="세종"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/sghin4"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_marginTop="20dp"
             android:layout_below="@id/btn_Seoul"/>
 
@@ -76,10 +78,10 @@
             android:text="대전"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/sghin4"
             android:layout_toRightOf="@id/btn_Sejong"
             android:layout_marginLeft="30dp"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_marginTop="20dp"
             android:layout_below="@id/btn_Inchen"/>
 
@@ -90,9 +92,9 @@
             android:text="대구"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/sghin4"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_below="@id/btn_Sejong"/>
 
         <Button
@@ -102,9 +104,9 @@
             android:text="울산"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_toRightOf="@id/btn_Degu"
+            android:backgroundTint="@color/sghin4"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_below="@id/btn_Degen"/>
@@ -116,9 +118,9 @@
             android:text="광주"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_marginTop="20dp"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:backgroundTint="@color/sghin4"
             android:layout_below="@id/btn_Degu"/>
 
         <Button
@@ -128,9 +130,9 @@
             android:text="부산"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_toRightOf="@id/btn_Gwangju"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:backgroundTint="@color/sghin4"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_below="@id/btn_Ulsan"/>
@@ -141,18 +143,20 @@
             android:layout_height="wrap_content"
             android:text="제주"
             android:textStyle="bold"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:textColor="@color/sghin1"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/sghin4"
             android:layout_below="@id/btn_Gwangju"/>
 
         <Button
+            android:id="@+id/btn_next4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="다음"
             android:textColor="@color/sghin1"
             android:textStyle="bold"
+            android:backgroundTint="@color/white"
             android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
