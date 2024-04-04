@@ -3,6 +3,7 @@ package com.weare2024.tonight.activites
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile3Binding
 
 class MyProfileActivity3 : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MyProfileActivity3 : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnNext3.setOnClickListener { startActivity(Intent(Intent(this,MyProfileActivity4::class.java)) )}
+        overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
 
     }
 }
