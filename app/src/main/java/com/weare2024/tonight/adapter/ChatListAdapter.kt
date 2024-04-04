@@ -35,6 +35,7 @@ class ChatListAdapter(var context: Context,var chatlist:List<SampleChatList>) :A
             val intent = Intent(context,ChatingActivity::class.java)
 
 
+
             context.startActivity(intent)
         }
     }
