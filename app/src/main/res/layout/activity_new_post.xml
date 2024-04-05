@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:padding="16dp"
             android:layout_marginBottom="30dp"
-            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:visibility="visible"/>
 
     </RelativeLayout>

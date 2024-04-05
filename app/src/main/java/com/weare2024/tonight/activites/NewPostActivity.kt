@@ -3,19 +3,15 @@ package com.weare2024.tonight.activites
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import androidx.viewpager2.widget.ViewPager2
@@ -72,18 +68,18 @@ class NewPostActivity : AppCompatActivity() {
             MultipartBody.Part.createFormData("img1", file.name, requestBody)
         }
 
-        retrofitService.insertBoard(boardList, imgsUri).enqueue(object : Callback<String> {
-            override fun onResponse(p0: Call<String>, p1: Response<String>) {
-                val s = p1.body()
-                Toast.makeText(this@NewPostActivity, "$s", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-
-            override fun onFailure(p0: Call<String>, p1: Throwable) {
-                Log.d("aaaa", "${p1.message}")
-            }
-
-        })
+//        retrofitService.insertBoard(boardList, imgsUri).enqueue(object : Callback<String> {
+//            override fun onResponse(p0: Call<String>, p1: Response<String>) {
+//                val s = p1.body()
+//                Toast.makeText(this@NewPostActivity, "$s", Toast.LENGTH_SHORT).show()
+//                finish()
+//            }
+//
+//            override fun onFailure(p0: Call<String>, p1: Throwable) {
+//                Log.d("aaaa", "${p1.message}")
+//            }
+//
+//        })
     }
 
     private fun imageUpload() {
@@ -113,10 +109,13 @@ class NewPostActivity : AppCompatActivity() {
             for (i in 0 until cnt) {
                 imgs.add(result.data?.clipData?.getItemAt(i)?.uri)
             }
+            binding.ivPost.visibility = View.GONE
+            pager.visibility = View.VISIBLE
+            pager.adapter= PagerAdapter(this, imgs)
         }
     }
 
-//    private val resultLauncher =
+//    private val resultLauncher2 =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 //            if (it.resultCode == RESULT_OK) {
 //                val uri = it.data?.data

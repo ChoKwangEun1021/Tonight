@@ -30,7 +30,7 @@ class ChatingActivity : AppCompatActivity() {
 
 
         binding.toolvar.title = room
-        binding.toolvar.subtitle = G.name
+        binding.toolvar.subtitle = G.nickname
         binding.btnSend.setOnClickListener { btnSend() }
         binding.recyclerView.adapter = ChatAdapter(this,msgItem)
 
@@ -50,12 +50,9 @@ class ChatingActivity : AppCompatActivity() {
     }
 
     private fun btnSend() {
-        val qqq /*허용할 uid*/ = "ㅂㅂㅂ"
-        val uidNow = G.uid
-        if (qqq.equals(uidNow)){
 
-            val nickname = G.name
-            val image = G.image
+            val nickname = G.nickname
+            val image = G.uid
             val msg = binding.et.text.toString()
             val time = SimpleDateFormat("hh:mm", Locale.KOREA).format(Date())
             val uid =G.uid
@@ -71,9 +68,6 @@ class ChatingActivity : AppCompatActivity() {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE)  as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        }else {
-
-        }
 
 
     }

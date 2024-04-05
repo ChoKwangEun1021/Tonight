@@ -15,7 +15,7 @@ class MyProfileActivity5 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        //
+        overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
 
     }
 }

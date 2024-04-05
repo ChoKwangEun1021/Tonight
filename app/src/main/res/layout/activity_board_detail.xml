@@ -77,8 +77,6 @@
                     android:src="@drawable/baseline_send_24" />
             </RelativeLayout>
 
-
-
     </LinearLayout>
 
     <LinearLayout
