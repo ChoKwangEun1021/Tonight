@@ -35,8 +35,7 @@ class ProfileFragment : Fragment() {
         val drawerLogout = binding.nav.setNavigationItemSelectedListener(object :OnNavigationItemSelectedListener{
             override fun onNavigationItemSelected(p0: MenuItem): Boolean {
                 if (p0.itemId == R.id.menu_aa){
-                    G.name=""
-                    G.uid=""
+                    Toast.makeText(requireContext(), "asdasdasdasd", Toast.LENGTH_SHORT).show()
                 }
                 return false
             }
