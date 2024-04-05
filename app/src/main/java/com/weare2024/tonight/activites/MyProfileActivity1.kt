@@ -3,7 +3,6 @@ package com.weare2024.tonight.activites
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile1Binding
 

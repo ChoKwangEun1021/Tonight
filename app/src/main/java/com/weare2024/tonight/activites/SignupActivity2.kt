@@ -70,6 +70,7 @@ class SignupActivity2 : AppCompatActivity() {
                                 users["area"] = "서울"
                                 users["work"] = "개발자"
 
+                                //자동 로그인 기능
                                 spfEdt.putBoolean("isLogin", true)
                                 spf2Edt.putString("uid", uid)
                                 spf2Edt.putString("nickname", nickName)
