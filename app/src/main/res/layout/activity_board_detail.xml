@@ -89,8 +89,6 @@
                     android:src="@drawable/baseline_send_24" />
             </RelativeLayout>
 
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -124,7 +122,5 @@
                 android:hint="닉네임님에게 댓글 추가하기"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

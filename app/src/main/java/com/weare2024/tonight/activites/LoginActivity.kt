@@ -14,9 +14,16 @@ import com.weare2024.tonight.databinding.ActivityLoginBinding
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
+    private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
+    private val spfEdt by lazy { spf.edit() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        if (spf.getBoolean("isLogin", false)) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
         binding.btnGo.setOnClickListener(this)
         binding.btnLoginKakao.setOnClickListener(this)
@@ -28,17 +35,21 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.btn_go -> {
                 startActivity(Intent(this, MainActivity::class.java))
             }
+
             R.id.btn_login_kakao -> {}
             R.id.btn_login_naver -> {}
             R.id.btn_login_google -> {}
             R.id.btn_login -> {
                 startActivity(Intent(this, EmailLoginActivity::class.java))
             }
+
             R.id.btn_signup -> {
+                spfEdt.putBoolean("isLogin", true)
+                spfEdt.apply()
                 val intent = Intent(this, SignupActivity::class.java)
                 startActivity(intent)
             }
