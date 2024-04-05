@@ -13,4 +13,8 @@ interface RetrofitService {
     @POST("/Tonight/board/insertDB.php")
     fun insertBoard(@PartMap dataPart: Map<String, String>, @Part filePart: MultipartBody.Part?) : Call<String>
 
+    @Multipart
+    @POST("/Tonight/board/insertDB.php")
+    fun insertBoard2(@PartMap dataPart: Map<String, String>, @Part fileParts: List<MultipartBody.Part?>) : Call<String>
+
 }
