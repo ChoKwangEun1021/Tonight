@@ -30,7 +30,7 @@ class ChatingActivity : AppCompatActivity() {
 
 
         binding.toolvar.title = room
-        binding.toolvar.subtitle = G.name
+        binding.toolvar.subtitle = G.nickname
         binding.btnSend.setOnClickListener { btnSend() }
         binding.recyclerView.adapter = ChatAdapter(this,msgItem)
 
@@ -54,8 +54,8 @@ class ChatingActivity : AppCompatActivity() {
         val uidNow = G.uid
         if (qqq.equals(uidNow)){
 
-            val nickname = G.name
-            val image = G.image
+            val nickname = G.nickname
+            val image = G.uid
             val msg = binding.et.text.toString()
             val time = SimpleDateFormat("hh:mm", Locale.KOREA).format(Date())
             val uid =G.uid
