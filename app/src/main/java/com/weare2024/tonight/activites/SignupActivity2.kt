@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivitySignup2Binding
 import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
@@ -21,6 +20,10 @@ import com.weare2024.tonight.firebase.FBRef
 class SignupActivity2 : AppCompatActivity() {
     private val binding by lazy { ActivitySignup2Binding.inflate(layoutInflater) }
     private var imgUri: Uri? = null
+    private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
+    private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
+    private val spfEdt by lazy { spf.edit() }
+    private val spf2Edt by lazy { spf2.edit() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -38,6 +41,7 @@ class SignupActivity2 : AppCompatActivity() {
             when(intent.getStringExtra("login_type")) {
 
                 "kakao" -> {
+
                 }
 
                 "naver" -> {
@@ -65,6 +69,12 @@ class SignupActivity2 : AppCompatActivity() {
                                 users["birth"] = "1998.10.21"
                                 users["area"] = "서울"
                                 users["work"] = "개발자"
+
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickName)
+                                spfEdt.apply()
+                                spf2Edt.apply()
 
                                 FBRef.userRef.document().set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
