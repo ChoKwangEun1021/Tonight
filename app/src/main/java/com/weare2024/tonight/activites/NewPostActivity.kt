@@ -58,11 +58,6 @@ class NewPostActivity : AppCompatActivity() {
     val imgs: MutableList<Uri?> = mutableListOf()
     val pager: ViewPager2 by lazy { binding.pager }
 
-    private fun imageUpload() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-        }
-        else resultLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*").putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true))
     private fun insertData() {
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
@@ -91,6 +86,15 @@ class NewPostActivity : AppCompatActivity() {
         })
     }
 
+    private fun imageUpload() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } else resultLauncher.launch(
+            Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*")
+                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        )
+    }
+
     private fun imagePost() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) resultLauncher.launch(
             Intent(
@@ -100,31 +104,32 @@ class NewPostActivity : AppCompatActivity() {
         else resultLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*"))
     }
 
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            result ->
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
-            if (result.data?. data != null) {
-                imgs.add(result.data?.data)
-            } else {
-                val cnt:Int = result.data?.clipData?.itemCount!!
-                for (i in 0 until cnt) {
-                    imgs.add(result.data?.clipData?.getItemAt(i)?.uri)
-                }
-
-    private val resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                val uri = it.data?.data
-                if (uri != null) {
-                    Glide.with(this).load(uri).into(binding.ivPost)
-                    imgPath = getRealPathFromUri(uri)
-                }
+        if (result.data?.data != null) {
+            imgs.add(result.data?.data)
+        } else {
+            val cnt: Int = result.data?.clipData?.itemCount!!
+            for (i in 0 until cnt) {
+                imgs.add(result.data?.clipData?.getItemAt(i)?.uri)
             }
-            }
-            binding.ivPost.visibility = View.GONE
-            pager.visibility = View.VISIBLE
-            pager.adapter= PagerAdapter(this, imgs)
+        }
     }
+
+//    private val resultLauncher =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//            if (it.resultCode == RESULT_OK) {
+//                val uri = it.data?.data
+//                if (uri != null) {
+//                    Glide.with(this).load(uri).into(binding.ivPost)
+//                    imgPath = getRealPathFromUri(uri)
+//                }
+//            }
+//            }
+//            binding.ivPost.visibility = View.GONE
+//            pager.visibility = View.VISIBLE
+//            pager.adapter= PagerAdapter(this, imgs)
+//    }
 
     private val pickMultipleLauncher = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()){
 
