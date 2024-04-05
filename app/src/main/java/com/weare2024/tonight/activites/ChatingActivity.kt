@@ -50,9 +50,6 @@ class ChatingActivity : AppCompatActivity() {
     }
 
     private fun btnSend() {
-        val qqq /*허용할 uid*/ = "ㅂㅂㅂ"
-        val uidNow = G.uid
-        if (qqq.equals(uidNow)){
 
             val nickname = G.name
             val image = G.image
@@ -71,9 +68,6 @@ class ChatingActivity : AppCompatActivity() {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE)  as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        }else {
-
-        }
 
 
     }

@@ -2,8 +2,8 @@ package com.weare2024.tonight
 
 class G {
     companion object{
-        val name=""
+        var name=""
         val image=""
-        val uid="ㅂㅂㅂ"
+        var uid=""
     }
 }
