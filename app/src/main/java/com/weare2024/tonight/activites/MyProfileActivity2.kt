@@ -17,5 +17,6 @@ class MyProfileActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.btnNext2.setOnClickListener { startActivity(Intent(Intent(this,MyProfileActivity3::class.java))) }
+        overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
     }
 }
