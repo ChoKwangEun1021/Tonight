@@ -3,6 +3,7 @@ package com.weare2024.tonight.activites
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -25,14 +26,39 @@ class BoardDetailActivity : AppCompatActivity() {
         binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem?): Boolean {
-                when(item!!.itemId){
-                    R.id.more112->{
-                        showBottomSheet()
+                if (item!!.itemId == R.id.more112) {
+                    showBottomSheet()
+                    val singo1 = findViewById<TextView>(R.id.singo_1)
+                        singo1?.setOnClickListener {
+                            Toast.makeText(this@BoardDetailActivity, "${singo1.text}", Toast.LENGTH_SHORT).show()
+
                     }
+//                    val singo2:TextView = findViewById(R.id.singo_2)
+//                    singo2.setOnClickListener {
+//
+//                    }
+//                    val singo3:TextView = findViewById(R.id.singo_3)
+//                    singo3.setOnClickListener {
+//
+//                    }
+//                    val singo4:TextView = findViewById(R.id.singo_4)
+//                    singo4.setOnClickListener {
+//
+//                    }
+//                    val singo5:TextView = findViewById(R.id.singo_5)
+//                    singo5.setOnClickListener {
+//
+//                    }
                 }
+//                when(item!!.itemId){
+//                    R.id.more112->{
+//                        showBottomSheet()
+//                    }
+//                }
                 return true
             }
         })
+
     }
     private fun showBottomSheet(){
         val dailog = BottomSheetDialog(this@BoardDetailActivity)

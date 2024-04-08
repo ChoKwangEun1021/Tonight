@@ -15,12 +15,19 @@
         android:layout_alignParentBottom="true"
         android:background="?attr/actionBarItemBackground">
 
-        <EditText
+            <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title_112"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="신고하기"
+            android:textStyle="bold"
+            android:textSize="25sp"
             android:gravity="center"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="3dp"/>
 
         <TextView
             android:id="@+id/singo_1"
