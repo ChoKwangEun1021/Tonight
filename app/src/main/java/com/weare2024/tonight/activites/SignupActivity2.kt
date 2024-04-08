@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.ActivitySignup2Binding
 import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
@@ -77,7 +78,8 @@ class SignupActivity2 : AppCompatActivity() {
                                 spfEdt.apply()
                                 spf2Edt.apply()
 
-                                FBRef.userRef.document().set(users).addOnSuccessListener {
+                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                FBRef.userRef.document(nickName).set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                 }
                                 userProfileImgUpload()
@@ -87,6 +89,7 @@ class SignupActivity2 : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
+                        
 
                     }
                 }

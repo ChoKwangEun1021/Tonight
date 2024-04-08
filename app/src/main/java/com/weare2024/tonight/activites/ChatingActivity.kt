@@ -1,6 +1,7 @@
 package com.weare2024.tonight.activites
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ class ChatingActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityChatingBinding
     var room: String = " Room #1"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChatingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
