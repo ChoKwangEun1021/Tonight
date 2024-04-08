@@ -1,39 +1,43 @@
 package com.weare2024.tonight.activites
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityBoardDetailBinding
 
 class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
     private val bs: View by lazy { binding.bs } //댓글 바텀시트
-//    private val more112 : View by lazy { R.id.more112 } // 신고 바텀시트
     private val bsb: BottomSheetBehavior<View> by lazy { BottomSheetBehavior.from(bs) }
+    private val rl_title : View by lazy { binding.rlTitle }
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.request.setOnClickListener { clickComment() }
         binding.chat.setOnClickListener { clickChat() }
+        binding.sendupload.setOnClickListener { clickSendUpload() }
+        binding.rlTitle.setOnClickListener { clickTitle() }
         binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
-
                     }
                 return true
             }
         })
-
     }
     private fun showBottomSheet(){
         val dailog = BottomSheetDialog(this@BoardDetailActivity)
@@ -69,5 +73,18 @@ class BoardDetailActivity : AppCompatActivity() {
     private fun clickChat(){
         Toast.makeText(this, "채팅 채널로 연결 됩니다.", Toast.LENGTH_SHORT).show()
     }
+    private fun clickSendUpload(){
+        var nickname = G.nickname
+        var uid = G.uid
+        val comment = binding.et.text.toString()
 
+    }
+    private fun clickTitle() {
+        val imageView = ImageView(this@BoardDetailActivity)
+        imageView.setImageResource(R.drawable.profle)
+        val builder = AlertDialog.Builder(this@BoardDetailActivity)
+        builder.setView(imageView)
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
 }

@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/menu_detail">
         <RelativeLayout
+            android:id="@+id/rl_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
@@ -35,37 +36,33 @@
         </RelativeLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
-
         <ImageView
             android:id="@+id/iv"
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:background="#81FFFFFF"/>
         <TextView
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="하이하이 여기 maxlines 3줄"
             android:background="#B3FFFFFF"
             android:maxLines="3"/>
-
             <RelativeLayout
                 android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/iv"
                 android:backgroundTint="@color/white">
-
                 <ImageView
                     android:id="@+id/request"
                     android:layout_width="30dp"
-                    android:layout_height="53dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="70dp"
                     android:background="?attr/selectableItemBackground"
                     android:src="@drawable/baseline_request" />
-
                 <ImageView
                     android:id="@+id/chat"
                     android:layout_width="30dp"
@@ -77,8 +74,22 @@
                     android:src="@drawable/baseline_send_24" />
             </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                <TextView
+                    android:id="@+id/tv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="다른사람들의 답글\n모음 스크롤뷰로 감쌌음"/>
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/bs"
         android:layout_width="match_parent"
@@ -90,17 +101,6 @@
         android:layout_marginRight="4dp"
         android:layout_alignParentBottom="true"
         android:background="?attr/actionBarItemBackground">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
-            <TextView
-                android:id="@+id/tv_comment_group"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="다른사람들의 답글\n모음 스크롤뷰로 감쌌음"/>
-        </androidx.recyclerview.widget.RecyclerView>
           <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -108,12 +108,14 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="닉네임님에게 댓글 추가하기"
                         android:layout_marginRight="30dp"/>
              </com.google.android.material.textfield.TextInputLayout>
               <ImageView
+                  android:id="@+id/sendupload"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_gravity="end"
@@ -123,8 +125,5 @@
           </RelativeLayout>
     </LinearLayout>
 
-
     <!-- 버튼 - 엔터 이벤트 구현 -->
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
