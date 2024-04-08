@@ -23,11 +23,12 @@
             android:textStyle="bold"
             android:textSize="25sp"
             android:gravity="center"/>
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="3dp"/>
+            android:textSize="2dp"
+            android:background="@color/black"/>
 
         <TextView
             android:id="@+id/singo_1"

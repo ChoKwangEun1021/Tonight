@@ -1,5 +1,6 @@
 package com.weare2024.tonight.activites
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,7 @@ class BoardDetailActivity : AppCompatActivity() {
         binding.chat.setOnClickListener { clickChat() }
         binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener{
+            @SuppressLint("SuspiciousIndentation")
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
