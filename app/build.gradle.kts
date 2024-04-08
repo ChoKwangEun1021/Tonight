@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.converter.gson)
     implementation(libs.converter.scalars)
+    implementation(libs.firebase.common.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,4 +65,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
 
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
+
+    implementation ("com.kakao.sdk:v2-user:2.20.1")
+
 }

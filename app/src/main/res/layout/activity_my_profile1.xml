@@ -5,58 +5,67 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activites.MyProfileActivity1"
+    android:background="@drawable/bg_profile_1"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/bg_profile_1">
+    tools:context=".activites.MyProfileActivity1">
 
     <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+        android:navigationIcon="@drawable/baseline_arrow_back_24" />
 
     <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:progressDrawable="@drawable/prograsbar_fat"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--        android:progressDrawable="@drawable/prograsbar_fat"/>-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="성별은 무엇인가요?"
-        android:textStyle="bold"
-        android:textSize="32dp"/>
+        android:textSize="32dp"
+        android:textStyle="bold" />
 
-    <TextView
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="남성"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:background="@drawable/btn_choice"
-        android:layout_marginTop="20dp"/>
+        android:layout_height="200dp">
+        <RadioButton
+            android:id="@+id/man"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_choice"
+            android:gravity="center"
+            android:text="남성"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-    <TextView
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_choice"
+            android:gravity="center"
+            android:text="여성"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="여성"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:background="@drawable/btn_choice"
-        android:layout_marginTop="20dp"/>
-
+        android:layout_height="match_parent">
     <Button
         android:id="@+id/btn_next1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:text="다음"
-        android:textStyle="bold"
-        android:layout_marginTop="430dp"/>
-
-
+        android:textStyle="bold" />
+    </RelativeLayout>
 
 
 </LinearLayout>
