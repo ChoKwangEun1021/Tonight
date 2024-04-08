@@ -18,5 +18,15 @@ class MyProfileActivity2 : AppCompatActivity() {
         setContentView(binding.root)
         binding.btnNext2.setOnClickListener { startActivity(Intent(Intent(this,MyProfileActivity3::class.java))) }
         overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
+
+        val uid = intent.getStringExtra("uid")
+        val nickname = intent.getStringExtra("nickName")
+        val gender = intent.getStringExtra("gender")
+        val intent = Intent(this,MyProfileActivity3::class.java)
+        intent.putExtra("kakao_uid",uid)
+        intent.putExtra("nickName",nickname)
+        intent.putExtra("gender",gender)
+
+
     }
 }
