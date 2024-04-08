@@ -2,6 +2,7 @@ package com.weare2024.tonight.activites
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Log.d("aaa","${R.string.kakao_native_app_key_activity}")
 
         if (spf.getBoolean("isLogin", false)) {
             startActivity(Intent(this, MainActivity::class.java))
@@ -81,7 +83,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                         val id: String = user.id.toString()
                         val nickname: String = user.kakaoAccount?.profile?.nickname ?: ""
 
-                        Toast.makeText(this, "$id\n$nickname", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "$id\n$nickname", Toast.LENGTH_SHORT).show()
 //                        G.userAccount = UserAccount(id, nickname)
 
                         val intent = Intent(this, SignupActivity2::class.java)
