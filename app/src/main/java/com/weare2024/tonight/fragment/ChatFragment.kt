@@ -39,11 +39,13 @@ class ChatFragment : Fragment() {
 
     private fun clickBtn(){
 
-        startActivity(Intent(Intent(context,ChatingActivity::class.java)))
+        startActivity(Intent(context,ChatingActivity::class.java))
 
     }
     private fun clickBtn2(){
-
+        val intent =Intent(Intent(requireContext(),ChatingActivity::class.java))
+        intent.putExtra("asd","asd")
+        startActivity(intent)
     }
 
 }

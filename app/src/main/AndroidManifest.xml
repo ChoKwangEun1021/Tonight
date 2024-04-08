@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,14 +25,9 @@
             android:name=".activites.BoardDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activites.SinupActivity"
-            android:exported="false" />
-        <activity
             android:name=".activites.NewPostActivity"
             android:exported="false" />
-        <activity
-            android:name=".activites.BoardDetail"
-            android:exported="false" />
+
         <activity
             android:name=".activites.EmailLoginActivity"
             android:exported="false" />
@@ -71,6 +67,22 @@
         <activity
             android:name=".activites.MainActivity"
             android:exported="false" />
+
+
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="@string/kakao_native_app_key" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

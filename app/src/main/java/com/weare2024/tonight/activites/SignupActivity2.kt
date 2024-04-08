@@ -1,6 +1,8 @@
 package com.weare2024.tonight.activites
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.ActivitySignup2Binding
 import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
@@ -28,7 +31,7 @@ class SignupActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.btnRegister.setOnClickListener { clickRegister() }
+        binding.btnRegister.setOnClickListener { clickImage() }
         binding.cvProfile.setOnClickListener { getImage() }
     }
 
@@ -42,6 +45,11 @@ class SignupActivity2 : AppCompatActivity() {
 
                 "kakao" -> {
 
+                    val uid = intent.getStringExtra("uid")
+                    val intent2 = Intent(this, MyProfileActivity1::class.java)
+                    intent2.putExtra("kakao_uid", uid)
+                    intent2.putExtra("nickname", nickName)
+                    startActivity(intent2)
                 }
 
                 "naver" -> {
@@ -77,8 +85,13 @@ class SignupActivity2 : AppCompatActivity() {
                                 spfEdt.apply()
                                 spf2Edt.apply()
 
-                                FBRef.userRef.document().set(users).addOnSuccessListener {
+                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                FBRef.userRef.document(nickName).set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                }
+                                FBAuth.auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
+                                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+
                                 }
                                 userProfileImgUpload()
                                 startActivity(Intent(this, MainActivity::class.java))
@@ -87,6 +100,7 @@ class SignupActivity2 : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
+                        
 
                     }
                 }
@@ -96,6 +110,19 @@ class SignupActivity2 : AppCompatActivity() {
 
 
 
+    }
+
+    private fun clickImage(){
+        if (binding.cvProfile.drawable is VectorDrawable){
+            Toast.makeText(this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show()
+            return
+        }else if (binding.inputLayoutNickName.editText!!.text.toString().isNullOrEmpty() ){
+            Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
+            return
+        }else{
+            Toast.makeText(this, "이미지 선택 완료", Toast.LENGTH_SHORT).show()
+            clickRegister()
+        }
     }
 
     private fun getImage() {
