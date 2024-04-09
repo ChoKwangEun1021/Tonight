@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
-import com.bumptech.glide.Glide
 import androidx.viewpager2.widget.ViewPager2
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding

@@ -8,6 +8,7 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 
 interface RetrofitService {
+
     @Multipart
     @POST("/Tonight/board/insertTest.php")
     fun insertBoard(@PartMap dataPart: Map<String, String>, @Part fileParts: List<MultipartBody.Part>?) : Call<String>
