@@ -22,7 +22,6 @@ class MyProfileActivity4 : AppCompatActivity() {
     val aaa = bonColor()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -47,8 +46,16 @@ class MyProfileActivity4 : AppCompatActivity() {
         }
 
         val intent = Intent(this, MyProfileActivity5::class.java)
-        intent.putExtra("jj",jj)
-        Log.d("jj",jj)
+        val uid = intent.getStringExtra("uid")
+        val nickname = intent.getStringExtra("nickName")
+        val gender = intent.getStringExtra("gender")
+        val height = intent.getStringExtra("height")
+
+        intent.putExtra("jj", jj)
+        intent.putExtra("kakao_uid", uid)
+        intent.putExtra("nickName", nickname)
+        intent.putExtra("gender", gender)
+        intent.putExtra("height", height)
         startActivity(intent)
     }
 
@@ -89,15 +96,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click2() {
         jj = binding.btnDegen.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(ccc)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "대전"
 
@@ -106,15 +113,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click3() {
         jj = binding.btnInchen.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(ccc)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "인천"
 
@@ -123,15 +130,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click4() {
         jj = binding.btnGwangju.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(ccc)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "광주"
 
@@ -140,15 +147,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click5() {
         jj = binding.btnJeju.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(ccc)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "제주"
 
@@ -157,15 +164,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click6() {
         jj = binding.btnSejong.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+       binding.btnBusan.setBackgroundColor(aaa)
+       binding.btnUlsan.setBackgroundColor(aaa)
+       binding.btnSeoul.setBackgroundColor(aaa)
+       binding.btnJeju.setBackgroundColor(aaa)
+       binding.btnSejong.setBackgroundColor(ccc)
+       binding.btnGwangju.setBackgroundColor(aaa)
+       binding.btnInchen.setBackgroundColor(aaa)
+       binding.btnDegen.setBackgroundColor(aaa)
+       binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "세종"
 
@@ -174,15 +181,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click7() {
         jj = binding.btnSeoul.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(ccc)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "서울"
 
@@ -191,15 +198,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click8() {
         jj = binding.btnUlsan.text.toString()
-        binding.btnBusan.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnUlsan.backgroundTintList = ColorStateList.valueOf(getColor(grayColor()))
-        binding.btnSeoul.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnJeju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnSejong.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnGwangju.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnInchen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegen.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
-        binding.btnDegu.backgroundTintList = ColorStateList.valueOf(getColor(bonColor()))
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(ccc)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(aaa)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "울산"
 
