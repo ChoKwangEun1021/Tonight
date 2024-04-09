@@ -11,18 +11,20 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import androidx.viewpager2.widget.ViewPager2
-import com.weare2024.tonight.R
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
 import com.weare2024.tonight.network.RetrofitHelper
 import com.weare2024.tonight.network.RetrofitService
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,12 +32,17 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.StringBuilder
+import java.nio.file.Files
 
 class NewPostActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityNewPostBinding.inflate(layoutInflater) }
     private val boardList = mutableMapOf<String, String>()
     private var imgPath: String? = null
+    private var imgPath2 = mutableListOf<String>()
+    private val imgFiles = mutableListOf<File>()
+    private val files = mutableListOf<MultipartBody.Part>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +54,7 @@ class NewPostActivity : AppCompatActivity() {
             insertData()
 //            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
         }
-        
+
         binding.ivPost.setOnClickListener { imageUpload() }
     }
 
@@ -62,24 +69,33 @@ class NewPostActivity : AppCompatActivity() {
         boardList["nickname"] = "nickname"
         boardList["content"] = binding.textPost.text.toString()
 
-        val imgsUri = imgPath?.let {
-            val file = File(it)
-//            val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
-//            MultipartBody.Part.createFormData("img1", file.name, requestBody)
+        for (i in 0 until imgPath2.size) {
+            val file = File(imgPath2[i])
+//            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), imgPath2[i])
+            val requestBody2 = imgPath2.get(i).toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+            val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody2)
+            files.add(filePart)
+
         }
 
-//        retrofitService.insertBoard(boardList, imgsUri).enqueue(object : Callback<String> {
-//            override fun onResponse(p0: Call<String>, p1: Response<String>) {
-//                val s = p1.body()
-//                Toast.makeText(this@NewPostActivity, "$s", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//
-//            override fun onFailure(p0: Call<String>, p1: Throwable) {
-//                Log.d("aaaa", "${p1.message}")
-//            }
-//
-//        })
+//        val imgsUri = imgPath?.let {
+//            val file = File(it)
+//            val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
+//            MultipartBody.Part.createFormData("img", file.name, requestBody)
+//        }
+
+        retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, p1: Response<String>) {
+                val s = p1.body()
+                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
+            }
+
+            override fun onFailure(p0: Call<String>, p1: Throwable) {
+                Log.d("aaaa", "${p1.message}")
+            }
+
+        })
     }
 
     private fun imageUpload() {
@@ -91,57 +107,43 @@ class NewPostActivity : AppCompatActivity() {
         )
     }
 
-    private fun imagePost() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) resultLauncher.launch(
-            Intent(
-                MediaStore.ACTION_PICK_IMAGES
-            )
-        )
-        else resultLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*"))
-    }
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
-        if (result.data?.data != null) {
-            imgs.add(result.data?.data)
-        } else {
-            val cnt: Int = result.data?.clipData?.itemCount!!
-            for (i in 0 until cnt) {
-                imgs.add(result.data?.clipData?.getItemAt(i)?.uri)
+            if (result.data?.data != null) {
+                imgs.add(result.data?.data)
+                imgPath = getRealPathFromUri(result.data?.data!!)
+                imgPath2.add(imgPath!!)
+            } else {
+                val cnt: Int = result.data?.clipData?.itemCount!!
+                for (i in 0 until cnt) {
+                    imgs.add(result.data?.clipData?.getItemAt(i)?.uri)
+                    imgPath = getRealPathFromUri(result.data?.clipData?.getItemAt(i)?.uri!!)
+                    imgPath2.add(imgPath!!)
+                }
+                binding.ivPost.visibility = View.GONE
+                pager.visibility = View.VISIBLE
+                pager.adapter = PagerAdapter(this, imgs)
             }
-            binding.ivPost.visibility = View.GONE
-            pager.visibility = View.VISIBLE
-            pager.adapter= PagerAdapter(this, imgs)
-        }
-    }
-
-//    private val resultLauncher2 =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//            if (it.resultCode == RESULT_OK) {
-//                val uri = it.data?.data
-//                if (uri != null) {
-//                    Glide.with(this).load(uri).into(binding.ivPost)
-//                    imgPath = getRealPathFromUri(uri)
-//                }
-//            }
-//            }
-//            binding.ivPost.visibility = View.GONE
-//            pager.visibility = View.VISIBLE
-//            pager.adapter= PagerAdapter(this, imgs)
-//    }
-
-    private val pickMultipleLauncher = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()){
-
-        uris: List<Uri> ->
-
-        if (uris.isNotEmpty()) {
-            binding.ivPost.visibility = View.GONE
-            pager.visibility = View.VISIBLE
-            for (uri in uris) imgs.add(uri)
-            pager.adapter= PagerAdapter(this, imgs)
         }
 
-    }
+    private val pickMultipleLauncher =
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
+
+                uris: List<Uri> ->
+
+            if (uris.isNotEmpty()) {
+                binding.ivPost.visibility = View.GONE
+                pager.visibility = View.VISIBLE
+                for (uri in uris) {
+                    imgs.add(uri)
+                    imgPath = getRealPathFromUri(uri)
+                    imgPath2.add(imgPath!!)
+                }
+                pager.adapter = PagerAdapter(this, imgs)
+            }
+
+        }
 
     private fun getRealPathFromUri(uri: Uri): String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
