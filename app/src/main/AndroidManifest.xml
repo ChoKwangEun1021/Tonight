@@ -68,7 +68,6 @@
             android:name=".activites.MainActivity"
             android:exported="false" />
 
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
