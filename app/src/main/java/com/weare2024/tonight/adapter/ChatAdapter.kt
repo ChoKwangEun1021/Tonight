@@ -24,13 +24,7 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val laoutInflater = LayoutInflater.from(context)
 
-        return if (viewType == 0) VH1(
-            RecyclerViewMyChatBinding.inflate(
-                laoutInflater,
-                parent,
-                false
-            )
-        )
+        return if (viewType == 0) VH1(RecyclerViewMyChatBinding.inflate(laoutInflater,parent,false))
         else VH2(RecyclerViewOtherChatBinding.inflate(laoutInflater, parent, false))
     }
 
@@ -41,7 +35,7 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = chatDataItem[position]
         if (item.nickname == G.nickname) {
-        val name= G.nickname
+            val name = G.nickname
 //        FBRef.userRef.whereEqualTo("name", name).get()
             val vh = holder as VH1
             vh.binding.tvName.text = item.nickname
@@ -49,12 +43,12 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
             vh.binding.tvTime.text = item.time
             Glide.with(context).load(item.profileUrl).into(vh.binding.ciriv)
 
-            } else {
-                val vh = holder as VH2
-                vh.binding.tvName.text = item.nickname
-                vh.binding.tvMsg.text = item.message
-                vh.binding.tvTime.text = item.time
-                Glide.with(context).load(item.profileUrl).into(vh.binding.ciriv)
+        } else {
+            val vh = holder as VH2
+            vh.binding.tvName.text = item.nickname
+            vh.binding.tvMsg.text = item.message
+            vh.binding.tvTime.text = item.time
+            Glide.with(context).load(item.profileUrl).into(vh.binding.ciriv)
 
         }
 

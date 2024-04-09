@@ -8,13 +8,8 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 
 interface RetrofitService {
-//    1. POST 방식으로 데이터를 보내기
     @Multipart
-    @POST("/05Retrofit/insertDB.php")
-    fun postDataToServer(@PartMap dataPart: Map<String, String>, @Part filePart: MultipartBody.Part?) : Call<String>
-
-    @Multipart
-    @POST("/Tonight/board/insertDB2.php")
-    fun insertBoard2(@PartMap dataPart: Map<String, String>, @Part fileParts: List<MultipartBody.Part?>) : Call<String>
+    @POST("/Tonight/board/insertTest.php")
+    fun insertBoard(@PartMap dataPart: Map<String, String>, @Part fileParts: List<MultipartBody.Part>?) : Call<String>
 
 }
