@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,6 +16,14 @@ import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.tasks.Task
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -23,6 +32,8 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
     private val spfEdt by lazy { spf.edit() }
     private val spf2Edt by lazy { spf2.edit() }
+    lateinit var firebaseAuth: FirebaseAuth
+    lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +51,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         binding.btnLoginGoogle.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         binding.btnSignup.setOnClickListener(this)
+        firebaseAuth = FirebaseAuth.getInstance()
 
     }
 
@@ -54,7 +66,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_login_naver -> {}
-            R.id.btn_login_google -> {}
+            R.id.btn_login_google -> {
+                google()
+            }
+
             R.id.btn_login -> {
                 startActivity(Intent(this, EmailLoginActivity::class.java))
             }
@@ -67,6 +82,37 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
         }
     }
+
+    fun google() {
+
+        val signInOptions: GoogleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+
+        val intent = GoogleSignIn.getClient(this, signInOptions).signInIntent
+        resultLauncher.launch(intent)
+
+
+    }
+
+
+    val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val intent = it.data
+
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
+
+            val account = task.result
+            val id = account.id.toString()
+            val email = account.email ?: ""
+            Toast.makeText(this, "$id   ,,$email", Toast.LENGTH_SHORT).show()
+            val intent1 = Intent(this, SignupActivity2::class.java)
+            intent1.putExtra("google_uid", id)
+            intent1.putExtra("login_type", "google")
+
+
+            startActivity(intent1)
+            finish()
+        }
 
     fun clickKakao() {
 

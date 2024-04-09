@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.converter.scalars)
     implementation(libs.firebase.common.ktx)
+    implementation(libs.play.services.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,6 +67,10 @@ dependencies {
 
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
-    implementation ("com.kakao.sdk:v2-user:2.20.1")
+    implementation("com.kakao.sdk:v2-user:2.20.1")
+
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
 
 }
