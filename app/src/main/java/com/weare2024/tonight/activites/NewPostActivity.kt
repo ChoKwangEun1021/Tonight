@@ -24,6 +24,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +34,6 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.StringBuilder
-import java.nio.file.Files
 
 class NewPostActivity : AppCompatActivity() {
 
@@ -41,7 +41,6 @@ class NewPostActivity : AppCompatActivity() {
     private val boardList = mutableMapOf<String, String>()
     private var imgPath: String? = null
     private var imgPath2 = mutableListOf<String>()
-    private val imgFiles = mutableListOf<File>()
     private val files = mutableListOf<MultipartBody.Part>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,24 +70,17 @@ class NewPostActivity : AppCompatActivity() {
 
         for (i in 0 until imgPath2.size) {
             val file = File(imgPath2[i])
-//            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), imgPath2[i])
-            val requestBody2 = imgPath2.get(i).toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
 
-            val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody2)
+            val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody)
             files.add(filePart)
-
         }
-
-//        val imgsUri = imgPath?.let {
-//            val file = File(it)
-//            val requestBody = RequestBody.create(MediaType.parse("image/*"), file)
-//            MultipartBody.Part.createFormData("img", file.name, requestBody)
-//        }
 
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, p1: Response<String>) {
                 val s = p1.body()
-                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
+//                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
+                finish()
             }
 
             override fun onFailure(p0: Call<String>, p1: Throwable) {
