@@ -85,6 +85,7 @@ class SignupActivity2 : AppCompatActivity() {
                                 spfEdt.apply()
                                 spf2Edt.apply()
 
+                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                 FBRef.userRef.document(nickName).set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                 }
@@ -99,7 +100,7 @@ class SignupActivity2 : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
-                        
+
 
                     }
                 }

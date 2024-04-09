@@ -17,5 +17,6 @@ class MyProfileActivity5 : AppCompatActivity() {
         setContentView(binding.root)
         overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
 
+
     }
 }
