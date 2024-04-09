@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                         val intent = Intent(this, SignupActivity2::class.java)
                         intent.putExtra("kakao_uid", id)
                         intent.putExtra("login_type", "kakao")
+                        intent.putExtra("nickName",nickname)
 //
 
                         startActivity(intent)

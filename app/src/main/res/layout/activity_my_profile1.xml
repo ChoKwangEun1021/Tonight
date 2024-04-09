@@ -22,6 +22,7 @@
     <!--        android:progressDrawable="@drawable/prograsbar_fat"/>-->
 
     <TextView
+        android:id="@+id/tv_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="성별은 무엇인가요?"

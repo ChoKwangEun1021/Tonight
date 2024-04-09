@@ -31,21 +31,30 @@
         android:textColor="@color/sghin1"/>
 
   <NumberPicker
+      android:id="@+id/number"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginRight="24dp"
       android:layout_marginLeft="24dp" />
 
-    <Button
-        android:id="@+id/btn_next2"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:text="다음"
-        android:textStyle="bold"
-        android:layout_marginTop="330dp"
-        android:textColor="@color/sghin1"/>
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_next2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="다음"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/sghin1"/>
+
+    </RelativeLayout>
+
+
 
     <!-- pr용 주석 -->
 
