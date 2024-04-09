@@ -49,13 +49,10 @@ class BoardDetailActivity : AppCompatActivity() {
     private fun insertData() {
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
-
         itemList["uid"] = "uid"
         itemList["nickname"] = "nickname"
         itemList["comment"] = "comment"
-
     }
-
         private fun showBottomSheet(){
         val dailog = BottomSheetDialog(this@BoardDetailActivity)
         val view = layoutInflater.inflate(R.layout.more112,null)
@@ -82,7 +79,6 @@ class BoardDetailActivity : AppCompatActivity() {
         }
         dailog.show()
     }
-
     private fun clickComment(){
         if (bsb.state == BottomSheetBehavior.STATE_COLLAPSED)  // 상태 확인
             bsb.state = BottomSheetBehavior.STATE_EXPANDED // 시트 열기
@@ -91,7 +87,6 @@ class BoardDetailActivity : AppCompatActivity() {
     private fun clickChat(){
         Toast.makeText(this, "채팅 채널로 연결 됩니다.", Toast.LENGTH_SHORT).show()
     }
-
     var sendupload : String? = null
     private fun clickSendUpload(){
         sendupload ?: return
@@ -104,7 +99,4 @@ class BoardDetailActivity : AppCompatActivity() {
         val alertDialog = builder.create()
         alertDialog.show()
     }
-
-
-
 }

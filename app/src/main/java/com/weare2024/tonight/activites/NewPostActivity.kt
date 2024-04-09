@@ -73,6 +73,7 @@ class NewPostActivity : AppCompatActivity() {
 
             val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody)
             files.add(filePart)
+
         }
 
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
@@ -164,7 +165,7 @@ class NewPostActivity : AppCompatActivity() {
             outputStream.write(buf, 0, len)
         }
 
-        //반복문이 끝났으면 복사가 완료된 것임
+        //반복문이 끝났으면 복사가 완료된 것임za
         inputStream.close()
         outputStream.close()
 
