@@ -50,8 +50,17 @@ class MyProfileActivity4 : AppCompatActivity() {
         val nickname = intent.getStringExtra("nickName")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
+        val yy = intent.getStringExtra("yy")
+        val mm = intent.getStringExtra("mm")
+        val dd = intent.getStringExtra("dd")
+
+
+        intent.putExtra("yy", yy)
+        intent.putExtra("mm", mm)
+        intent.putExtra("dd", dd)
 
         intent.putExtra("jj", jj)
+
         intent.putExtra("kakao_uid", uid)
         intent.putExtra("nickName", nickname)
         intent.putExtra("gender", gender)
@@ -60,8 +69,6 @@ class MyProfileActivity4 : AppCompatActivity() {
     }
 
     private fun click() {
-        jj = binding.btnBusan.text.toString()
-
         binding.btnBusan.setBackgroundColor(ccc)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -71,10 +78,7 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnInchen.setBackgroundColor(aaa)
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
-
         jj = "부산"
-
-
     }
 
     private fun click1() {
@@ -164,15 +168,15 @@ class MyProfileActivity4 : AppCompatActivity() {
 
     private fun click6() {
         jj = binding.btnSejong.text.toString()
-       binding.btnBusan.setBackgroundColor(aaa)
-       binding.btnUlsan.setBackgroundColor(aaa)
-       binding.btnSeoul.setBackgroundColor(aaa)
-       binding.btnJeju.setBackgroundColor(aaa)
-       binding.btnSejong.setBackgroundColor(ccc)
-       binding.btnGwangju.setBackgroundColor(aaa)
-       binding.btnInchen.setBackgroundColor(aaa)
-       binding.btnDegen.setBackgroundColor(aaa)
-       binding.btnDegu.setBackgroundColor(aaa)
+        binding.btnBusan.setBackgroundColor(aaa)
+        binding.btnUlsan.setBackgroundColor(aaa)
+        binding.btnSeoul.setBackgroundColor(aaa)
+        binding.btnJeju.setBackgroundColor(aaa)
+        binding.btnSejong.setBackgroundColor(ccc)
+        binding.btnGwangju.setBackgroundColor(aaa)
+        binding.btnInchen.setBackgroundColor(aaa)
+        binding.btnDegen.setBackgroundColor(aaa)
+        binding.btnDegu.setBackgroundColor(aaa)
 
         jj = "세종"
 

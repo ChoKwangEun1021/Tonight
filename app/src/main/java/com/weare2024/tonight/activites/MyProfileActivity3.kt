@@ -35,7 +35,6 @@ class MyProfileActivity3 : AppCompatActivity() {
             intent.putExtra("yy", year)
             intent.putExtra("mm", month)
             intent.putExtra("dd", day)
-
             intent.putExtra("kakao_uid", uid)
             intent.putExtra("nickName", nickname)
             intent.putExtra("gender", gender)
