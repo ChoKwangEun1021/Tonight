@@ -79,6 +79,7 @@ class NewPostActivity : AppCompatActivity() {
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, p1: Response<String>) {
                 val s = p1.body()
+                Toast.makeText(this@NewPostActivity, "게시글 작성이 완료되었습니다.", Toast.LENGTH_SHORT).show()
 //                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
                 finish()
             }
