@@ -75,7 +75,6 @@ class MyProfileActivity1 : AppCompatActivity() {
             intent.putExtra("gender", gender)
             intent.putExtra("kakao_uid", uid)
             intent.putExtra("nickname", nickname)
-//            AlertDialog.Builder(this).setMessage("입력받은데이터: $nickname,$uid").create().show()
             startActivity(intent)
 
         } else if (gendera == "여자") {
@@ -86,8 +85,6 @@ class MyProfileActivity1 : AppCompatActivity() {
             intent.putExtra("gender", gender)
             intent.putExtra("kakao_uid", uid)
             intent.putExtra("nickname", nickname)
-
-//            AlertDialog.Builder(this).setMessage("입력받은데이터: $nickname,$uid").create().show()
 
             startActivity(intent)
         } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()

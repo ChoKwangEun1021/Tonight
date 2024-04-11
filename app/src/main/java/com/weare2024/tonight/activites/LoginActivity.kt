@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.Task
+import com.kakao.sdk.auth.AuthApiClient
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -38,7 +39,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.d("aaa","${R.string.kakao_native_app_key_activity}")
+        Log.d("aaa", "${R.string.kakao_native_app_key_activity}")
 
         if (spf.getBoolean("isLogin", false)) {
             startActivity(Intent(this, MainActivity::class.java))
@@ -63,10 +64,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
             R.id.btn_login_kakao -> {
                 clickKakao()
-                spfEdt.putBoolean("isLogin",true)
-                spfEdt.apply()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
             }
 
             R.id.btn_login_naver -> {}
@@ -131,24 +128,27 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 UserApiClient.instance.me { user, error ->
                     if (user != null) {
                         val uid: String = user.id.toString()
-                        val nickname: String = user.kakaoAccount?.profile?.nickname ?: ""
 
-//                        Toast.makeText(this, "$id\n$nickname", Toast.LENGTH_SHORT).show()
-//                        G.userAccount = UserAccount(uid, nickname)
 
                         val intent = Intent(this, SignupActivity2::class.java)
                         intent.putExtra("kakao_uid", uid)
                         intent.putExtra("login_type", "kakao")
-                        intent.putExtra("nickname",nickname)
-//
 
                         startActivity(intent)
-
-//                        finish()
+                        finish()
 
                     }
                 }
 
+            }
+        }
+
+        if (AuthApiClient.instance.hasToken()){
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }else{
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                UserApiClient.instance.loginWithKakaoAccount(this,callback = callback)
             }
         }
 

@@ -47,7 +47,6 @@ class MyProfileActivity2 : AppCompatActivity() {
             intent.putExtra("nickname",nickname)
             intent.putExtra("gender",gender)
             intent.putExtra("height",height)
-            Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
 
             startActivity(intent)
         }
