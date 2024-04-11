@@ -33,13 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-`
 
         <Button
             android:id="@+id/btn_Seoul"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:text="서울"
+
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:textStyle="bold"
             android:textColor="@color/sghin1"
