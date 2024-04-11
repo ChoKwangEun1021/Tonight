@@ -18,8 +18,8 @@ class MyProfileActivity3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val uid = intent.getStringExtra("uid")
-        val nickname = intent.getStringExtra("nickName")
+        val uid = intent.getStringExtra("kakao_uid")
+        val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
 
@@ -36,7 +36,7 @@ class MyProfileActivity3 : AppCompatActivity() {
             intent.putExtra("mm", month)
             intent.putExtra("dd", day)
             intent.putExtra("kakao_uid", uid)
-            intent.putExtra("nickName", nickname)
+            intent.putExtra("nickname", nickname)
             intent.putExtra("gender", gender)
             intent.putExtra("height", height)
 

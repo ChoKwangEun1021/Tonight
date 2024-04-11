@@ -24,7 +24,7 @@ class MyProfileActivity1 : AppCompatActivity() {
         val female = findViewById<RadioButton>(R.id.female)
         binding.btnNext1.setOnClickListener { clickNext() }
 
-        val uid = intent.getStringExtra("uid")
+        val uid = intent.getStringExtra("kakao_uid")
         var nickName = intent.getStringExtra("nickname")
         if (nickName != null) {
             binding.tvGender.append(nickName)

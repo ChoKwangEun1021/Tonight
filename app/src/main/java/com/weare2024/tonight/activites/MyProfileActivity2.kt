@@ -38,13 +38,13 @@ class MyProfileActivity2 : AppCompatActivity() {
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
 
 
-            val uid = intent.getStringExtra("uid")
-            val nickname = intent.getStringExtra("nickName")
+            val uid = intent.getStringExtra("kakao_uid")
+            val nickname = intent.getStringExtra("nickname")
             val gender = intent.getStringExtra("gender")
             val height = "${selectedNumber}cm"
 
             intent.putExtra("kakao_uid",uid)
-            intent.putExtra("nickName",nickname)
+            intent.putExtra("nickname",nickname)
             intent.putExtra("gender",gender)
             intent.putExtra("height",height)
 
