@@ -63,6 +63,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
             R.id.btn_login_kakao -> {
                 clickKakao()
+                spfEdt.putBoolean("isLogin",true)
+                spfEdt.apply()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
 
             R.id.btn_login_naver -> {}
@@ -126,16 +130,16 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 // 사용자 정보 요청
                 UserApiClient.instance.me { user, error ->
                     if (user != null) {
-                        val id: String = user.id.toString()
+                        val uid: String = user.id.toString()
                         val nickname: String = user.kakaoAccount?.profile?.nickname ?: ""
 
 //                        Toast.makeText(this, "$id\n$nickname", Toast.LENGTH_SHORT).show()
-//                        G.userAccount = UserAccount(id, nickname)
+//                        G.userAccount = UserAccount(uid, nickname)
 
                         val intent = Intent(this, SignupActivity2::class.java)
-                        intent.putExtra("kakao_uid", id)
+                        intent.putExtra("kakao_uid", uid)
                         intent.putExtra("login_type", "kakao")
-                        intent.putExtra("nickName",nickname)
+                        intent.putExtra("nickname",nickname)
 //
 
                         startActivity(intent)

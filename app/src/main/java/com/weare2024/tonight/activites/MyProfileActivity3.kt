@@ -22,26 +22,34 @@ class MyProfileActivity3 : AppCompatActivity() {
         val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
+        val intent = Intent(this, MyProfileActivity4::class.java)
 
         var datePicker: DatePicker = binding.date
 
         overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
 
         binding.btnNext3.setOnClickListener {
-            val intent = Intent(this, MyProfileActivity4::class.java)
             val year = datePicker.year
             val month = datePicker.month + 1
             val day = datePicker.dayOfMonth
-            intent.putExtra("yy", year)
-            intent.putExtra("mm", month)
-            intent.putExtra("dd", day)
-            intent.putExtra("kakao_uid", uid)
-            intent.putExtra("nickname", nickname)
-            intent.putExtra("gender", gender)
-            intent.putExtra("height", height)
 
-            startActivity(intent)
-//            Log.d("datapicker","$year $month $day")
+            if (year == null || month == null || day == null){
+                Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }else{
+
+                intent.putExtra("kakao_uid", uid)
+                intent.putExtra("nickname", nickname)
+                intent.putExtra("gender", gender)
+                intent.putExtra("height", height)
+                intent.putExtra("year", year)
+                intent.putExtra("month", month)
+                intent.putExtra("day", day)
+                Toast.makeText(this, "$uid,$nickname,$gender,$height.$year.$month.$day", Toast.LENGTH_SHORT).show()
+                startActivity(intent)
+
+            }
+
+
         }
     }
 }

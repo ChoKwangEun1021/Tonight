@@ -22,6 +22,7 @@
         android:progressDrawable="@drawable/prograsbar_fat"/>
 
     <TextView
+        android:id="@+id/tv_profile5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="어떤 일을 하고 계시나요?"

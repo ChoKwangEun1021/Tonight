@@ -32,7 +32,6 @@ class MyProfileActivity2 : AppCompatActivity() {
         numberPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
 
         binding.btnNext2.setOnClickListener {
-            val intent = Intent(this,MyProfileActivity3::class.java)
 
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
@@ -41,12 +40,14 @@ class MyProfileActivity2 : AppCompatActivity() {
             val uid = intent.getStringExtra("kakao_uid")
             val nickname = intent.getStringExtra("nickname")
             val gender = intent.getStringExtra("gender")
+            val intent = Intent(this,MyProfileActivity3::class.java)
             val height = "${selectedNumber}cm"
 
             intent.putExtra("kakao_uid",uid)
             intent.putExtra("nickname",nickname)
             intent.putExtra("gender",gender)
             intent.putExtra("height",height)
+            Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
 
             startActivity(intent)
         }

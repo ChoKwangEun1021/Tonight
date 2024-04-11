@@ -2,6 +2,7 @@ package com.weare2024.tonight.activites
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,23 +10,38 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
+import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile5Binding
+import com.weare2024.tonight.firebase.FBAuth
+import java.util.logging.LogManager
 
 class MyProfileActivity5 : AppCompatActivity() {
 
     private val binding by lazy { ActivityMyProfile5Binding.inflate(layoutInflater) }
+    lateinit var nickname: String
+    private var imgUri: Uri? = null
 
     val ccc = grayColor()
     val aaa = bonColor()
     var job = ""
 
+    private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
+    private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
+    private val spfEdt by lazy { spf.edit() }
+    private val spf2Edt by lazy { spf2.edit() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
+        overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
 
-        binding.btnNext5.setOnClickListener { clickNext() }
+
 
         binding.btnStudent.setOnClickListener { student() }
         binding.btnArbeit.setOnClickListener { Arbeit() }
@@ -43,38 +59,110 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnJobSeeker.setOnClickListener { JobSeeker() }
         binding.btnCategoryOther.setOnClickListener { CategoryOther() }
 
+        binding.btnNext5.setOnClickListener { clickNext() }
+
+
     }
-    private fun clickNext(){
-        if (job ==""){
+
+    private fun clickNext() {
+        val userRef = Firebase.firestore.collection("kakao_uid")
+
+        if (job == "") {
             Toast.makeText(this, "직업을 선택해 주세요.", Toast.LENGTH_SHORT).show()
 
+        } else {
+            val uid = intent.getStringExtra("kakao_uid")
+            val nickname = intent.getStringExtra("nickname")
+            val gender = intent.getStringExtra("gender")
+            val height = intent.getStringExtra("height")
+            val year = intent.getIntExtra("year", 0)
+            val month = intent.getIntExtra("month", 1)
+            val day = intent.getIntExtra("day", 2)
+            val jj = intent.getStringExtra("jj")
+            val intent = Intent(this, MainActivity::class.java)
+
+            intent.putExtra("kakao_uid", uid)
+            intent.putExtra("nickname", nickname)
+            intent.putExtra("gender", gender)
+            intent.putExtra("height", height)
+            intent.putExtra("year", year)
+            intent.putExtra("month", month)
+            intent.putExtra("day", day)
+            intent.putExtra("jj", jj)
+            intent.putExtra("job", job)
+            AlertDialog.Builder(this)
+                .setMessage("인텐트로 넘어온 데이터들 : $nickname  $uid   $gender  $height  $year:$month:$day  $jj  $job")
+                .create().show()
+
+
         }
-        val intent = Intent(this, MainActivity::class.java)
-        val uid = intent.getStringExtra("kakao_uid")
-        val nickname = intent.getStringExtra("nickname")
-        val gender = intent.getStringExtra("gender")
-        val height = intent.getStringExtra("height")
-        val yy = intent.getStringExtra("yy")
-        val mm = intent.getStringExtra("mm")
-        val dd = intent.getStringExtra("dd")
-        val jj =intent.getStringExtra("jj")
 
-        intent.putExtra("yy", yy)
-        intent.putExtra("mm", mm)
-        intent.putExtra("dd", dd)
 
-        intent.putExtra("jj", jj)
-        intent.putExtra("job", job)
 
-        intent.putExtra("kakao_uid", uid)
-        intent.putExtra("nickname", nickname)
-        intent.putExtra("gender", gender)
-        intent.putExtra("height", height)
-        AlertDialog.Builder(this).setMessage("인텐트로 넘어온 데이터들 : $nickname  $uid   $gender  $height  $yy:$mm:$dd  $jj  $job").create().show()
-        startActivity(intent)
+        if (intent != null && intent.hasExtra("login_type")) {
+            when (intent.getStringExtra("login_type")) {
+                "kakao" -> {
+
+                    val uid = intent.getStringExtra("kakao_uid")
+                    val kakaoEmail = "$uid@kakao.com"
+                    val nickname = ""
+
+                    userRef.whereEqualTo("email", kakaoEmail).get().addOnSuccessListener {
+
+                        val user = mutableMapOf<String, String>()
+                        user["uid"] = user.toString()
+                        user["email"] = kakaoEmail
+                        user["password"] = "카카오로그인"
+                        user["nickname"] = nickname
+
+                        spfEdt.putString("uid", uid)
+                        spfEdt.putString("nickname", nickname)
+                        spfEdt.apply()
+
+                        G.uid = uid.toString()
+                        G.nickname = nickname
+
+                        userRef.document().set(user).addOnSuccessListener {
+                            Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    userProfileImgUpload()
+                    startActivity(Intent(this,MainActivity::class.java))
+                    finish()
+
+                }
+
+            }
+
+        }
+        Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+
+
     }
 
-    private fun student(){
+    private fun userProfileImgUpload(){
+
+        var name = ""
+        if (intent != null && intent.hasExtra("login_type")){
+            when(intent.getStringExtra("login_type")){
+                "kakao" -> {
+                    name = intent.getStringExtra("kakao_uid").toString()
+
+                    val imgRef:StorageReference = Firebase.storage.getReference("usersImg/$name")
+
+                    imgUri?.apply {
+                        imgRef.putFile(this).addOnSuccessListener {
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun student() {
         binding.btnStudent.setBackgroundColor(ccc)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -92,8 +180,9 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnCategoryOther.setBackgroundColor(aaa)
 
         job = "학생"
-  }
-    private fun Arbeit(){
+    }
+
+    private fun Arbeit() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(ccc)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -112,7 +201,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "아르바이트"
     }
-    private fun Freelancer(){
+
+    private fun Freelancer() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(ccc)
@@ -131,7 +221,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "프리랜서"
     }
-    private fun Company(){
+
+    private fun Company() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -150,7 +241,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "회사원"
     }
-    private fun SelfEmployment(){
+
+    private fun SelfEmployment() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -169,7 +261,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "자영업"
     }
-    private fun Profession(){
+
+    private fun Profession() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -188,7 +281,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "전문직"
     }
-    private fun Dotor(){
+
+    private fun Dotor() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -207,7 +301,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "의료직"
     }
-    private fun Techer(){
+
+    private fun Techer() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -226,7 +321,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "교육직"
     }
-    private fun Finance(){
+
+    private fun Finance() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -245,7 +341,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "금융직"
     }
-    private fun Research(){
+
+    private fun Research() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -264,7 +361,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "연구,기술직"
     }
-    private fun PublicOfficial(){
+
+    private fun PublicOfficial() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -283,7 +381,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "공무원"
     }
-    private fun Ceo(){
+
+    private fun Ceo() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -302,7 +401,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "사업가"
     }
-    private fun Soldier(){
+
+    private fun Soldier() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -321,7 +421,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "군인"
     }
-    private fun JobSeeker(){
+
+    private fun JobSeeker() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
@@ -340,7 +441,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         job = "취업준비생"
     }
-    private fun CategoryOther(){
+
+    private fun CategoryOther() {
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(aaa)
         binding.btnFreelancer.setBackgroundColor(aaa)
