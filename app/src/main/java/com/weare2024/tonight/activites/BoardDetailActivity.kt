@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.weare2024.tonight.G
 import com.weare2024.tonight.R
+import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.databinding.ActivityBoardDetailBinding
 import com.weare2024.tonight.network.RetrofitHelper
 import com.weare2024.tonight.network.RetrofitService
@@ -24,7 +27,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private val rl_title : View by lazy { binding.rlTitle }
     private val itemList = mutableMapOf<String, String>()
     private var imgPath: String? = null
-    @SuppressLint("NotifyDataSetChanged")
+    val vp : ViewPager2 by lazy { binding.viewPager}
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -90,6 +93,14 @@ class BoardDetailActivity : AppCompatActivity() {
     var sendupload : String? = null
     private fun clickSendUpload(){
         sendupload ?: return
+        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
+        val retrofitService = retrofit.create(RetrofitService::class.java)
+        var nickname = G.nickname
+        var uid = G.uid
+        val content = binding.et.text.toString()
+//        if ()
+
+
     }
     private fun clickTitle() {
         val imageView = ImageView(this@BoardDetailActivity)

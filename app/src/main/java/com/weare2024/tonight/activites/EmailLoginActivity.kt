@@ -25,13 +25,13 @@ class EmailLoginActivity : AppCompatActivity() {
         val email = binding.inputLayoutEmail.editText!!.text.toString()
         val password = binding.inputLayoutPassword.editText!!.text.toString()
         val uid = FBAuth.getUid()
-        val nickName = getSharedPreferences("nickName", MODE_PRIVATE).toString()
+        val nickname = getSharedPreferences("nickname", MODE_PRIVATE).toString()
 
         FBAuth.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 spfEdt.putBoolean("isLogin", true)
                 spf2Edt.putString("uid", uid)
-                spf2Edt.putString("nickname", nickName)
+                spf2Edt.putString("nickname", nickname)
                 spfEdt.apply()
                 spf2Edt.apply()
                 startActivity(Intent(this, MainActivity::class.java))

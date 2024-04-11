@@ -45,37 +45,28 @@ class NewPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         binding.toolbar.setNavigationOnClickListener { finish() }
-
         binding.buttonPost.setOnClickListener {
             insertData()
 //            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
         }
-
         binding.ivPost.setOnClickListener { imageUpload() }
     }
-
     val imgs: MutableList<Uri?> = mutableListOf()
     val pager: ViewPager2 by lazy { binding.pager }
-
     private fun insertData() {
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
-
         boardList["uid"] = "uid"
         boardList["nickname"] = "nickname"
         boardList["content"] = binding.textPost.text.toString()
-
         for (i in 0 until imgPath2.size) {
             val file = File(imgPath2[i])
             val requestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
-
             val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody)
             files.add(filePart)
 
         }
-
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, p1: Response<String>) {
                 val s = p1.body()
@@ -83,14 +74,11 @@ class NewPostActivity : AppCompatActivity() {
 //                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
                 finish()
             }
-
             override fun onFailure(p0: Call<String>, p1: Throwable) {
                 Log.d("aaaa", "${p1.message}")
             }
-
         })
     }
-
     private fun imageUpload() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -99,10 +87,8 @@ class NewPostActivity : AppCompatActivity() {
                 .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         )
     }
-
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
             if (result.data?.data != null) {
                 imgs.add(result.data?.data)
                 imgPath = getRealPathFromUri(result.data?.data!!)
@@ -119,12 +105,9 @@ class NewPostActivity : AppCompatActivity() {
                 pager.adapter = PagerAdapter(this, imgs)
             }
         }
-
     private val pickMultipleLauncher =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
-
                 uris: List<Uri> ->
-
             if (uris.isNotEmpty()) {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
@@ -135,13 +118,10 @@ class NewPostActivity : AppCompatActivity() {
                 }
                 pager.adapter = PagerAdapter(this, imgs)
             }
-
         }
-
     private fun getRealPathFromUri(uri: Uri): String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
         //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
-
         //Uri[미디어저장소의 DB 주소]로 부터 파일의 이름을 얻어오기 - DB SELECT 쿼리작업을 해주는 기능을 가진 객체를 이용
         val cursorLoader: CursorLoader = CursorLoader(this, uri, null, null, null, null)
         val cursor: Cursor? = cursorLoader.loadInBackground()
@@ -149,27 +129,22 @@ class NewPostActivity : AppCompatActivity() {
             moveToFirst()
             getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
         }
-
         //복사본이 저장될 파일의 경로와 파일명.확장자
         val file: File = File(externalCacheDir, fileName.toString())
-
         //이제 복사 작업 수행
         val inputStream: InputStream = contentResolver.openInputStream(uri) ?: return null
         val outputStream: OutputStream = FileOutputStream(file)
-
         //파일복사
         while (true) {
             val buf: ByteArray = ByteArray(1024) //빈 바이트 배열 [길이:1KB]
             val len: Int = inputStream.read(buf) //스트림을 통해 읽어들인 바이트들을 buf 배열에 넣어줌
             if (len <= 0) break
-
             outputStream.write(buf, 0, len)
         }
 
         //반복문이 끝났으면 복사가 완료된 것임za
         inputStream.close()
         outputStream.close()
-
         return file.absolutePath
     }
 }

@@ -26,7 +26,6 @@ class MyProfileActivity4 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.btnNext4.setOnClickListener { clickNext() }
         overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
 
 
@@ -39,35 +38,50 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnSejong.setOnClickListener { click6() }
         binding.btnSeoul.setOnClickListener { click7() }
         binding.btnUlsan.setOnClickListener { click8() }
-    }
 
-    private fun clickNext() {
-        if (jj == "") {
-            Toast.makeText(this, "지역을 선택 해주세요", Toast.LENGTH_SHORT).show()
+
+
+        binding.btnNext4.setOnClickListener {
+
+            if (jj == "") {
+                Toast.makeText(this, "지역을 선택 해주세요", Toast.LENGTH_SHORT).show()
+            }else {
+
+                val uid = intent.getStringExtra("kakao_uid")
+                val nickname = intent.getStringExtra("nickname")
+                val gender = intent.getStringExtra("gender")
+                val height = intent.getStringExtra("height")
+                val year = intent.getIntExtra("year", 0)
+                val month = intent.getIntExtra("month", 1)
+                val day = intent.getIntExtra("day", 2)
+                val intent = Intent(this, MyProfileActivity5::class.java)
+
+                intent.putExtra("kakao_uid", uid)
+                intent.putExtra("nickname", nickname)
+                intent.putExtra("gender", gender)
+                intent.putExtra("height", height)
+                intent.putExtra("year", year)
+                intent.putExtra("month", month)
+                intent.putExtra("day", day)
+                intent.putExtra("jj", jj)
+                Toast.makeText(
+                    this,
+                    "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(intent)
+            }
         }
-
-        val intent = Intent(this, MyProfileActivity5::class.java)
-        val uid = intent.getStringExtra("kakao_uid")
-        val nickname = intent.getStringExtra("nickname")
-        val gender = intent.getStringExtra("gender")
-        val height = intent.getStringExtra("height")
-        val yy = intent.getStringExtra("yy")
-        val mm = intent.getStringExtra("mm")
-        val dd = intent.getStringExtra("dd")
-
-
-        intent.putExtra("yy", yy)
-        intent.putExtra("mm", mm)
-        intent.putExtra("dd", dd)
-
-        intent.putExtra("jj", jj)
-
-        intent.putExtra("kakao_uid", uid)
-        intent.putExtra("nickname", nickname)
-        intent.putExtra("gender", gender)
-        intent.putExtra("height", height)
-        startActivity(intent)
     }
+
+//    private fun clickNext() {
+//
+//
+//
+//
+//
+//
+//    }
 
     private fun click() {
         binding.btnBusan.setBackgroundColor(ccc)
