@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
@@ -38,18 +39,21 @@ class SignupActivity2 : AppCompatActivity() {
     private fun clickRegister() {
         val email = intent.getStringExtra("email").toString()
         val password = intent.getStringExtra("password").toString()
-        val nickName = binding.inputLayoutNickName.editText!!.text.toString()
+        val nickname = binding.inputLayoutNickName.editText!!.text.toString()
 
         if (intent != null && intent.hasExtra("login_type")) {
             when(intent.getStringExtra("login_type")) {
 
                 "kakao" -> {
 
-                    val uid = intent.getStringExtra("uid")
-                    val intent2 = Intent(this, MyProfileActivity1::class.java)
-                    intent2.putExtra("kakao_uid", uid)
-                    intent2.putExtra("nickname", nickName)
-                    startActivity(intent2)
+                    val uid = intent.getStringExtra("kakao_uid")
+                    val intent = Intent(this, MyProfileActivity1::class.java)
+                    intent.putExtra("kakao_uid", uid)
+                    intent.putExtra("nickname", nickname)
+                    startActivity(intent)
+                    Toast.makeText(this, "$uid,", Toast.LENGTH_SHORT).show()
+
+
                 }
 
                 "naver" -> {
@@ -70,7 +74,7 @@ class SignupActivity2 : AppCompatActivity() {
                             FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
                                 users["uid"] = uid
                                 users["email"] = email
-                                users["nickname"] = nickName
+                                users["nickname"] = nickname
                                 users["profileImgUri"] = uid
                                 users["gender"] = "남자"
                                 users["height"] = "187cm"
@@ -81,16 +85,16 @@ class SignupActivity2 : AppCompatActivity() {
                                 //자동 로그인 기능
                                 spfEdt.putBoolean("isLogin", true)
                                 spf2Edt.putString("kakao_uid", uid)
-                                spf2Edt.putString("nickname",nickName)
+                                spf2Edt.putString("nickname",nickname)
                                 spfEdt.apply()
                                 spf2Edt.apply()
 
-                                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                FBRef.userRef.document(nickName).set(users).addOnSuccessListener {
+                                FBRef.userRef.document(nickname).set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                 }
                                 FBAuth.auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
                                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+
 
                                 }
                                 userProfileImgUpload()

@@ -4,6 +4,7 @@ class G {
     companion object {
         var nickname = ""
         var uid = ""
+
     }
 
 }

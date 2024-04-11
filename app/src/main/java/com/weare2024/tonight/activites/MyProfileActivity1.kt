@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile1Binding
@@ -20,14 +21,15 @@ class MyProfileActivity1 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
         val man = findViewById<RadioButton>(R.id.man)
         val female = findViewById<RadioButton>(R.id.female)
         binding.btnNext1.setOnClickListener { clickNext() }
 
         val uid = intent.getStringExtra("kakao_uid")
-        var nickName = intent.getStringExtra("nickname")
-        if (nickName != null) {
-            binding.tvGender.append(nickName)
+        var nickname = intent.getStringExtra("nickname")
+        if (nickname != null) {
+            binding.tvGender.append(nickname)
         } else {
             Toast.makeText(this, "잘못됫습니다", Toast.LENGTH_SHORT).show()
         }
@@ -66,24 +68,26 @@ class MyProfileActivity1 : AppCompatActivity() {
 //        Log.d("ccc", gendera)
 //        Log.d("nicnam",nickName.toString())
         if (gendera == "남자") {
+            val uid = intent.getStringExtra("kakao_uid")
+            val nickname = intent.getStringExtra("nickname")
             val intent = Intent(this, MyProfileActivity2::class.java)
-            val uid = intent.getStringExtra("uid")
-            val nickName = intent.getStringExtra("nickName")
             val gender = "남자"
             intent.putExtra("gender", gender)
             intent.putExtra("kakao_uid", uid)
-            intent.putExtra("nickname", nickName)
-
+            intent.putExtra("nickname", nickname)
+//            AlertDialog.Builder(this).setMessage("입력받은데이터: $nickname,$uid").create().show()
             startActivity(intent)
 
         } else if (gendera == "여자") {
+            val uid = intent.getStringExtra("kakao_uid")
+            val nickname = intent.getStringExtra("nickname")
             val intent = Intent(this, MyProfileActivity2::class.java)
-            val uid = intent.getStringExtra("uid")
-            val nickName = intent.getStringExtra("nickName")
             val gender = "여자"
             intent.putExtra("gender", gender)
             intent.putExtra("kakao_uid", uid)
-            intent.putExtra("nickname", nickName)
+            intent.putExtra("nickname", nickname)
+
+//            AlertDialog.Builder(this).setMessage("입력받은데이터: $nickname,$uid").create().show()
 
             startActivity(intent)
         } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
