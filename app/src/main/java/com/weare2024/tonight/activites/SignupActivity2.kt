@@ -70,7 +70,7 @@ class SignupActivity2 : AppCompatActivity() {
                             FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
                                 users["uid"] = uid
                                 users["email"] = email
-                                users["nickName"] = nickName
+                                users["nickname"] = nickName
                                 users["profileImgUri"] = uid
                                 users["gender"] = "남자"
                                 users["height"] = "187cm"
@@ -80,8 +80,8 @@ class SignupActivity2 : AppCompatActivity() {
 
                                 //자동 로그인 기능
                                 spfEdt.putBoolean("isLogin", true)
-                                spf2Edt.putString("uid", uid)
-                                spf2Edt.putString("nickname", nickName)
+                                spf2Edt.putString("kakao_uid", uid)
+                                spf2Edt.putString("nickname",nickName)
                                 spfEdt.apply()
                                 spf2Edt.apply()
 

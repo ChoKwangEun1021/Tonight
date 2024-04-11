@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
-import com.bumptech.glide.Glide
 import androidx.viewpager2.widget.ViewPager2
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
@@ -74,11 +73,13 @@ class NewPostActivity : AppCompatActivity() {
 
             val filePart = MultipartBody.Part.createFormData("img[]", file.name, requestBody)
             files.add(filePart)
+
         }
 
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, p1: Response<String>) {
                 val s = p1.body()
+                Toast.makeText(this@NewPostActivity, "게시글 작성이 완료되었습니다.", Toast.LENGTH_SHORT).show()
 //                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
                 finish()
             }
@@ -165,7 +166,7 @@ class NewPostActivity : AppCompatActivity() {
             outputStream.write(buf, 0, len)
         }
 
-        //반복문이 끝났으면 복사가 완료된 것임
+        //반복문이 끝났으면 복사가 완료된 것임za
         inputStream.close()
         outputStream.close()
 

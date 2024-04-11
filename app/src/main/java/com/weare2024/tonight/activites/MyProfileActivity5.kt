@@ -50,8 +50,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         }
         val intent = Intent(this, MainActivity::class.java)
-        val uid = intent.getStringExtra("uid")
-        val nickname = intent.getStringExtra("nickName")
+        val uid = intent.getStringExtra("kakao_uid")
+        val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
         val yy = intent.getStringExtra("yy")
@@ -67,7 +67,7 @@ class MyProfileActivity5 : AppCompatActivity() {
         intent.putExtra("job", job)
 
         intent.putExtra("kakao_uid", uid)
-        intent.putExtra("nickName", nickname)
+        intent.putExtra("nickname", nickname)
         intent.putExtra("gender", gender)
         intent.putExtra("height", height)
         AlertDialog.Builder(this).setMessage("인텐트로 넘어온 데이터들 : $nickname  $uid   $gender  $height  $yy:$mm:$dd  $jj  $job").create().show()
@@ -92,7 +92,7 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnCategoryOther.setBackgroundColor(aaa)
 
         job = "학생"
-    }
+  }
     private fun Arbeit(){
         binding.btnStudent.setBackgroundColor(aaa)
         binding.btnArbeit.setBackgroundColor(ccc)
