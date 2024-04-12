@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_login_naver -> {
-                naver()
+//                naver()
             }
             R.id.btn_login_google -> {
                 google()
@@ -101,74 +101,74 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    private fun naver() {
-        //네아로 SDK 초기화
-        NaverIdLoginSDK.initialize(
-            this,
-            getString(R.string.client_id),
-            getString(R.string.client_secret),
-            "Tonight"
-        )
-
-        val account = NaverIdLoginSDK.getAccessToken()
-
-        if (account != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        } else {
-            //로그인 요청
-            NaverIdLoginSDK.authenticate(this, object : OAuthLoginCallback {
-                override fun onError(errorCode: Int, message: String) {
-                    Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailure(httpStatus: Int, message: String) {
-                    Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
-                }
-                override fun onSuccess() {
-                    Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
-
-                    //사용자 정보를 받아오기 -- REST API로 받아야 함
-                    //로그인에 성공하면 REST API로 요청할 수 있는 토큰(token)을 발급받음
-                    val accessToken: String? = NaverIdLoginSDK.getAccessToken()
-
-                    //Retrofit 작업을 통해 사용자 정보 가져오기
-                    val retroift =
-                        RetrofitHelper.getRetrofitInstance("https://openapi.naver.com")
-                    val retrofitApiService = retroift.create(RetrofitService::class.java)
-
-                    val call = retrofitApiService.getNidUserInfo("Bearer $accessToken")
-                    call.enqueue(object : Callback<NaverLogin> {
-                        override fun onResponse(
-                            call: Call<NaverLogin>,
-                            response: Response<NaverLogin>
-                        ) {
-                            val s = response.body()
-                            val id = s?.response?.id
-                            val email = s?.response?.email
-
-                            FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
-                                if (id != null) {
-                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                                } else {
-                                    val intent2 = Intent(this@LoginActivity, SignupActivity2::class.java)
-                                    intent2.putExtra("naver_uid", s?.response?.id)
-                                    intent2.putExtra("naver_email", email)
-                                    intent2.putExtra("login_type", "naver")
-
-                                    startActivity(intent)
-                                }
-                            }
-                        }
-                        override fun onFailure(call: Call<NaverLogin>, t: Throwable) {
-                            Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_SHORT).show()
-                        }
-
-                    })
-                }
-            })
-        }
-    }
+//    private fun naver() {
+//        //네아로 SDK 초기화
+//        NaverIdLoginSDK.initialize(
+//            this,
+//            getString(R.string.client_id),
+//            getString(R.string.client_secret),
+//            "Tonight"
+//        )
+//
+//        val account = NaverIdLoginSDK.getAccessToken()
+//
+//        if (account != null) {
+//            startActivity(Intent(this, MainActivity::class.java))
+//            finish()
+//        } else {
+//            //로그인 요청
+//            NaverIdLoginSDK.authenticate(this, object : OAuthLoginCallback {
+//                override fun onError(errorCode: Int, message: String) {
+//                    Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+//                }
+//
+//                override fun onFailure(httpStatus: Int, message: String) {
+//                    Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+//                }
+//                override fun onSuccess() {
+//                    Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+//
+//                    //사용자 정보를 받아오기 -- REST API로 받아야 함
+//                    //로그인에 성공하면 REST API로 요청할 수 있는 토큰(token)을 발급받음
+//                    val accessToken: String? = NaverIdLoginSDK.getAccessToken()
+//
+//                    //Retrofit 작업을 통해 사용자 정보 가져오기
+//                    val retroift =
+//                        RetrofitHelper.getRetrofitInstance("https://openapi.naver.com")
+//                    val retrofitApiService = retroift.create(RetrofitService::class.java)
+//
+//                    val call = retrofitApiService.getNidUserInfo("Bearer $accessToken")
+//                    call.enqueue(object : Callback<NaverLogin> {
+//                        override fun onResponse(
+//                            call: Call<NaverLogin>,
+//                            response: Response<NaverLogin>
+//                        ) {
+//                            val s = response.body()
+//                            val id = s?.response?.id
+//                            val email = s?.response?.email
+//
+//                            FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
+//                                if (id != null) {
+//                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//                                } else {
+//                                    val intent2 = Intent(this@LoginActivity, SignupActivity2::class.java)
+//                                    intent2.putExtra("naver_uid", s?.response?.id)
+//                                    intent2.putExtra("naver_email", email)
+//                                    intent2.putExtra("login_type", "naver")
+//
+//                                    startActivity(intent)
+//                                }
+//                            }
+//                        }
+//                        override fun onFailure(call: Call<NaverLogin>, t: Throwable) {
+//                            Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_SHORT).show()
+//                        }
+//
+//                    })
+//                }
+//            })
+//        }
+//    }
 
     fun google() {
         val signInOptions: GoogleSignInOptions =
@@ -201,10 +201,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                     val userData = snap.toObject(UserData::class.java)
                     userData?.apply {
                         G.uid = uid
-                        G.nickname = "$name"
+                        G.nickname = "$nickname"
                         spfEdt.putBoolean("isLogin", true)
                         spf2Edt.putString("uid", uid)
-                        spf2Edt.putString("nickname", name)
+                        spf2Edt.putString("nickname", nickname)
                         spfEdt.apply()
                         spf2Edt.apply()
                         Toast.makeText(this@LoginActivity, "${G.nickname}", Toast.LENGTH_SHORT)
@@ -253,10 +253,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                                     userData?.apply {
                                         G.uid = uid
-                                        G.nickname = "$name"
+                                        G.nickname = nickname
                                         spfEdt.putBoolean("isLogin", true)
                                         spf2Edt.putString("uid", uid)
-                                        spf2Edt.putString("nickname", name)
+                                        spf2Edt.putString("nickname", nickname)
                                         spfEdt.apply()
                                         spf2Edt.apply()
 
