@@ -134,6 +134,54 @@ class MyProfileActivity5 : AppCompatActivity() {
                     finish()
 
                 }
+                "naver" ->{
+
+                }
+                "google" ->{
+                    val uid = intent.getStringExtra("google_uid")
+                    val googleEmail = intent.getStringExtra("google_email").toString()
+                    val gender = intent.getStringExtra("gender")
+                    val height = intent.getStringExtra("height")
+                    val year = intent.getIntExtra("year", 0)
+                    val month = intent.getIntExtra("month", 1)
+                    val day = intent.getIntExtra("day", 2)
+                    val jj = intent.getStringExtra("jj")
+                    Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
+
+
+
+                    FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
+
+                        val user = mutableMapOf<String, String>()
+                        user["uid"] = uid.toString()
+                        user["email"] = googleEmail
+                        user["nickname"] = nickname
+                        user["gender"] = gender.toString()
+                        user["height"] = height.toString()
+                        user["year"] = year.toString()
+                        user["month"] = month.toString()
+                        user["day"] = day.toString()
+                        user["jj"] = jj.toString()
+
+                        spfEdt.putString("uid", uid)
+                        spfEdt.putString("nickname", nickname)
+                        spfEdt.apply()
+
+                        G.uid = uid.toString()
+                        G.nickname = nickname
+
+
+                        FBRef.userRef.document().set(user).addOnSuccessListener {
+                            Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
+                    userProfileImgUpload()
+                    startActivity(Intent(this,MainActivity::class.java))
+                    finish()
+
+                }
 
             }
 

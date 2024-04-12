@@ -91,14 +91,8 @@
                 android:id="@+id/recycler_comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-                <TextView
-                    android:id="@+id/tv_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="다른사람들의 답글\n모음 스크롤뷰로 감쌌음" />
-            </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>
 
