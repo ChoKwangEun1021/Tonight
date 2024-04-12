@@ -15,10 +15,12 @@ import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.storage
+import com.kakao.sdk.user.model.AccessTokenInfo
 import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile5Binding
 import com.weare2024.tonight.firebase.FBAuth
+import com.weare2024.tonight.firebase.FBRef
 import java.util.logging.LogManager
 
 class MyProfileActivity5 : AppCompatActivity() {
@@ -30,6 +32,8 @@ class MyProfileActivity5 : AppCompatActivity() {
     val ccc = grayColor()
     val aaa = bonColor()
     var job = ""
+
+
 
     private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
     private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
@@ -65,14 +69,14 @@ class MyProfileActivity5 : AppCompatActivity() {
     }
 
     private fun clickNext() {
-        val userRef = Firebase.firestore.collection("kakao_uid")
+//        val userRef = Firebase.firestore.collection("uid")
 
         if (job == "") {
             Toast.makeText(this, "직업을 선택해 주세요.", Toast.LENGTH_SHORT).show()
 
         } else {
-            val uid = intent.getStringExtra("kakao_uid")
-            val nickname = intent.getStringExtra("nickname")
+            val uicd = intent.getStringExtra("kakao_uid")
+            val nikname = intent.getStringExtra("nickname")
             val gender = intent.getStringExtra("gender")
             val height = intent.getStringExtra("height")
             val year = intent.getIntExtra("year", 0)
@@ -81,22 +85,8 @@ class MyProfileActivity5 : AppCompatActivity() {
             val jj = intent.getStringExtra("jj")
             val intent = Intent(this, MainActivity::class.java)
 
-            intent.putExtra("kakao_uid", uid)
-            intent.putExtra("nickname", nickname)
-            intent.putExtra("gender", gender)
-            intent.putExtra("height", height)
-            intent.putExtra("year", year)
-            intent.putExtra("month", month)
-            intent.putExtra("day", day)
-            intent.putExtra("jj", jj)
-            intent.putExtra("job", job)
-            AlertDialog.Builder(this)
-                .setMessage("인텐트로 넘어온 데이터들 : $nickname  $uid   $gender  $height  $year:$month:$day  $jj  $job")
-                .create().show()
-
 
         }
-
 
 
         if (intent != null && intent.hasExtra("login_type")) {
@@ -105,15 +95,27 @@ class MyProfileActivity5 : AppCompatActivity() {
 
                     val uid = intent.getStringExtra("kakao_uid")
                     val kakaoEmail = "$uid@kakao.com"
-                    val nickname = ""
+                    val gender = intent.getStringExtra("gender")
+                    val height = intent.getStringExtra("height")
+                    val year = intent.getIntExtra("year", 0)
+                    val month = intent.getIntExtra("month", 1)
+                    val day = intent.getIntExtra("day", 2)
+                    val jj = intent.getStringExtra("jj")
 
-                    userRef.whereEqualTo("email", kakaoEmail).get().addOnSuccessListener {
+
+
+                    FBRef.userRef.whereEqualTo("email", kakaoEmail).get().addOnSuccessListener {
 
                         val user = mutableMapOf<String, String>()
-                        user["uid"] = user.toString()
+                        user["uid"] = uid.toString()
                         user["email"] = kakaoEmail
-                        user["password"] = "카카오로그인"
                         user["nickname"] = nickname
+                        user["gender"] = gender.toString()
+                        user["height"] = height.toString()
+                        user["year"] = year.toString()
+                        user["month"] = month.toString()
+                        user["day"] = day.toString()
+                        user["jj"] = jj.toString()
 
                         spfEdt.putString("uid", uid)
                         spfEdt.putString("nickname", nickname)
@@ -122,7 +124,7 @@ class MyProfileActivity5 : AppCompatActivity() {
                         G.uid = uid.toString()
                         G.nickname = nickname
 
-                        userRef.document().set(user).addOnSuccessListener {
+                        FBRef.userRef.document().set(user).addOnSuccessListener {
                             Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -137,6 +139,7 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         }
         Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+
 
 
     }

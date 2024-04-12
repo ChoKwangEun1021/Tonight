@@ -64,11 +64,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                 intent.putExtra("month", month)
                 intent.putExtra("day", day)
                 intent.putExtra("jj", jj)
-                Toast.makeText(
-                    this,
-                    "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
-                    Toast.LENGTH_SHORT
-                ).show()
+
                 startActivity(intent)
             }
         }
