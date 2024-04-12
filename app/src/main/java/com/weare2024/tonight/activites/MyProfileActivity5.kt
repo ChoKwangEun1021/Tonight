@@ -116,9 +116,9 @@ class MyProfileActivity5 : AppCompatActivity() {
                             user["area"] = area.toString()
                             user["work"] = job
 
-                            spfEdt.putString("uid", uid)
-                            spfEdt.putString("nickname", nickname)
-                            spfEdt.apply()
+                            spf2Edt.putString("uid", uid)
+                            spf2Edt.putString("nickname", nickname)
+                            spf2Edt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
@@ -167,9 +167,9 @@ class MyProfileActivity5 : AppCompatActivity() {
                                 user["day"] = day.toString()
                                 user["jj"] = jj.toString()
 
-                                spfEdt.putString("uid", uid)
-                                spfEdt.putString("nickname", nickname)
-                                spfEdt.apply()
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickname)
+                                spf2Edt.apply()
 
                                 G.uid = uid.toString()
                                 G.nickname = nickname.toString()

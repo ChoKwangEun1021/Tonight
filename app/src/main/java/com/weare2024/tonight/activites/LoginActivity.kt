@@ -250,6 +250,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                             FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
                                 for (snap in it) {
                                     val userData = snap.toObject(UserData::class.java)
+
                                     userData?.apply {
                                         G.uid = uid
                                         G.nickname = "$name"
