@@ -59,6 +59,14 @@ class SignupActivity2 : AppCompatActivity() {
                 }
 
                 "naver" -> {
+                    val uid = intent.getStringExtra("naver_uid")
+                    val intent = Intent(this, MyProfileActivity1::class.java)
+                    intent.putExtra("naver_uid", uid)
+                    intent.putExtra("naver_email", email)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("login_type", "naver")
+                    startActivity(intent)
+//                    Toast.makeText(this, $uid, Toast.LENGTH_SHORT).show()
 
                 }
 
