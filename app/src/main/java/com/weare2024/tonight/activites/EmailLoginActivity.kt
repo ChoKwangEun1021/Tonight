@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.ActivityEmailLoginBinding
 import com.weare2024.tonight.firebase.FBAuth
 
@@ -24,16 +25,18 @@ class EmailLoginActivity : AppCompatActivity() {
     private fun clickLogin() {
         val email = binding.inputLayoutEmail.editText!!.text.toString()
         val password = binding.inputLayoutPassword.editText!!.text.toString()
-        val uid = FBAuth.getUid()
         val nickname = getSharedPreferences("nickname", MODE_PRIVATE).toString()
 
         FBAuth.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            val uid = FBAuth.getUid()
             if (it.isSuccessful) {
                 spfEdt.putBoolean("isLogin", true)
                 spf2Edt.putString("uid", uid)
                 spf2Edt.putString("nickname", nickname)
                 spfEdt.apply()
                 spf2Edt.apply()
+                G.uid = uid
+                G.nickname = "asas"
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()

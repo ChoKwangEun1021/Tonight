@@ -39,28 +39,6 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-//        items.add(Images(R.drawable.sample))
-
         binding.recyclerView.adapter= ListAdapter(requireContext(), items)
 
         binding.fab.setOnClickListener {
@@ -70,7 +48,6 @@ class ListFragment : Fragment() {
         }
 
     }
-
     override fun onResume() {
         super.onResume()
 

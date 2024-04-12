@@ -23,6 +23,7 @@ class MyProfileActivity1 : AppCompatActivity() {
 
 
         val man = findViewById<RadioButton>(R.id.man)
+//        val man = binding.man.text
         val female = findViewById<RadioButton>(R.id.female)
         binding.btnNext1.setOnClickListener { clickNext() }
 
@@ -59,7 +60,6 @@ class MyProfileActivity1 : AppCompatActivity() {
 //        intent2.putExtra("kakao_uid", uid)
 //        intent2.putExtra("nickname", nickName)
 //        intent2.putExtra("gender", gender)
-
 
     }
 

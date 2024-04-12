@@ -26,16 +26,17 @@ class ListAdapter(val context: Context, val imageList: List<Images>) : Adapter<L
         return imageList.size
     }
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val images= imageList[position]
+        val item = imageList[position]
 
-        val imageUri = "http://weare2024.dothome.co.kr/Tonight/board/${images.imgsUri}"
+        val imageUri = "http://weare2024.dothome.co.kr/Tonight/board/${item.imgsUri}"
         Glide.with(context).load(imageUri).into(holder.binding.iv)
 //        Log.d("abcde", imageUri)
 
         holder.binding.root.setOnClickListener {
-            Toast.makeText(context, "${position}번 BoardDetail Activity로 연결", Toast.LENGTH_SHORT).show()
-            context.startActivity(Intent(context, BoardDetailActivity::class.java))
-
+//            Toast.makeText(context, "${position}번 BoardDetail Activity로 연결", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, BoardDetailActivity::class.java)
+            intent.putExtra("boardNo", item.boardNo)
+            context.startActivity(intent)
         }
 
     }

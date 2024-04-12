@@ -50,6 +50,7 @@ class SignupActivity2 : AppCompatActivity() {
                     val intent = Intent(this, MyProfileActivity1::class.java)
                     intent.putExtra("kakao_uid", uid)
                     intent.putExtra("nickname", nickname)
+                    intent.putExtra("profileImgUri", imgUri)
                     intent.putExtra("login_type", "kakao")
                     startActivity(intent)
                     Toast.makeText(this, "$uid,", Toast.LENGTH_SHORT).show()

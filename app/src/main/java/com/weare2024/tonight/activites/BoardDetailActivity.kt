@@ -2,6 +2,7 @@ package com.weare2024.tonight.activites
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -15,10 +16,18 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.weare2024.tonight.G
 import com.weare2024.tonight.R
+import com.weare2024.tonight.data.BoardDetailData
 import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.databinding.ActivityBoardDetailBinding
 import com.weare2024.tonight.network.RetrofitHelper
 import com.weare2024.tonight.network.RetrofitService
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
@@ -36,9 +45,6 @@ class BoardDetailActivity : AppCompatActivity() {
 //        binding.sendupload.setOnClickListener { clickSendUpload() }
         binding.rlTitle.setOnClickListener { clickTitle() }
 //        itemList.add(SampleComment(R.drawable.profle,"잘생긴 오빠","누나 안녕하세요"))
-//        itemList.add(SampleComment(R.drawable.profle,"존예녀 누나","오빠 안녕하세요"))
-//        itemList.add(SampleComment(R.drawable.profle,"훈훈한 오빠","모두들 안녕"))
-//        binding.recyclerComment.adapter!!.notifyDataSetChanged()
         binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener{
             override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -47,6 +53,40 @@ class BoardDetailActivity : AppCompatActivity() {
                     }
                 return true
             }
+        })
+
+        sendBoardNo()
+    }
+
+    private fun sendBoardNo() {
+        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
+        val retrofitService = retrofit.create(RetrofitService::class.java)
+        val boardNo = intent.getIntExtra("boardNo", 0)
+
+//        Toast.makeText(this, "$boardNo", Toast.LENGTH_SHORT).show()
+//        retrofitService.boardNoSend(boardNo).enqueue(object : Callback<String> {
+//            override fun onResponse(p0: Call<String>, p1: Response<String>) {
+//                val s = p1.body()
+//                AlertDialog.Builder(this@BoardDetailActivity).setMessage("$s").create().show()
+//            }
+//
+//            override fun onFailure(p0: Call<String>, p1: Throwable) {
+//                Log.d("qwer", "${p1.message}")
+//            }
+//
+//        })
+
+        retrofitService.boardNoSend2(boardNo).enqueue(object : Callback<BoardDetailData> {
+            override fun onResponse(p0: Call<BoardDetailData>, p1: Response<BoardDetailData>) {
+                val data = p1.body()
+
+                AlertDialog.Builder(this@BoardDetailActivity).setMessage("$data").create().show()
+            }
+
+            override fun onFailure(p0: Call<BoardDetailData>, p1: Throwable) {
+                Log.d("qwer", "${p1.message}")
+            }
+
         })
     }
     private fun insertData() {
@@ -98,8 +138,6 @@ class BoardDetailActivity : AppCompatActivity() {
         var nickname = G.nickname
         var uid = G.uid
         val content = binding.et.text.toString()
-//        if ()
-
 
     }
     private fun clickTitle() {
