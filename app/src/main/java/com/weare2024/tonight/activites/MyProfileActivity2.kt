@@ -22,11 +22,11 @@ class MyProfileActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        overridePendingTransition(R.anim.from_right_enter_xml,R.anim.from_left_enter_xml)
+        overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
         var numberPicker = binding.number
 
         numberPicker.minValue = 130
-        numberPicker.maxValue= 250
+        numberPicker.maxValue = 250
 
         numberPicker.wrapSelectorWheel = false
         numberPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
@@ -35,32 +35,55 @@ class MyProfileActivity2 : AppCompatActivity() {
 
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
+            if ((intent != null && intent.hasExtra("login_type"))) {
+                when (intent.getStringExtra("login_type")) {
+                    "kakao" -> {
+                        val uid = intent.getStringExtra("kakao_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val gender = intent.getStringExtra("gender")
+                        val intent = Intent(this, MyProfileActivity3::class.java)
+                        val height = "${selectedNumber}cm"
 
-            if (intent.getStringExtra("kakao_uid") != null){
-                val uid = intent.getStringExtra("kakao_uid")
-                val nickname = intent.getStringExtra("nickname")
-                val gender = intent.getStringExtra("gender")
-                val intent = Intent(this,MyProfileActivity3::class.java)
-                val height = "${selectedNumber}cm"
+                        intent.putExtra("kakao_uid", uid)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("login_type", "kakao")
+                        Toast.makeText(
+                            this,
+                            "$uid,$nickname,$gender,$height",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(intent)
+                    }
 
-                intent.putExtra("kakao_uid",uid)
-                intent.putExtra("nickname",nickname)
-                intent.putExtra("gender",gender)
-                intent.putExtra("height",height)
-                Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
+                    "naver" -> {
 
-                startActivity(intent)
+                    }
 
-            }/*else if{
+                    "google" -> {
+                        val googleEmail = intent.getStringExtra("google_email")
+                        val uid = intent.getStringExtra("google_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val gender = intent.getStringExtra("gender")
+                        val intent = Intent(this, MyProfileActivity3::class.java)
+                        val height = "${selectedNumber}cm"
 
-            }*/
-
+                        intent.putExtra("google_email", googleEmail)
+                        intent.putExtra("google_uid", uid)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("login_type", "google")
+                        Toast.makeText(
+                            this,
+                            "$uid,$nickname,$gender,$height",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(intent)
+                    }
+                }
+            }
         }
-
-
-
-
-
-
     }
 }
