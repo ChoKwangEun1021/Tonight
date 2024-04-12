@@ -16,23 +16,17 @@ import com.weare2024.tonight.databinding.ActivityMyProfile2Binding
 class MyProfileActivity2 : AppCompatActivity() {
 
     private val binding by lazy { ActivityMyProfile2Binding.inflate(layoutInflater) }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
         var numberPicker = binding.number
-
         numberPicker.minValue = 130
         numberPicker.maxValue = 250
-
         numberPicker.wrapSelectorWheel = false
         numberPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
-
         binding.btnNext2.setOnClickListener {
-
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
             if ((intent != null && intent.hasExtra("login_type"))) {
@@ -43,7 +37,6 @@ class MyProfileActivity2 : AppCompatActivity() {
                         val gender = intent.getStringExtra("gender")
                         val intent = Intent(this, MyProfileActivity3::class.java)
                         val height = "${selectedNumber}cm"
-
                         intent.putExtra("kakao_uid", uid)
                         intent.putExtra("nickname", nickname)
                         intent.putExtra("gender", gender)
@@ -56,11 +49,26 @@ class MyProfileActivity2 : AppCompatActivity() {
                         ).show()
                         startActivity(intent)
                     }
-
                     "naver" -> {
-
+                        val googleEmail = intent.getStringExtra("naver_email")
+                        val uid = intent.getStringExtra("naver_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val gender = intent.getStringExtra("gender")
+                        val intent = Intent(this, MyProfileActivity3::class.java)
+                        val height = "${selectedNumber}cm"
+                        intent.putExtra("naver_email", googleEmail)
+                        intent.putExtra("naver_uid", uid)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("login_type", "naver")
+                        Toast.makeText(
+                            this,
+                            "$uid,$nickname,$gender,$height",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(intent)
                     }
-
                     "google" -> {
                         val googleEmail = intent.getStringExtra("google_email")
                         val uid = intent.getStringExtra("google_uid")
@@ -68,7 +76,6 @@ class MyProfileActivity2 : AppCompatActivity() {
                         val gender = intent.getStringExtra("gender")
                         val intent = Intent(this, MyProfileActivity3::class.java)
                         val height = "${selectedNumber}cm"
-
                         intent.putExtra("google_email", googleEmail)
                         intent.putExtra("google_uid", uid)
                         intent.putExtra("nickname", nickname)

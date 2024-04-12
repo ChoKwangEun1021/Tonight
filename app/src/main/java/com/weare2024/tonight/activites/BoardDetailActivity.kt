@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.weare2024.tonight.G
 import com.weare2024.tonight.R
+import com.weare2024.tonight.adapter.CommentAdapter
 import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.databinding.ActivityBoardDetailBinding
 import com.weare2024.tonight.network.RetrofitHelper
@@ -24,41 +25,49 @@ class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
     private val bs: View by lazy { binding.bs } //댓글 바텀시트
     private val bsb: BottomSheetBehavior<View> by lazy { BottomSheetBehavior.from(bs) }
-    private val rl_title : View by lazy { binding.rlTitle }
-    private val itemList = mutableMapOf<String, String>()
+    private val rl_title: View by lazy { binding.rlTitle }
+    private val commentList: MutableMap<String, String> = mutableMapOf()
     private var imgPath: String? = null
-    val vp : ViewPager2 by lazy { binding.viewPager}
-    override fun onCreate(savedInstanceState: Bundle?){
+    val vp: ViewPager2 by lazy { binding.viewPager }
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.request.setOnClickListener { clickComment() }
         binding.chat.setOnClickListener { clickChat() }
 //        binding.sendupload.setOnClickListener { clickSendUpload() }
         binding.rlTitle.setOnClickListener { clickTitle() }
-//        itemList.add(SampleComment(R.drawable.profle,"잘생긴 오빠","누나 안녕하세요"))
-//        itemList.add(SampleComment(R.drawable.profle,"존예녀 누나","오빠 안녕하세요"))
-//        itemList.add(SampleComment(R.drawable.profle,"훈훈한 오빠","모두들 안녕"))
-//        binding.recyclerComment.adapter!!.notifyDataSetChanged()
+        binding.recyclerComment.adapter = CommentAdapter(this, commentList)
         binding.rl.background = null
-        binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener{
+        binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
-                    }
+                }
                 return true
             }
         })
     }
-    private fun insertData() {
-        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
-        val retrofitService = retrofit.create(RetrofitService::class.java)
-        itemList["uid"] = "uid"
-        itemList["nickname"] = "nickname"
-        itemList["comment"] = "comment"
+
+    override fun onResume() {
+        super.onResume()
+//        loadDB()
+//    }
+////    private fun loadDB(){    // 요거는 이제 게시 상태페이지 댓글리스트 불러 오기 위한 준비물
+////        val retrofit =RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
+////        val retrofitService = retrofit.create(RetrofitService::class.java)
+////        retrofitService.insertBoard(itemList,)
+
+        //    private fun insertData() {
+//        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
+//        val retrofitService = retrofit.create(RetrofitService::class.java)
+//
+//    }
+////
+////
     }
-        private fun showBottomSheet(){
+    private fun showBottomSheet() {
         val dailog = BottomSheetDialog(this@BoardDetailActivity)
-        val view = layoutInflater.inflate(R.layout.more112,null)
+        val view = layoutInflater.inflate(R.layout.more112, null)
         dailog.setContentView(view)
         val singo1 = view.findViewById<TextView>(R.id.singo_1)
         singo1.setOnClickListener {
@@ -82,25 +91,24 @@ class BoardDetailActivity : AppCompatActivity() {
         }
         dailog.show()
     }
-    private fun clickComment(){
+    private fun clickComment() {
         if (bsb.state == BottomSheetBehavior.STATE_COLLAPSED)  // 상태 확인
             bsb.state = BottomSheetBehavior.STATE_EXPANDED // 시트 열기
-        else {bsb.state = BottomSheetBehavior.STATE_COLLAPSED}  // 시트 닫기
+        else {
+            bsb.state = BottomSheetBehavior.STATE_COLLAPSED
+        }  // 시트 닫기
     }
-    private fun clickChat(){
+    private fun clickChat() {
         Toast.makeText(this, "채팅 채널로 연결 됩니다.", Toast.LENGTH_SHORT).show()
     }
-    var sendupload : String? = null
-    private fun clickSendUpload(){
+    var sendupload: String? = null
+    private fun clickSendUpload() { // 댓글 달면 DB에 저장시키고  리사이클러뷰에 띄우는 과정
         sendupload ?: return
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
-        var nickname = G.nickname
-        var uid = G.uid
-        val content = binding.et.text.toString()
-//        if ()
-
-
+        commentList["uid"] = "uid"
+        commentList["nickname"] = "nickname"
+        commentList["comment"] = binding.et.text.toString()
     }
     private fun clickTitle() {
         val imageView = ImageView(this@BoardDetailActivity)

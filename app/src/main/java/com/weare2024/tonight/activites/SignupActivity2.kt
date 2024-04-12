@@ -58,6 +58,14 @@ class SignupActivity2 : AppCompatActivity() {
                 }
 
                 "naver" -> {
+                    val uid = intent.getStringExtra("naver_uid")
+                    val intent = Intent(this,MyProfileActivity1::class.java)
+                    intent.putExtra("naver_uid", uid)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("login_type", "naver")
+                    startActivity(intent)
+                    Toast.makeText(this, "$uid,", Toast.LENGTH_SHORT).show()
+
 
                 }
 
@@ -78,7 +86,6 @@ class SignupActivity2 : AppCompatActivity() {
                     FBAuth.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         val uid = FBAuth.getUid()
                         val users = mutableMapOf<String, String>()
-
                         if (it.isSuccessful) {
                             FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
                                 users["uid"] = uid
@@ -90,21 +97,17 @@ class SignupActivity2 : AppCompatActivity() {
                                 users["birth"] = "1998.10.21"
                                 users["area"] = "서울"
                                 users["work"] = "개발자"
-
                                 //자동 로그인 기능
                                 spfEdt.putBoolean("isLogin", true)
                                 spf2Edt.putString("kakao_uid", uid)
                                 spf2Edt.putString("nickname",nickname)
                                 spfEdt.apply()
                                 spf2Edt.apply()
-
                                 FBRef.userRef.document(nickname).set(users).addOnSuccessListener {
                                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                                 }
                                 FBAuth.auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
                                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
-
                                 }
                                 userProfileImgUpload()
                                 startActivity(Intent(this, MainActivity::class.java))
@@ -113,16 +116,10 @@ class SignupActivity2 : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                         }
-
-
                     }
                 }
             }
-
         }
-
-
-
     }
 
     private fun clickImage(){

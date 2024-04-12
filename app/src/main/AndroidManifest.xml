@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".activites.BoardDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activites.NewPostActivity"
             android:exported="false" />

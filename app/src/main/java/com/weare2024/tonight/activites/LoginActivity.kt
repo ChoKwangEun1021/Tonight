@@ -6,12 +6,9 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
@@ -25,7 +22,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.Task
+import com.google.gson.JsonObject
+import com.google.protobuf.Parser
 import com.kakao.sdk.auth.AuthApiClient
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.OAuthLoginCallback
+import com.weare2024.tonight.data.NaverLogin
+import com.weare2024.tonight.firebase.FBAuth
+import com.weare2024.tonight.firebase.FBRef
+import com.weare2024.tonight.network.RetrofitHelper
+import com.weare2024.tonight.network.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity(), OnClickListener {
 
@@ -36,17 +45,16 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     private val spf2Edt by lazy { spf2.edit() }
     lateinit var firebaseAuth: FirebaseAuth
     lateinit var googleApiClient: GoogleApiClient
+    var naverLogin : NaverLogin? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         Log.d("aaa", "${R.string.kakao_native_app_key_activity}")
-
         if (spf.getBoolean("isLogin", false)) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-
         binding.btnGo.setOnClickListener(this)
         binding.btnLoginKakao.setOnClickListener(this)
         binding.btnLoginNaver.setOnClickListener(this)
@@ -54,28 +62,24 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         binding.btnLogin.setOnClickListener(this)
         binding.btnSignup.setOnClickListener(this)
         firebaseAuth = FirebaseAuth.getInstance()
-
     }
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_go -> {
                 startActivity(Intent(this, MainActivity::class.java))
             }
-
             R.id.btn_login_kakao -> {
                 clickKakao()
             }
-
-            R.id.btn_login_naver -> {}
+            R.id.btn_login_naver -> {
+                clickNaver()
+            }
             R.id.btn_login_google -> {
                 google()
             }
-
             R.id.btn_login -> {
                 startActivity(Intent(this, EmailLoginActivity::class.java))
             }
-
             R.id.btn_signup -> {
                 spfEdt.putBoolean("isLogin", true)
                 spfEdt.apply()
@@ -84,49 +88,34 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
         }
     }
-
     fun google() {
         val signInOptions: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.app_name))
                 .requestEmail()
                 .build()
-
         val signInClient = GoogleSignIn.getClient(this, signInOptions)
-
         if (firebaseAuth.currentUser == null) { // 사용자가 로그인되어 있지 않은 경우에만 구글 로그인 시작
             val signInIntent = signInClient.signInIntent
             resultLauncher.launch(signInIntent)
         } else {
             // 이미 로그인된 사용자가 있는 경우, 여기서 처리를 진행하거나 메인 화면으로 이동할 수 있습니다.
         }
-
-
         if (/*"토큰이 없으면"  googleToken == null*/true) {
-//
-//            val signInOptions: GoogleSignInOptions =
-//                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
-//                    .build()
-//
-//            val intent = GoogleSignIn.getClient(this, signInOptions).signInIntent
-//
-//            resultLauncher.launch(intent)
+            val signInOptions: GoogleSignInOptions =
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+                    .build()
+            val intent = GoogleSignIn.getClient(this, signInOptions).signInIntent
+            resultLauncher.launch(intent)
         } else /*("토큰이 있으면")*/{
             startActivity(Intent(this, MainActivity::class.java))
             //쉐어드를 다시 저장
         }
-
-
     }
-
-
     val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val intent = it.data
-
-
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
-
             val account = task.result
             val uid = account.id.toString()
             val googleEmail = account.email ?: "email 이 null임!!! 이거 오류임!!!"
@@ -136,37 +125,39 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             intent1.putExtra("login_type", "google")
             startActivity(intent1)
             finish()
-
-
         }
-
     fun clickKakao() {
         if (/*"토큰이 없으면"*/true) {
-
             // 두개의 로그인 요청 콜백함수
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "카카오로그인 성공", Toast.LENGTH_SHORT).show()
-
                     // 사용자 정보 요청
                     UserApiClient.instance.me { user, error ->
                         if (user != null) {
                             val uid: String = user.id.toString()
+//                        Toast.makeText(this, "$id\n$nickname", Toast.LENGTH_SHORT).show()
+//                        G.userAccount = UserAccount(uid, nickname)
                             val intent = Intent(this, SignupActivity2::class.java)
                             intent.putExtra("kakao_uid", uid)
                             intent.putExtra("login_type", "kakao")
-
-                            startActivity(intent)
-                            finish()
-
+                            // 사용자 정보 요청
+                            UserApiClient.instance.me { user, error ->
+                                if (user != null) {
+                                    val uid: String = user.id.toString()
+                                    val intent = Intent(this, SignupActivity2::class.java)
+                                    intent.putExtra("kakao_uid", uid)
+                                    intent.putExtra("login_type", "kakao")
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
                         }
                     }
-
                 }
             }
-
             if (AuthApiClient.instance.hasToken()) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
@@ -175,17 +166,60 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 }
             }
-
             // 카카오톡이 사용가능하면 이를 이용하여 로그인하고 없으면 카카오계정으로 로그인하기
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
-        }else /*("토큰이 있으면")*/ {
-            startActivity(Intent(this,MainActivity::class.java))
-            //쉐어드를 다시저장
+//                }else /*("토큰이 있으면")*/ {
+//                startActivity(Intent(this, MainActivity::class.java))
+//                //쉐어드를 다시저장
         }
     }
-}
+        fun clickNaver() {
+            NaverIdLoginSDK.initialize(
+                this,
+                getString(R.string.client_id),
+                getString(R.string.client_secret),
+                "ToNight"
+            )
+            NaverIdLoginSDK.authenticate(this, object : OAuthLoginCallback {
+                override fun onError(errorCode: Int, message: String) {
+                    Toast.makeText(this@LoginActivity, "$message", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(httpStatus: Int, message: String) {
+                    Toast.makeText(this@LoginActivity, "$message", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess() {
+                    Toast.makeText(this@LoginActivity, "성공적으로 로그인 되었습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                    val accessToken: String? = NaverIdLoginSDK.getAccessToken()
+                    val retrofit = RetrofitHelper.getRetrofitInstance("https://openapi.naver.com")
+                    val retrofitService = retrofit.create(RetrofitService::class.java)
+                    val call = retrofitService.getNidUserInfo("Bearer ${accessToken}")
+                    call.enqueue(object : Callback<NaverLogin> {
+                        override fun onResponse(p0: Call<NaverLogin>, p1: Response<NaverLogin>) {
+                            val naverLogin = p1.body()
+                            val uid = naverLogin?.response?.id
+                            val email = naverLogin?.response?.email
+                            val intent = Intent(this@LoginActivity, SignupActivity2::class.java)
+                            intent.putExtra("naver_uid", uid)
+                            intent.putExtra("naver_email", email)
+                            intent.putExtra("login_type", "naver")
+                            startActivity(intent)
+                            finish()
+                        }
+
+                        override fun onFailure(p0: Call<NaverLogin>, p1: Throwable) {
+                            Toast.makeText(this@LoginActivity, "${p1.message}", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
+                }
+            })
+        }
+    }
 

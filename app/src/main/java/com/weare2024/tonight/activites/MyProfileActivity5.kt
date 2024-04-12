@@ -38,7 +38,6 @@ class MyProfileActivity5 : AppCompatActivity() {
     private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
     private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
     private val spfEdt by lazy { spf.edit() }
-    private val spf2Edt by lazy { spf2.edit() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +61,10 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnSoldier.setOnClickListener { Soldier() }
         binding.btnJobSeeker.setOnClickListener { JobSeeker() }
         binding.btnCategoryOther.setOnClickListener { CategoryOther() }
-
         binding.btnNext5.setOnClickListener { clickNext() }
-
-
     }
-
     private fun clickNext() {
 //        val userRef = Firebase.firestore.collection("uid")
-
         if (job == "") {
             Toast.makeText(this, "직업을 선택해 주세요.", Toast.LENGTH_SHORT).show()
 
@@ -84,15 +78,10 @@ class MyProfileActivity5 : AppCompatActivity() {
             val day = intent.getIntExtra("day", 2)
             val jj = intent.getStringExtra("jj")
             val intent = Intent(this, MainActivity::class.java)
-
-
         }
-
-
         if (intent != null && intent.hasExtra("login_type")) {
             when (intent.getStringExtra("login_type")) {
                 "kakao" -> {
-
                     val uid = intent.getStringExtra("kakao_uid")
                     val kakaoEmail = "$uid@kakao.com"
                     val gender = intent.getStringExtra("gender")
@@ -101,11 +90,7 @@ class MyProfileActivity5 : AppCompatActivity() {
                     val month = intent.getIntExtra("month", 1)
                     val day = intent.getIntExtra("day", 2)
                     val jj = intent.getStringExtra("jj")
-
-
-
                     FBRef.userRef.whereEqualTo("email", kakaoEmail).get().addOnSuccessListener {
-
                         val user = mutableMapOf<String, String>()
                         user["uid"] = uid.toString()
                         user["email"] = kakaoEmail
@@ -116,26 +101,52 @@ class MyProfileActivity5 : AppCompatActivity() {
                         user["month"] = month.toString()
                         user["day"] = day.toString()
                         user["jj"] = jj.toString()
-
                         spfEdt.putString("uid", uid)
                         spfEdt.putString("nickname", nickname)
                         spfEdt.apply()
-
                         G.uid = uid.toString()
                         G.nickname = nickname
-
                         FBRef.userRef.document().set(user).addOnSuccessListener {
                             Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
-
+                    userProfileImgUpload()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                "naver" -> {
+                    val uid = intent.getStringExtra("naver_uid")
+                    val naverEmail = intent.getStringExtra("naver_email").toString()
+                    val gender = intent.getStringExtra("gender")
+                    val height = intent.getStringExtra("height")
+                    val year = intent.getIntExtra("year", 0)
+                    val month = intent.getIntExtra("month", 1)
+                    val day = intent.getIntExtra("day", 2)
+                    val jj = intent.getStringExtra("jj")
+                    Toast.makeText(this, "$naverEmail", Toast.LENGTH_SHORT).show()
+                    FBRef.userRef.whereEqualTo("email", naverEmail).get().addOnSuccessListener {
+                        val user = mutableMapOf<String, String>()
+                        user["uid"] = uid.toString()
+                        user["email"] = naverEmail
+                        user["nickname"] = nickname
+                        user["gender"] = gender.toString()
+                        user["height"] = height.toString()
+                        user["year"] = year.toString()
+                        user["month"] = month.toString()
+                        user["day"] = day.toString()
+                        user["jj"] = jj.toString()
+                        spfEdt.putString("uid", uid)
+                        spfEdt.putString("nickname", nickname)
+                        spfEdt.apply()
+                        G.uid = uid.toString()
+                        G.nickname = nickname
+                        FBRef.userRef.document().set(user).addOnSuccessListener {
+                            Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                     userProfileImgUpload()
                     startActivity(Intent(this,MainActivity::class.java))
                     finish()
-
-                }
-                "naver" ->{
-
                 }
                 "google" ->{
                     val uid = intent.getStringExtra("google_uid")
@@ -147,11 +158,7 @@ class MyProfileActivity5 : AppCompatActivity() {
                     val day = intent.getIntExtra("day", 2)
                     val jj = intent.getStringExtra("jj")
                     Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
-
-
-
                     FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
-
                         val user = mutableMapOf<String, String>()
                         user["uid"] = uid.toString()
                         user["email"] = googleEmail
@@ -162,46 +169,30 @@ class MyProfileActivity5 : AppCompatActivity() {
                         user["month"] = month.toString()
                         user["day"] = day.toString()
                         user["jj"] = jj.toString()
-
                         spfEdt.putString("uid", uid)
                         spfEdt.putString("nickname", nickname)
                         spfEdt.apply()
-
                         G.uid = uid.toString()
                         G.nickname = nickname
-
-
                         FBRef.userRef.document().set(user).addOnSuccessListener {
                             Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
-
-
                     userProfileImgUpload()
                     startActivity(Intent(this,MainActivity::class.java))
                     finish()
-
                 }
-
             }
-
         }
         Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-
-
-
     }
-
     private fun userProfileImgUpload(){
-
         var name = ""
         if (intent != null && intent.hasExtra("login_type")){
             when(intent.getStringExtra("login_type")){
                 "kakao" -> {
                     name = intent.getStringExtra("kakao_uid").toString()
-
                     val imgRef:StorageReference = Firebase.storage.getReference("usersImg/$name")
-
                     imgUri?.apply {
                         imgRef.putFile(this).addOnSuccessListener {
 
