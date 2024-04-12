@@ -50,6 +50,7 @@ class SignupActivity2 : AppCompatActivity() {
                     val intent = Intent(this, MyProfileActivity1::class.java)
                     intent.putExtra("kakao_uid", uid)
                     intent.putExtra("nickname", nickname)
+                    intent.putExtra("login_type", "kakao")
                     startActivity(intent)
                     Toast.makeText(this, "$uid,", Toast.LENGTH_SHORT).show()
 
@@ -62,9 +63,12 @@ class SignupActivity2 : AppCompatActivity() {
 
                 "google" -> {
                     val uid = intent.getStringExtra("google_uid")
+                    val googleEmail = intent.getStringExtra("google_email")
                     val intent = Intent(this,MyProfileActivity1::class.java)
                     intent.putExtra("google_uid",uid)
                     intent.putExtra("nickname",nickname)
+                    intent.putExtra("google_email",googleEmail)
+                    intent.putExtra("login_type", "google")
                     startActivity(intent)
                     Toast.makeText(this, "$uid,$nickname", Toast.LENGTH_SHORT).show()
                 }
