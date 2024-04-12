@@ -46,26 +46,33 @@ class MyProfileActivity4 : AppCompatActivity() {
             if (jj == "") {
                 Toast.makeText(this, "지역을 선택 해주세요", Toast.LENGTH_SHORT).show()
             }else {
+                if ((intent.getStringExtra("kakao_uid") != null)) {
 
-                val uid = intent.getStringExtra("kakao_uid")
-                val nickname = intent.getStringExtra("nickname")
-                val gender = intent.getStringExtra("gender")
-                val height = intent.getStringExtra("height")
-                val year = intent.getIntExtra("year", 0)
-                val month = intent.getIntExtra("month", 1)
-                val day = intent.getIntExtra("day", 2)
-                val intent = Intent(this, MyProfileActivity5::class.java)
 
-                intent.putExtra("kakao_uid", uid)
-                intent.putExtra("nickname", nickname)
-                intent.putExtra("gender", gender)
-                intent.putExtra("height", height)
-                intent.putExtra("year", year)
-                intent.putExtra("month", month)
-                intent.putExtra("day", day)
-                intent.putExtra("jj", jj)
+                    val uid = intent.getStringExtra("kakao_uid")
+                    val nickname = intent.getStringExtra("nickname")
+                    val gender = intent.getStringExtra("gender")
+                    val height = intent.getStringExtra("height")
+                    val year = intent.getIntExtra("year", 0)
+                    val month = intent.getIntExtra("month", 1)
+                    val day = intent.getIntExtra("day", 2)
+                    val intent = Intent(this, MyProfileActivity5::class.java)
 
-                startActivity(intent)
+                    intent.putExtra("kakao_uid", uid)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("gender", gender)
+                    intent.putExtra("height", height)
+                    intent.putExtra("year", year)
+                    intent.putExtra("month", month)
+                    intent.putExtra("day", day)
+                    intent.putExtra("jj", jj)
+                    Toast.makeText(
+                        this,
+                        "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(intent)
+                }
             }
         }
     }

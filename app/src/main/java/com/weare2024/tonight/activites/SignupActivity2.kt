@@ -61,7 +61,12 @@ class SignupActivity2 : AppCompatActivity() {
                 }
 
                 "google" -> {
-
+                    val uid = intent.getStringExtra("google_uid")
+                    val intent = Intent(this,MyProfileActivity1::class.java)
+                    intent.putExtra("google_uid",uid)
+                    intent.putExtra("nickname",nickname)
+                    startActivity(intent)
+                    Toast.makeText(this, "$uid,$nickname", Toast.LENGTH_SHORT).show()
                 }
 
                 "email" -> {

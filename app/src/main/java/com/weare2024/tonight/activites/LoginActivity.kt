@@ -103,11 +103,11 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(intent)
 
             val account = task.result
-            val id = account.id.toString()
+            val uid = account.id.toString()
             val email = account.email ?: ""
-            Toast.makeText(this, "$id   ,,$email", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "$uid   ,,$email", Toast.LENGTH_SHORT).show()
             val intent1 = Intent(this, SignupActivity2::class.java)
-            intent1.putExtra("google_uid", id)
+            intent1.putExtra("google_uid", uid)
             intent1.putExtra("login_type", "google")
 
 
