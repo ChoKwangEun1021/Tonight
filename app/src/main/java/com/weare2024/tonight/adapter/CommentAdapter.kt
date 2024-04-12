@@ -9,26 +9,24 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.weare2024.tonight.activites.BoardDetailActivity
+import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.data.SampleComment
 import com.weare2024.tonight.databinding.RecyclerCommentBinding
 
-class CommentAdapter (var content : Context, var commentlist : List<SampleComment>): Adapter<CommentAdapter.VH>() {
-    inner class VH(var binding: RecyclerCommentBinding):ViewHolder(binding.root)
+class CommentAdapter (var content : Context, var items : List<CommentData>): Adapter<CommentAdapter.VH>() {
+    inner class VH(var binding: RecyclerCommentBinding): ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val layoutInflater = LayoutInflater.from(content)
-        var binding = RecyclerCommentBinding.inflate(layoutInflater, parent, false)
+        val binding = RecyclerCommentBinding.inflate(LayoutInflater.from(content), parent, false)
         return VH(binding)
     }
 
-    override fun getItemCount(): Int {
-        return commentlist.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val list = commentlist[position]
+        val list = items[position]
         holder.binding.tvName.text = list.nickname
-        holder.binding.tvComment.text = list.comment
+        holder.binding.tvComment.text = list.content
 
         // 이미지 보여주기 [ DB에는 이미지경로가 "./boardImgs/IMG_xxxx.jpg" 이기때문에 ]
         // 안드로이드 에서는 서버의 전체 주소가 필요함

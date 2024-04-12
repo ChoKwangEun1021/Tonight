@@ -51,7 +51,7 @@ class NewPostActivity : AppCompatActivity() {
             insertData()
 //            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
         }
-        AlertDialog.Builder(this).setMessage("${G.uid}\n${G.nickname}").create().show()
+//        AlertDialog.Builder(this).setMessage("${G.uid}\n${G.nickname}").create().show()
         binding.ivPost.setOnClickListener { imageUpload() }
     }
 
@@ -109,6 +109,7 @@ class NewPostActivity : AppCompatActivity() {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
                 pager.adapter = PagerAdapter(this, imgs)
+//                Log.d("imgsUri", "$imgs")
             }
         }
     private val pickMultipleLauncher =
@@ -122,6 +123,7 @@ class NewPostActivity : AppCompatActivity() {
                     imgPath2.add(imgPath!!)
                 }
                 pager.adapter = PagerAdapter(this, imgs)
+//                Log.d("imgsUri", "$imgs")
             }
         }
 
