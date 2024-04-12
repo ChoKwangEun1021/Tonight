@@ -33,18 +33,26 @@ class MyProfileActivity3 : AppCompatActivity() {
             val month = datePicker.month + 1
             val day = datePicker.dayOfMonth
 
-            if (year == null || month == null || day == null){
+            if (year == null || month == null || day == null) {
                 Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
+                if (intent.getStringExtra("kakao_uid") != null) {
 
-                intent.putExtra("kakao_uid", uid)
-                intent.putExtra("nickname", nickname)
-                intent.putExtra("gender", gender)
-                intent.putExtra("height", height)
-                intent.putExtra("year", year)
-                intent.putExtra("month", month)
-                intent.putExtra("day", day)
-                startActivity(intent)
+                    intent.putExtra("kakao_uid", uid)
+
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("gender", gender)
+                    intent.putExtra("height", height)
+                    intent.putExtra("year", year)
+                    intent.putExtra("month", month)
+                    intent.putExtra("day", day)
+                    Toast.makeText(
+                        this,
+                        "$uid,$nickname,$gender,$height.$year.$month.$day",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(intent)
+                }
 
             }
 

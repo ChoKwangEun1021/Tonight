@@ -36,19 +36,25 @@ class MyProfileActivity2 : AppCompatActivity() {
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
 
+            if (intent.getStringExtra("kakao_uid") != null){
+                val uid = intent.getStringExtra("kakao_uid")
+                val nickname = intent.getStringExtra("nickname")
+                val gender = intent.getStringExtra("gender")
+                val intent = Intent(this,MyProfileActivity3::class.java)
+                val height = "${selectedNumber}cm"
 
-            val uid = intent.getStringExtra("kakao_uid")
-            val nickname = intent.getStringExtra("nickname")
-            val gender = intent.getStringExtra("gender")
-            val intent = Intent(this,MyProfileActivity3::class.java)
-            val height = "${selectedNumber}cm"
+                intent.putExtra("kakao_uid",uid)
+                intent.putExtra("nickname",nickname)
+                intent.putExtra("gender",gender)
+                intent.putExtra("height",height)
+                Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
 
-            intent.putExtra("kakao_uid",uid)
-            intent.putExtra("nickname",nickname)
-            intent.putExtra("gender",gender)
-            intent.putExtra("height",height)
+                startActivity(intent)
 
-            startActivity(intent)
+            }/*else if{
+
+            }*/
+
         }
 
 
