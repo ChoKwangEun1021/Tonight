@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
 import androidx.viewpager2.widget.ViewPager2
+import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
 import com.weare2024.tonight.network.RetrofitHelper
@@ -50,8 +51,10 @@ class NewPostActivity : AppCompatActivity() {
             insertData()
 //            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
         }
+        AlertDialog.Builder(this).setMessage("${G.uid}\n${G.nickname}").create().show()
         binding.ivPost.setOnClickListener { imageUpload() }
     }
+
     val imgs: MutableList<Uri?> = mutableListOf()
     val pager: ViewPager2 by lazy { binding.pager }
     private fun insertData() {
@@ -74,11 +77,13 @@ class NewPostActivity : AppCompatActivity() {
 //                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
                 finish()
             }
+
             override fun onFailure(p0: Call<String>, p1: Throwable) {
                 Log.d("aaaa", "${p1.message}")
             }
         })
     }
+
     private fun imageUpload() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -87,6 +92,7 @@ class NewPostActivity : AppCompatActivity() {
                 .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         )
     }
+
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.data?.data != null) {
@@ -106,8 +112,7 @@ class NewPostActivity : AppCompatActivity() {
             }
         }
     private val pickMultipleLauncher =
-        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
-                uris: List<Uri> ->
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uris: List<Uri> ->
             if (uris.isNotEmpty()) {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
@@ -119,6 +124,7 @@ class NewPostActivity : AppCompatActivity() {
                 pager.adapter = PagerAdapter(this, imgs)
             }
         }
+
     private fun getRealPathFromUri(uri: Uri): String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
         //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송

@@ -66,7 +66,9 @@ dependencies {
 
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
 
-    implementation ("com.kakao.sdk:v2-user:2.20.1")
+    implementation("com.kakao.sdk:v2-user:2.20.1")
+
+    implementation("com.navercorp.nid:oauth:5.9.0")
 
     implementation("com.navercorp.nid:oauth:5.9.1") // jdk 11 코틀린 네아로
 

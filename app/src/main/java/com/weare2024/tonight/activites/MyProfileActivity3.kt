@@ -22,12 +22,17 @@ class MyProfileActivity3 : AppCompatActivity() {
         val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
+
+
         var datePicker: DatePicker = binding.date
+
         overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
+
         binding.btnNext3.setOnClickListener {
             val year = datePicker.year
             val month = datePicker.month + 1
             val day = datePicker.dayOfMonth
+
 //            if (year == null || month == null || day == null) {
 //                Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
 //            } else {
@@ -50,33 +55,33 @@ class MyProfileActivity3 : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         startActivity(intent)
+
                     }
+
                     "naver" -> {
+
                         val uid = intent.getStringExtra("naver_uid")
-                        val nickname = intent.getStringExtra("nickname")
-                        val gender = intent.getStringExtra("gender")
-                        val height = intent.getStringExtra("height")
+                        val email = intent.getStringExtra("naver_email")
                         val intent = Intent(this, MyProfileActivity4::class.java)
-                        var datePicker : DatePicker = binding.date
-                        overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
-                        binding.btnNext3.setOnClickListener {
-                            val year = datePicker.year
-                            val month = datePicker.month + 1
-                            val day = datePicker.dayOfMonth
-                            if (year == null || month == null || day == null) {
-                                Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
-                            } else {
-                                intent.putExtra("naver_uid", uid)
-                                intent.putExtra("nickname", nickname)
-                                intent.putExtra("gender", gender)
-                                intent.putExtra("height", height)
-                                intent.putExtra("year", year)
-                                intent.putExtra("month", month)
-                                intent.putExtra("day", day)
-                                startActivity(intent)
-                            }
-                        }
+
+                        intent.putExtra("naver_uid", uid)
+                        intent.putExtra("naver_email", email)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("year", year)
+                        intent.putExtra("month", month)
+                        intent.putExtra("day", day)
+                        intent.putExtra("login_type", "naver")
+
+                        Toast.makeText(
+                            this,
+                            "$uid,$nickname,$gender,$height.$year.$month.$day",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(intent)
                     }
+
                     "google" -> {
                         val uid = intent.getStringExtra("google_uid")
                         val googleEmail = intent.getStringExtra("google_email")
