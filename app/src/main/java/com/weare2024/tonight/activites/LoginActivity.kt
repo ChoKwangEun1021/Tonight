@@ -82,9 +82,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_login_naver -> {
-//                naver()
-                naverBYheesoo()
-
+                naver()
             }
             R.id.btn_login_google -> {
                 google()

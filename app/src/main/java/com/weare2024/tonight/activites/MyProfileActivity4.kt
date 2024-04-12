@@ -51,15 +51,18 @@ class MyProfileActivity4 : AppCompatActivity() {
                         "kakao" ->{
                             val uid = intent.getStringExtra("kakao_uid")
                             val nickname = intent.getStringExtra("nickname")
+                            val imguri = intent.getStringExtra("profileImgUri")
                             val gender = intent.getStringExtra("gender")
                             val height = intent.getStringExtra("height")
                             val year = intent.getIntExtra("year", 0)
                             val month = intent.getIntExtra("month", 1)
                             val day = intent.getIntExtra("day", 2)
                             val intent = Intent(this, MyProfileActivity5::class.java)
+                            Log.d("img","$imguri")
 
                             intent.putExtra("kakao_uid", uid)
                             intent.putExtra("nickname", nickname)
+                            intent.putExtra("profileImgUri",imguri)
                             intent.putExtra("gender", gender)
                             intent.putExtra("height", height)
                             intent.putExtra("year", year)

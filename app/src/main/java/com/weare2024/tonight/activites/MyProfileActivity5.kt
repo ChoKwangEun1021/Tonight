@@ -82,14 +82,13 @@ class MyProfileActivity5 : AppCompatActivity() {
     }
 
     private fun clickNext() {
-        val userRef = Firebase.firestore.collection("kakao_uid")
-
         if (job == "") {
             Toast.makeText(this, "직업을 선택해 주세요.", Toast.LENGTH_SHORT).show()
 
         } else {
             val nickname = intent.getStringExtra("nickname")
             val gender = intent.getStringExtra("gender")
+            val imguri = intent.getStringExtra("profileImgUri")
             val height = intent.getStringExtra("height")
             val year = intent.getIntExtra("year", 0)
             val month = intent.getIntExtra("month", 1)
@@ -116,9 +115,9 @@ class MyProfileActivity5 : AppCompatActivity() {
                             user["area"] = area.toString()
                             user["work"] = job
 
-                            spf2Edt.putString("uid", uid)
-                            spf2Edt.putString("nickname", nickname)
-                            spf2Edt.apply()
+                            spfEdt.putString("uid", uid)
+                            spfEdt.putString("nickname", nickname)
+                            spfEdt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
@@ -193,8 +192,7 @@ class MyProfileActivity5 : AppCompatActivity() {
 
 
 
-                        FBRef.userRef.whereEqualTo("email", googleEmail).get()
-                            .addOnSuccessListener {
+                        FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
 
                                 val user = mutableMapOf<String, String>()
                                 user["uid"] = uid.toString()
@@ -202,24 +200,21 @@ class MyProfileActivity5 : AppCompatActivity() {
                                 user["nickname"] = nickname.toString()
                                 user["gender"] = gender.toString()
                                 user["height"] = height.toString()
-                                user["year"] = year.toString()
-                                user["month"] = month.toString()
-                                user["day"] = day.toString()
+                                user["birth"] = birth
                                 user["jj"] = jj.toString()
 
-                                spf2Edt.putString("uid", uid)
-                                spf2Edt.putString("nickname", nickname)
-                                spf2Edt.apply()
+                                spfEdt.putString("uid", uid)
+                                spfEdt.putString("nickname", nickname)
+                                spfEdt.apply()
 
                                 G.uid = uid.toString()
                                 G.nickname = nickname.toString()
 
 
-                                FBRef.userRef.document().set(user).addOnSuccessListener {
-                                    Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                            FBRef.userRef.document().set(user).addOnSuccessListener {
+                                Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
                             }
+                        }
                         userProfileImgUpload()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
@@ -235,16 +230,19 @@ class MyProfileActivity5 : AppCompatActivity() {
 
         }
     }
-        private fun userProfileImgUpload() {
 
-            var name = ""
-            if (intent != null && intent.hasExtra("login_type")) {
+    private fun userProfileImgUpload(){
+
+        var name = ""
+        val profileImgUri = intent?.getStringExtra("profileImgUri")
+        if (profileImgUri != null) {
+            imgUri = Uri.parse(profileImgUri)
+            if (intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
                     "kakao" -> {
                         name = intent.getStringExtra("kakao_uid").toString()
 
-                        val imgRef: StorageReference =
-                            Firebase.storage.getReference("usersImg/$name")
+                        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
 
                         imgUri?.apply {
                             imgRef.putFile(this).addOnSuccessListener {
@@ -254,306 +252,311 @@ class MyProfileActivity5 : AppCompatActivity() {
                     }
                 }
             }
-
-        }
-        private fun student() {
-            binding.btnStudent.setBackgroundColor(ccc)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
-
-            job = "학생"
+        } else {
+            // profileImgUri가 null인 경우 처리
+            // 예외를 throw하거나 오류를 기록하거나 다른 적절한 조치를 취할 수 있습니다
         }
 
-        private fun Arbeit() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(ccc)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    }
 
-            job = "아르바이트"
-        }
+    private fun student() {
+        binding.btnStudent.setBackgroundColor(ccc)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Freelancer() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(ccc)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "학생"
+    }
 
-            job = "프리랜서"
-        }
+    private fun Arbeit() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(ccc)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Company() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(ccc)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "아르바이트"
+    }
 
-            job = "회사원"
-        }
+    private fun Freelancer() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(ccc)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun SelfEmployment() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(ccc)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "프리랜서"
+    }
 
-            job = "자영업"
-        }
+    private fun Company() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(ccc)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Profession() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(ccc)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "회사원"
+    }
 
-            job = "전문직"
-        }
+    private fun SelfEmployment() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(ccc)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Dotor() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(ccc)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "자영업"
+    }
 
-            job = "의료직"
-        }
+    private fun Profession() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(ccc)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Techer() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(ccc)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "전문직"
+    }
 
-            job = "교육직"
-        }
+    private fun Dotor() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(ccc)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-        private fun Finance() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(ccc)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+        job = "의료직"
+    }
+
+    private fun Techer() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(ccc)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
+
+        job = "교육직"
+    }
+
+    private fun Finance() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(ccc)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
             job = "금융직"
         }
 
-        private fun Research() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(ccc)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    private fun Research() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(ccc)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "연구,기술직"
-        }
+        job = "연구,기술직"
+    }
 
-        private fun PublicOfficial() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(ccc)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    private fun PublicOfficial() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(ccc)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "공무원"
-        }
+        job = "공무원"
+    }
 
-        private fun Ceo() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(ccc)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    private fun Ceo() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(ccc)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "사업가"
-        }
+        job = "사업가"
+    }
 
-        private fun Soldier() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(ccc)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    private fun Soldier() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(ccc)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "군인"
-        }
+        job = "군인"
+    }
 
-        private fun JobSeeker() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(ccc)
-            binding.btnCategoryOther.setBackgroundColor(aaa)
+    private fun JobSeeker() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(ccc)
+        binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "취업준비생"
-        }
+        job = "취업준비생"
+    }
 
-        private fun CategoryOther() {
-            binding.btnStudent.setBackgroundColor(aaa)
-            binding.btnArbeit.setBackgroundColor(aaa)
-            binding.btnFreelancer.setBackgroundColor(aaa)
-            binding.btnCompany.setBackgroundColor(aaa)
-            binding.btnSelfEmployment.setBackgroundColor(aaa)
-            binding.btnProfession.setBackgroundColor(aaa)
-            binding.btnDotor.setBackgroundColor(aaa)
-            binding.btnTecher.setBackgroundColor(aaa)
-            binding.btnFinance.setBackgroundColor(aaa)
-            binding.btnResearch.setBackgroundColor(aaa)
-            binding.btnPublicOfficial.setBackgroundColor(aaa)
-            binding.btnCeo.setBackgroundColor(aaa)
-            binding.btnSoldier.setBackgroundColor(aaa)
-            binding.btnJobSeeker.setBackgroundColor(aaa)
-            binding.btnCategoryOther.setBackgroundColor(ccc)
+    private fun CategoryOther() {
+        binding.btnStudent.setBackgroundColor(aaa)
+        binding.btnArbeit.setBackgroundColor(aaa)
+        binding.btnFreelancer.setBackgroundColor(aaa)
+        binding.btnCompany.setBackgroundColor(aaa)
+        binding.btnSelfEmployment.setBackgroundColor(aaa)
+        binding.btnProfession.setBackgroundColor(aaa)
+        binding.btnDotor.setBackgroundColor(aaa)
+        binding.btnTecher.setBackgroundColor(aaa)
+        binding.btnFinance.setBackgroundColor(aaa)
+        binding.btnResearch.setBackgroundColor(aaa)
+        binding.btnPublicOfficial.setBackgroundColor(aaa)
+        binding.btnCeo.setBackgroundColor(aaa)
+        binding.btnSoldier.setBackgroundColor(aaa)
+        binding.btnJobSeeker.setBackgroundColor(aaa)
+        binding.btnCategoryOther.setBackgroundColor(ccc)
 
-            job = "기타"
-        }
+        job = "기타"
+    }
 
 }

@@ -18,11 +18,11 @@ class MyProfileActivity3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        val uid = intent.getStringExtra("kakao_uid")
         val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
-
+        val imguri = intent.getStringExtra("profileImgUri")
 
         var datePicker: DatePicker = binding.date
 
@@ -32,6 +32,7 @@ class MyProfileActivity3 : AppCompatActivity() {
             val year = datePicker.year
             val month = datePicker.month + 1
             val day = datePicker.dayOfMonth
+//            val intent = Intent(this, MyProfileActivity4::class.java)
 
 //            if (year == null || month == null || day == null) {
 //                Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -43,6 +44,7 @@ class MyProfileActivity3 : AppCompatActivity() {
                         val intent = Intent(this, MyProfileActivity4::class.java)
                         intent.putExtra("kakao_uid", uid)
                         intent.putExtra("nickname", nickname)
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("gender", gender)
                         intent.putExtra("height", height)
                         intent.putExtra("year", year)
@@ -94,7 +96,7 @@ class MyProfileActivity3 : AppCompatActivity() {
                         intent.putExtra("month", month)
                         intent.putExtra("day", day)
                         intent.putExtra("login_type", "google")
-                        intent.putExtra("google_email",googleEmail)
+                        intent.putExtra("google_email", googleEmail)
                         Toast.makeText(
                             this,
                             "$uid,$nickname,$gender,$height.$year.$month.$day",
@@ -103,11 +105,13 @@ class MyProfileActivity3 : AppCompatActivity() {
                         startActivity(intent)
 
                     }
+
+
                 }
             }
         }
+
     }
 }
-
 
 

@@ -24,6 +24,7 @@ import com.weare2024.tonight.firebase.FBRef
 class SignupActivity2 : AppCompatActivity() {
     private val binding by lazy { ActivitySignup2Binding.inflate(layoutInflater) }
     private var imgUri: Uri? = null
+
     private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
     private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
     private val spfEdt by lazy { spf.edit() }
@@ -48,13 +49,13 @@ class SignupActivity2 : AppCompatActivity() {
 
                     val uid = intent.getStringExtra("kakao_uid")
                     val intent = Intent(this, MyProfileActivity1::class.java)
+                    Log.d("이미지","$imgUri")
                     intent.putExtra("kakao_uid", uid)
                     intent.putExtra("nickname", nickname)
-                    intent.putExtra("profileImgUri", imgUri)
+                    intent.putExtra("profileImgUri", imgUri.toString())
                     intent.putExtra("login_type", "kakao")
                     startActivity(intent)
-                    Toast.makeText(this, "$uid,", Toast.LENGTH_SHORT).show()
-
+                    Log.d("aaaa","$imgUri")
 
                 }
 
@@ -93,7 +94,6 @@ class SignupActivity2 : AppCompatActivity() {
                                 users["uid"] = uid
                                 users["email"] = email
                                 users["nickname"] = nickname
-                                users["profileImgUri"] = uid
                                 users["gender"] = "남자"
                                 users["height"] = "187cm"
                                 users["birth"] = "1998.10.21"
