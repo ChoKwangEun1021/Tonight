@@ -51,6 +51,8 @@ class ProfileFragment : Fragment() {
                         spf2Edt?.clear()
                         spfEdt?.apply()
                         spf2Edt?.apply()
+                        G.uid =""
+                        G.nickname =""
                         startActivity(Intent(requireContext(),LoginActivity::class.java))
                         activity?.finish()
 
