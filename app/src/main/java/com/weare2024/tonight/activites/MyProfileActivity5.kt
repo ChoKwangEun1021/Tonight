@@ -178,20 +178,27 @@ class MyProfileActivity5 : AppCompatActivity() {
     private fun userProfileImgUpload(){
 
         var name = ""
-        if (intent != null && intent.hasExtra("login_type")){
-            when(intent.getStringExtra("login_type")){
-                "kakao" -> {
-                    name = intent.getStringExtra("kakao_uid").toString()
+        val profileImgUri = intent?.getStringExtra("profileImgUri")
+        if (profileImgUri != null) {
+            imgUri = Uri.parse(profileImgUri)
+            if (intent.hasExtra("login_type")) {
+                when (intent.getStringExtra("login_type")) {
+                    "kakao" -> {
+                        name = intent.getStringExtra("kakao_uid").toString()
 
-                    val imgRef:StorageReference = Firebase.storage.getReference("usersImg/$name")
+                        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
 
-                    imgUri?.apply {
-                        imgRef.putFile(this).addOnSuccessListener {
+                        imgUri?.apply {
+                            imgRef.putFile(this).addOnSuccessListener {
 
+                            }
                         }
                     }
                 }
             }
+        } else {
+            // profileImgUri가 null인 경우 처리
+            // 예외를 throw하거나 오류를 기록하거나 다른 적절한 조치를 취할 수 있습니다
         }
 
     }
