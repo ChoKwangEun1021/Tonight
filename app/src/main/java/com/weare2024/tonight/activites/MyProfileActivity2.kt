@@ -58,7 +58,22 @@ class MyProfileActivity2 : AppCompatActivity() {
                     }
 
                     "naver" -> {
+                        val uid = intent.getStringExtra("naver_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val gender = intent.getStringExtra("gender")
+                        val email = intent.getStringExtra("email")
+                        val intent = Intent(this,MyProfileActivity3::class.java)
+                        val height = "${selectedNumber}cm"
 
+                        intent.putExtra("naver_uid",uid)
+                        intent.putExtra("email", email)
+                        intent.putExtra("nickname",nickname)
+                        intent.putExtra("gender",gender)
+                        intent.putExtra("height",height)
+                        intent.putExtra("login_type", "naver")
+                        Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
+
+                        startActivity(intent)
                     }
 
                     "google" -> {

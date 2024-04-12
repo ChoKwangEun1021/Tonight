@@ -95,6 +95,35 @@ class MyProfileActivity1 : AppCompatActivity() {
                     } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
                 }
                 "naver" ->{
+                    if (gendera == "남자") {
+                        val uid = intent.getStringExtra("naver_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val email = intent.getStringExtra("naver_email")
+                        val gender = "남자"
+
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("naver_uid", uid)
+                        intent.putExtra("naver_email", email)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("login_type", "naver")
+                        startActivity(intent)
+
+                    } else if (gendera == "여자") {
+                        val uid = intent.getStringExtra("naver_uid")
+                        val nickname = intent.getStringExtra("nickname")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val email = intent.getStringExtra("email")
+                        val gender = "여자"
+
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("naver_uid", uid)
+                        intent.putExtra("email", email)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("login_type", "naver")
+                        startActivity(intent)
+
+                    } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
 
                 }
                 "google" ->{

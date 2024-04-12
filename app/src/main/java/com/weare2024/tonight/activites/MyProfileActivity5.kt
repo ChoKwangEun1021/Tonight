@@ -137,6 +137,46 @@ class MyProfileActivity5 : AppCompatActivity() {
                     }
 
                     "naver" -> {
+                        val uid = intent.getStringExtra("naver_uid")
+                        val email = intent.getStringExtra("email")
+                        val gender = intent.getStringExtra("gender")
+
+                        val height = intent.getStringExtra("height")
+                        val year = intent.getIntExtra("year", 0)
+                        val month = intent.getIntExtra("month", 1)
+                        val day = intent.getIntExtra("day", 2)
+                        val jj = intent.getStringExtra("jj")
+
+
+
+                        FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
+
+                            val user = mutableMapOf<String, String>()
+                            user["uid"] = uid.toString()
+                            user["email"] = email.toString()
+                            user["nickname"] = nickname.toString()
+                            user["gender"] = gender.toString()
+                            user["height"] = height.toString()
+                            user["year"] = year.toString()
+                            user["month"] = month.toString()
+                            user["day"] = day.toString()
+                            user["jj"] = jj.toString()
+
+                            spfEdt.putString("uid", uid)
+                            spfEdt.putString("nickname", nickname)
+                            spfEdt.apply()
+
+                            G.uid = uid.toString()
+                            G.nickname = nickname.toString()
+
+                            FBRef.userRef.document().set(user).addOnSuccessListener {
+                                Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        userProfileImgUpload()
+                        startActivity(Intent(this,MainActivity::class.java))
+                        finish()
 
                     }
 
