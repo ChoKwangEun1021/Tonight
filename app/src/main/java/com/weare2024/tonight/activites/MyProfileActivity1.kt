@@ -54,6 +54,8 @@ class MyProfileActivity1 : AppCompatActivity() {
 
 
         overridePendingTransition(R.anim.from_right_enter_xml, R.anim.from_left_enter_xml)
+        val imguri = intent.getStringExtra("profileImgUri")
+        Log.d("pppp","$imguri")
 
 
         val intent2 = Intent(this, MyProfileActivity2::class.java)
@@ -73,21 +75,26 @@ class MyProfileActivity1 : AppCompatActivity() {
                     if (gendera == "남자") {
                         val uid = intent.getStringExtra("kakao_uid")
                         val nickname = intent.getStringExtra("nickname")
+                        val imguri = intent.getStringExtra("profileImgUri")
                         val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "남자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("kakao_uid", uid)
                         intent.putExtra("nickname", nickname)
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("login_type", "kakao")
                         startActivity(intent)
+
 
                     } else if (gendera == "여자") {
                         val uid = intent.getStringExtra("kakao_uid")
                         val nickname = intent.getStringExtra("nickname")
+                        val imguri = intent.getStringExtra("profileImgUri")
                         val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "여자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("kakao_uid", uid)
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("login_type", "kakao")
                         intent.putExtra("nickname", nickname)
 
