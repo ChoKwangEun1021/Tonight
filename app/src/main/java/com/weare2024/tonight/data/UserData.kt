@@ -1,7 +1,7 @@
 package com.weare2024.tonight.data
 
 data class UserData(
-    val name:String,
+    val nickname:String,
     val uid:String
     )
 
