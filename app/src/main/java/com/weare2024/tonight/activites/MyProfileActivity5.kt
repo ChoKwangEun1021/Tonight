@@ -115,16 +115,18 @@ class MyProfileActivity5 : AppCompatActivity() {
                             user["area"] = area.toString()
                             user["work"] = job
 
-                            spfEdt.putString("uid", uid)
-                            spfEdt.putString("nickname", nickname)
+                            spfEdt.putBoolean("isLogin", true)
+                            spf2Edt.putString("uid", uid)
+                            spf2Edt.putString("nickname", nickname)
                             spfEdt.apply()
+                            spf2Edt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-                            FBRef.userRef.document(nickname.toString()).set(user)
+                            FBRef.userRef.document(nickname).set(user)
                                 .addOnSuccessListener {
-                                    Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT)
+                                    Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
                                         .show()
                                 }
                         }
@@ -137,38 +139,30 @@ class MyProfileActivity5 : AppCompatActivity() {
 
                     "naver" -> {
                         val uid = intent.getStringExtra("naver_uid")
-                        val email = intent.getStringExtra("email")
-                        val gender = intent.getStringExtra("gender")
+                        val naverEmail = intent.getStringExtra("naver_email")
 
-                        val height = intent.getStringExtra("height")
-                        val year = intent.getIntExtra("year", 0)
-                        val month = intent.getIntExtra("month", 1)
-                        val day = intent.getIntExtra("day", 2)
-                        val jj = intent.getStringExtra("jj")
-
-
-
-                        FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
+                        FBRef.userRef.whereEqualTo("email", naverEmail).get().addOnSuccessListener {
 
                             val user = mutableMapOf<String, String>()
                             user["uid"] = uid.toString()
-                            user["email"] = email.toString()
+                            user["email"] = naverEmail.toString()
                             user["nickname"] = nickname.toString()
                             user["gender"] = gender.toString()
                             user["height"] = height.toString()
-                            user["year"] = year.toString()
-                            user["month"] = month.toString()
-                            user["day"] = day.toString()
-                            user["jj"] = jj.toString()
+                            user["birth"] = birth
+                            user["area"] = area.toString()
+                            user["work"] = job
 
-                            spfEdt.putString("uid", uid)
-                            spfEdt.putString("nickname", nickname)
+                            spfEdt.putBoolean("isLogin", true)
+                            spf2Edt.putString("uid", uid)
+                            spf2Edt.putString("nickname", nickname)
                             spfEdt.apply()
+                            spf2Edt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-                            FBRef.userRef.document().set(user).addOnSuccessListener {
+                            FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
                                 Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -182,15 +176,8 @@ class MyProfileActivity5 : AppCompatActivity() {
                     "google" -> {
                         val uid = intent.getStringExtra("google_uid")
                         val googleEmail = intent.getStringExtra("google_email").toString()
-                        val gender = intent.getStringExtra("gender")
-                        val height = intent.getStringExtra("height")
-                        val year = intent.getIntExtra("year", 0)
-                        val month = intent.getIntExtra("month", 1)
-                        val day = intent.getIntExtra("day", 2)
-                        val jj = intent.getStringExtra("jj")
+
                         Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
-
-
 
                         FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
 
@@ -201,17 +188,20 @@ class MyProfileActivity5 : AppCompatActivity() {
                                 user["gender"] = gender.toString()
                                 user["height"] = height.toString()
                                 user["birth"] = birth
-                                user["jj"] = jj.toString()
+                                user["area"] = area.toString()
+                                user["work"] = job
 
-                                spfEdt.putString("uid", uid)
-                                spfEdt.putString("nickname", nickname)
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickname)
                                 spfEdt.apply()
+                                spf2Edt.apply()
 
                                 G.uid = uid.toString()
                                 G.nickname = nickname.toString()
 
 
-                            FBRef.userRef.document().set(user).addOnSuccessListener {
+                            FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
                                 Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }

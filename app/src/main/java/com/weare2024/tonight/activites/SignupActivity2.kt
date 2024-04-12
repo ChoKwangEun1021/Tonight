@@ -39,7 +39,6 @@ class SignupActivity2 : AppCompatActivity() {
 
     private fun clickRegister() {
         val email = intent.getStringExtra("email").toString()
-        val password = intent.getStringExtra("password").toString()
         val nickname = binding.inputLayoutNickName.editText!!.text.toString()
 
         if (intent != null && intent.hasExtra("login_type")) {
@@ -61,9 +60,10 @@ class SignupActivity2 : AppCompatActivity() {
 
                 "naver" -> {
                     val uid = intent.getStringExtra("naver_uid")
+                    val naverEmail = intent.getStringExtra("naver_email")
                     val intent = Intent(this, MyProfileActivity1::class.java)
                     intent.putExtra("naver_uid", uid)
-                    intent.putExtra("naver_email", email)
+                    intent.putExtra("naver_email", naverEmail)
                     intent.putExtra("nickname", nickname)
                     intent.putExtra("login_type", "naver")
                     startActivity(intent)

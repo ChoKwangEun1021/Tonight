@@ -35,7 +35,7 @@ class MyProfileActivity2 : AppCompatActivity() {
 
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
-            if ((intent != null && intent.hasExtra("login_type"))) {
+            if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
                     "kakao" -> {
                         val uid = intent.getStringExtra("kakao_uid")

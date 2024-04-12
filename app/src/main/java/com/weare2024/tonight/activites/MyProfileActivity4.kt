@@ -46,7 +46,7 @@ class MyProfileActivity4 : AppCompatActivity() {
             if (jj == "") {
                 Toast.makeText(this, "지역을 선택 해주세요", Toast.LENGTH_SHORT).show()
             }else {
-                if ((intent != null && intent.hasExtra("login_type"))) {
+                if (intent != null && intent.hasExtra("login_type")) {
                     when (intent.getStringExtra("login_type")) {
                         "kakao" ->{
                             val uid = intent.getStringExtra("kakao_uid")

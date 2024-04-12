@@ -56,11 +56,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        if (spf.getBoolean("isLogin", false)) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-
         binding.btnGo.setOnClickListener(this)
         binding.btnLoginKakao.setOnClickListener(this)
         binding.btnLoginNaver.setOnClickListener(this)
@@ -93,8 +88,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_signup -> {
-                spfEdt.putBoolean("isLogin", true)
-                spfEdt.apply()
                 val intent = Intent(this, SignupActivity::class.java)
                 startActivity(intent)
             }
@@ -139,7 +132,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                     }
 
                     override fun onFailure(p0: Call<NaverLogin>, p1: Throwable) {
-                        Toast.makeText(this@LoginActivity, "네이버 로그인 실패", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "${p1.message}", Toast.LENGTH_SHORT).show()
                     }
 
                 })
@@ -274,15 +267,13 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             intent1.putExtra("google_uid", uid)
             intent1.putExtra("google_email", googleEmail)
             intent1.putExtra("login_type", "google")
-            spfEdt.putBoolean("isLogin", true)
-            spfEdt.apply()
             startActivity(intent1)
             finish()
         }
 
     fun clickKakao() {
         val kakaoToken = AuthApiClient.instance.hasToken()
-        if (kakaoToken == true) {
+        if (kakaoToken) {
 
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
@@ -319,16 +310,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                     }
                 }
             }
-            if (AuthApiClient.instance.hasToken()) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-                    UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                }
-            }
+
 
         } else /*("토큰이 없으면")*/ {
+
             // 두개의 로그인 요청 콜백함수
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
@@ -353,21 +338,12 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 }
             }
 
-            if (AuthApiClient.instance.hasToken()) {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-                    UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
-                }
-            }
-
-            // 카카오톡이 사용가능하면 이를 이용하여 로그인하고 없으면 카카오계정으로 로그인하기
             if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
+
         }
     }
 }

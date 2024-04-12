@@ -18,7 +18,6 @@ class MyProfileActivity3 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val uid = intent.getStringExtra("kakao_uid")
         val nickname = intent.getStringExtra("nickname")
         val gender = intent.getStringExtra("gender")
         val height = intent.getStringExtra("height")
@@ -37,7 +36,7 @@ class MyProfileActivity3 : AppCompatActivity() {
 //            if (year == null || month == null || day == null) {
 //                Toast.makeText(this, "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show()
 //            } else {
-            if ((intent != null && intent.hasExtra("login_type"))) {
+            if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
                     "kakao" -> {
                         val uid = intent.getStringExtra("kakao_uid")

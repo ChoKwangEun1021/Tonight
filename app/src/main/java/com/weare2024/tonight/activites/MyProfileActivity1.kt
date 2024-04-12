@@ -23,7 +23,6 @@ class MyProfileActivity1 : AppCompatActivity() {
 
 
         val man = findViewById<RadioButton>(R.id.man)
-//        val man = binding.man.text
         val female = findViewById<RadioButton>(R.id.female)
         binding.btnNext1.setOnClickListener { clickNext() }
 
@@ -57,18 +56,10 @@ class MyProfileActivity1 : AppCompatActivity() {
         val imguri = intent.getStringExtra("profileImgUri")
         Log.d("pppp","$imguri")
 
-
-        val intent2 = Intent(this, MyProfileActivity2::class.java)
-//        intent2.putExtra("kakao_uid", uid)
-//        intent2.putExtra("nickname", nickName)
-//        intent2.putExtra("gender", gender)
-
     }
 
     fun clickNext() {
 
-//        Log.d("ccc", gendera)
-//        Log.d("nicnam",nickName.toString())
         if (intent != null && intent.hasExtra("login_type")){
             when(intent.getStringExtra("login_type")) {
                 "kakao" ->{
@@ -105,8 +96,8 @@ class MyProfileActivity1 : AppCompatActivity() {
                     if (gendera == "남자") {
                         val uid = intent.getStringExtra("naver_uid")
                         val nickname = intent.getStringExtra("nickname")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val email = intent.getStringExtra("naver_email")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "남자"
 
                         intent.putExtra("gender", gender)
@@ -119,8 +110,8 @@ class MyProfileActivity1 : AppCompatActivity() {
                     } else if (gendera == "여자") {
                         val uid = intent.getStringExtra("naver_uid")
                         val nickname = intent.getStringExtra("nickname")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val email = intent.getStringExtra("email")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "여자"
 
                         intent.putExtra("gender", gender)
