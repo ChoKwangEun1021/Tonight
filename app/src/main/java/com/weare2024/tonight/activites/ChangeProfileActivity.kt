@@ -58,7 +58,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             val userDocRef = FBRef.userRef.document(nickname)
             userDocRef.get()
                 .addOnSuccessListener { document ->
-                    // 사용자의 기존 닉네임을 가져와서 토스트로 표시합니다.
+
                     val oldNickname = document.getString("nickname")
                     Toast.makeText(this@ChangeProfileActivity, "nickname : $oldNickname", Toast.LENGTH_SHORT).show()
                 }
@@ -91,7 +91,7 @@ class ChangeProfileActivity : AppCompatActivity() {
 //                    Log.e("Firestore", "사용자 정보 가져오기 실패: ${e.message}", e)
 //                }
 //        } else {
-//            // 사용자의 UID가 없는 경우 처리할 내용을 여기에 추가합니다.
+//            // 사용자의 UID가 없는 경우 처리할 내용을 여기에 추가.
 //            Toast.makeText(this, "사용자 식별 정보가 없습니다.", Toast.LENGTH_SHORT).show()
         }
     }
