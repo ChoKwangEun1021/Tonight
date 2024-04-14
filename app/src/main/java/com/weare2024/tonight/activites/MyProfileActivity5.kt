@@ -94,7 +94,7 @@ class MyProfileActivity5 : AppCompatActivity() {
             val month = intent.getIntExtra("month", 1)
             val day = intent.getIntExtra("day", 2)
             val birth = "$year.$month.$day"
-            val area = intent.getStringExtra("jj")
+            val area = intent.getStringExtra("area")
 
             if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
@@ -124,11 +124,13 @@ class MyProfileActivity5 : AppCompatActivity() {
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-                            FBRef.userRef.document(nickname).set(user)
-                                .addOnSuccessListener {
-                                    Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                            if (nickname != null) {
+                                FBRef.userRef.document(nickname).set(user)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                            }
                         }
 
                         userProfileImgUpload()
@@ -162,13 +164,16 @@ class MyProfileActivity5 : AppCompatActivity() {
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-                            FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
-                                Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            if (nickname != null) {
+                                FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
+                                    Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
                         }
 
                         userProfileImgUpload()
-                        startActivity(Intent(this,MainActivity::class.java))
+                        startActivity(Intent(this, MainActivity::class.java))
                         finish()
 
                     }
@@ -179,7 +184,8 @@ class MyProfileActivity5 : AppCompatActivity() {
 
                         Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
 
-                        FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
+                        FBRef.userRef.whereEqualTo("email", googleEmail).get()
+                            .addOnSuccessListener {
 
                                 val user = mutableMapOf<String, String>()
                                 user["uid"] = uid.toString()
@@ -201,16 +207,67 @@ class MyProfileActivity5 : AppCompatActivity() {
                                 G.nickname = nickname.toString()
 
 
-                            FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
-                                Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
+                                if (nickname != null) {
+                                    FBRef.userRef.document(nickname).set(user)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "회원가입이 완료돼었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
                             }
-                        }
                         userProfileImgUpload()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
 
                     }
 
+                    "email" -> {
+
+                        val email = intent.getStringExtra("email").toString()
+                        val uid = intent.getStringExtra("email_uid").toString()
+
+                        FBRef.userRef.whereEqualTo("email", email).get()
+                            .addOnSuccessListener {
+
+                                val user = mutableMapOf<String, String>()
+                                user["uid"] = uid
+                                user["email"] = email
+                                user["nickname"] = nickname.toString()
+                                user["gender"] = gender.toString()
+                                user["height"] = height.toString()
+                                user["birth"] = birth
+                                user["area"] = area.toString()
+                                user["work"] = job
+
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+
+                                G.uid = uid
+                                G.nickname = nickname.toString()
+                                if (nickname != null) {
+                                    FBRef.userRef.document(nickname).set(user)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "회원가입이 완료돼었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                }
+
+                            }
+                        userProfileImgUpload()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+
+                    }
                 }
 
             } else {
@@ -221,7 +278,7 @@ class MyProfileActivity5 : AppCompatActivity() {
         }
     }
 
-    private fun userProfileImgUpload(){
+    private fun userProfileImgUpload() {
 
         var name = ""
         val profileImgUri = intent?.getStringExtra("profileImgUri")
@@ -232,7 +289,8 @@ class MyProfileActivity5 : AppCompatActivity() {
                     "kakao" -> {
                         name = intent.getStringExtra("kakao_uid").toString()
 
-                        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
+                        val imgRef: StorageReference =
+                            Firebase.storage.getReference("usersImg/$name")
 
                         imgUri?.apply {
                             imgRef.putFile(this).addOnSuccessListener {
@@ -426,8 +484,8 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnJobSeeker.setBackgroundColor(aaa)
         binding.btnCategoryOther.setBackgroundColor(aaa)
 
-            job = "금융직"
-        }
+        job = "금융직"
+    }
 
     private fun Research() {
         binding.btnStudent.setBackgroundColor(aaa)

@@ -16,7 +16,7 @@ import com.weare2024.tonight.databinding.ActivityMyProfile4Binding
 class MyProfileActivity4 : AppCompatActivity() {
 
     private val binding by lazy { ActivityMyProfile4Binding.inflate(layoutInflater) }
-    var jj = ""
+    var area = ""
 
     val ccc = grayColor()
     val aaa = bonColor()
@@ -43,7 +43,7 @@ class MyProfileActivity4 : AppCompatActivity() {
 
         binding.btnNext4.setOnClickListener {
 
-            if (jj == "") {
+            if (area == "") {
                 Toast.makeText(this, "지역을 선택 해주세요", Toast.LENGTH_SHORT).show()
             }else {
                 if (intent != null && intent.hasExtra("login_type")) {
@@ -68,11 +68,11 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("year", year)
                             intent.putExtra("month", month)
                             intent.putExtra("day", day)
-                            intent.putExtra("jj", jj)
+                            intent.putExtra("area", area)
                             intent.putExtra("login_type", "kakao")
                             Toast.makeText(
                                 this,
-                                "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
+                                "$uid,$nickname,$gender,$height,$year,$month,$day,$area",
                                 Toast.LENGTH_SHORT
                             ).show()
                             startActivity(intent)
@@ -96,12 +96,12 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("year", year)
                             intent.putExtra("month", month)
                             intent.putExtra("day", day)
-                            intent.putExtra("jj", jj)
+                            intent.putExtra("area", area)
                             intent.putExtra("login_type", "naver")
 
                             Toast.makeText(
                                 this,
-                                "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
+                                "$uid,$nickname,$gender,$height,$year,$month,$day,$area",
                                 Toast.LENGTH_SHORT
                             ).show()
                             startActivity(intent)
@@ -124,14 +124,33 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("year", year)
                             intent.putExtra("month", month)
                             intent.putExtra("day", day)
-                            intent.putExtra("jj", jj)
+                            intent.putExtra("area", area)
                             intent.putExtra("login_type", "google")
                             intent.putExtra("google_email",googleEmail)
                             Toast.makeText(
                                 this,
-                                "$uid,$nickname,$gender,$height,$year,$month,$day,$jj",
+                                "$uid,$nickname,$gender,$height,$year,$month,$day,$area",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            startActivity(intent)
+                        }
+                        "email"-> {
+                            val email = intent.getStringExtra("email").toString()
+                            val uid = intent.getStringExtra("email_uid").toString()
+                            val nickname =intent.getStringExtra("nickname").toString()
+                            val gender =intent.getStringExtra("gender").toString()
+                            val height = intent.getStringExtra("height").toString()
+                            val birth = intent.getStringExtra("birth").toString()
+                            val intent = Intent(this,MyProfileActivity5::class.java)
+
+                            intent.putExtra("email",email)
+                            intent.putExtra("email_uid",uid)
+                            intent.putExtra("nickname",nickname)
+                            intent.putExtra("gender",gender)
+                            intent.putExtra("height", height)
+                            intent.putExtra("birth",birth)
+                            intent.putExtra("area", area)
+                            intent.putExtra("login_type","email")
                             startActivity(intent)
                         }
                     }
@@ -159,11 +178,11 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnInchen.setBackgroundColor(aaa)
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
-        jj = "부산"
+        area = "부산"
     }
 
     private fun click1() {
-        jj = binding.btnDegu.text.toString()
+        area = binding.btnDegu.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -174,13 +193,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(ccc)
 
-        jj = "대구"
+        area = "대구"
 
 
     }
 
     private fun click2() {
-        jj = binding.btnDegen.text.toString()
+        area = binding.btnDegen.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -191,13 +210,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(ccc)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "대전"
+        area = "대전"
 
 
     }
 
     private fun click3() {
-        jj = binding.btnInchen.text.toString()
+        area = binding.btnInchen.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -208,13 +227,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "인천"
+        area = "인천"
 
 
     }
 
     private fun click4() {
-        jj = binding.btnGwangju.text.toString()
+        area = binding.btnGwangju.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -225,13 +244,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "광주"
+        area = "광주"
 
 
     }
 
     private fun click5() {
-        jj = binding.btnJeju.text.toString()
+        area = binding.btnJeju.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -242,13 +261,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "제주"
+        area = "제주"
 
 
     }
 
     private fun click6() {
-        jj = binding.btnSejong.text.toString()
+        area = binding.btnSejong.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -259,13 +278,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "세종"
+        area = "세종"
 
 
     }
 
     private fun click7() {
-        jj = binding.btnSeoul.text.toString()
+        area = binding.btnSeoul.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(aaa)
         binding.btnSeoul.setBackgroundColor(ccc)
@@ -276,13 +295,13 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "서울"
+        area = "서울"
 
 
     }
 
     private fun click8() {
-        jj = binding.btnUlsan.text.toString()
+        area = binding.btnUlsan.text.toString()
         binding.btnBusan.setBackgroundColor(aaa)
         binding.btnUlsan.setBackgroundColor(ccc)
         binding.btnSeoul.setBackgroundColor(aaa)
@@ -293,7 +312,7 @@ class MyProfileActivity4 : AppCompatActivity() {
         binding.btnDegen.setBackgroundColor(aaa)
         binding.btnDegu.setBackgroundColor(aaa)
 
-        jj = "울산"
+        area = "울산"
 
 
     }

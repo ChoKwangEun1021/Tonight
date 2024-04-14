@@ -31,6 +31,7 @@ class MyProfileActivity3 : AppCompatActivity() {
             val year = datePicker.year
             val month = datePicker.month + 1
             val day = datePicker.dayOfMonth
+            val birth = year +month +day
 //            val intent = Intent(this, MyProfileActivity4::class.java)
 
 //            if (year == null || month == null || day == null) {
@@ -103,6 +104,24 @@ class MyProfileActivity3 : AppCompatActivity() {
                         ).show()
                         startActivity(intent)
 
+                    }
+
+                    "email" -> {
+                        val email = intent.getStringExtra("email").toString()
+                        val uid = intent.getStringExtra("email_uid").toString()
+                        val nickname =intent.getStringExtra("nickname").toString()
+                        val gender =intent.getStringExtra("gender").toString()
+                        val height = intent.getStringExtra("height").toString()
+                        val intent = Intent(this,MyProfileActivity4::class.java)
+
+                        intent.putExtra("email",email)
+                        intent.putExtra("email_uid",uid)
+                        intent.putExtra("nickname",nickname)
+                        intent.putExtra("gender",gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("birth",birth)
+                        intent.putExtra("login_type","email")
+                        startActivity(intent)
                     }
 
 

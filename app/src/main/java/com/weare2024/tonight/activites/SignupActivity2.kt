@@ -39,6 +39,7 @@ class SignupActivity2 : AppCompatActivity() {
 
     private fun clickRegister() {
         val email = intent.getStringExtra("email").toString()
+        val password = intent.getStringExtra("password").toString()
         val nickname = binding.inputLayoutNickName.editText!!.text.toString()
 
         if (intent != null && intent.hasExtra("login_type")) {
@@ -84,39 +85,22 @@ class SignupActivity2 : AppCompatActivity() {
                 }
 
                 "email" -> {
+                    val email = intent.getStringExtra("email").toString()
+                    val password = intent.getStringExtra("password").toString()
+                    val nickname = binding.inputLayoutNickName.editText!!.text.toString()
 
                     FBAuth.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         val uid = FBAuth.getUid()
-                        val users = mutableMapOf<String, String>()
+
 
                         if (it.isSuccessful) {
                             FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
-                                users["uid"] = uid
-                                users["email"] = email
-                                users["nickname"] = nickname
-                                users["gender"] = "남자"
-                                users["height"] = "187cm"
-                                users["birth"] = "1998.10.21"
-                                users["area"] = "서울"
-                                users["work"] = "개발자"
+                                val intent =Intent(this,MyProfileActivity1::class.java)
+                                intent.putExtra("email_uid",uid)
+                                intent.putExtra("login_type","email")
+                                intent.putExtra("nickname",nickname)
 
-                                //자동 로그인 기능
-                                spfEdt.putBoolean("isLogin", true)
-                                spf2Edt.putString("kakao_uid", uid)
-                                spf2Edt.putString("nickname",nickname)
-                                spfEdt.apply()
-                                spf2Edt.apply()
-
-                                FBRef.userRef.document(nickname).set(users).addOnSuccessListener {
-                                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                                }
-                                FBAuth.auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
-                                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-
-
-                                }
-                                userProfileImgUpload()
-                                startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, MyProfileActivity1::class.java))
                             }
 
                         } else {
@@ -162,34 +146,34 @@ class SignupActivity2 : AppCompatActivity() {
         }
     }
 
-    private fun userProfileImgUpload() {
-        var name = ""
-
-        if (intent != null && intent.hasExtra("login_type")) {
-            when (intent.getStringExtra("login_type")) {
-                "kakao" -> {
-                }
-
-                "naver" -> {
-                }
-
-                "google" -> {
-                }
-
-                "email" -> {
-                    name = FBAuth.getUid()
-
-                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
-
-                    imgUri?.apply {
-                        imgRef.putFile(this).addOnSuccessListener {
-                            Log.d("img upload", "이미지 업로드 성공")
-                        }
-                    }
-                }
-
-            }
-        }
-
-    }
+//    private fun userProfileImgUpload() {
+//        var name = ""
+//
+//        if (intent != null && intent.hasExtra("login_type")) {
+//            when (intent.getStringExtra("login_type")) {
+//                "kakao" -> {
+//                }
+//
+//                "naver" -> {
+//                }
+//
+//                "google" -> {
+//                }
+//
+//                "email" -> {
+//                    name = FBAuth.getUid()
+//
+//                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
+//
+//                    imgUri?.apply {
+//                        imgRef.putFile(this).addOnSuccessListener {
+//                            Log.d("img upload", "이미지 업로드 성공")
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//    }
 }
