@@ -2,24 +2,37 @@ package com.weare2024.tonight.fragment
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
 import com.weare2024.tonight.G
+import com.weare2024.tonight.G.Companion.uid
 import com.weare2024.tonight.R
 import com.weare2024.tonight.activites.LoginActivity
+import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.databinding.FragmentProfileBinding
 import com.weare2024.tonight.firebase.FBAuth
+import com.weare2024.tonight.firebase.FBRef
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -28,7 +41,6 @@ class ProfileFragment : Fragment() {
     private val spf2 by lazy { activity?.getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE) }
     private val spfEdt by lazy { spf?.edit() }
     private val spf2Edt by lazy { spf2?.edit() }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,19 +73,56 @@ class ProfileFragment : Fragment() {
 
                     }.create().show()
 
-
                 }
                 return false
             }
 
         })
 
+        //닉네임, 프로필이미지 불러오기
+        FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
+            binding.tv.text=""
+            for (snap in it) {
+                val userData : UserData? = snap.toObject(UserData::class.java)
+                userData?.apply {
+
+                    binding.tv.append(nickname)
+
+                    val uri = profileImgUri
+                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/"+uri)
+                    imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri>{
+                        override fun onSuccess(p0: Uri?) { Glide.with(this@ProfileFragment).load(p0).into(binding.iv) }
+
+                    })
+                }
+            }
+        }
+
     }
+
     private fun clickToolbar(){
+        val tv_drawer = view?.findViewById<TextView>(R.id.tv_drawer)
+        val iv_drawer = view?.findViewById<ImageView>(R.id.iv_drawer)
+
         drawerLayout=binding.drawerLayout
         if (drawerLayout!=null) {
             drawerLayout.openDrawer(GravityCompat.START)
+
+            FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
+                tv_drawer?.text=""
+                for (snap in it) {
+                    val userData : UserData = snap.toObject(UserData::class.java)
+                    userData.apply {
+                        tv_drawer?.append(nickname)
+
+                        val uri = profileImgUri
+                        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/"+uri)
+                        imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri>{
+                            override fun onSuccess(p0: Uri?) { Glide.with(this@ProfileFragment).load(p0).into(iv_drawer!!) }
+                        })
+                    }
+                }
+            }
         }
     }
-
 }
