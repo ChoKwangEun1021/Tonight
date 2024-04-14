@@ -7,25 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.weare2024.tonight.data.BoardDetailData
 import com.weare2024.tonight.databinding.PagerImgUploadBinding
 
-class BoardDetailPagerAdapter (val context: Context, val imgs: MutableList<Uri?>) : Adapter<BoardDetailPagerAdapter.VH>() {
+class BoardDetailPagerAdapter (val context: Context, val items: List<String>) : Adapter<BoardDetailPagerAdapter.VH>() {
 
-    inner class VH(val binding: PagerImgUploadBinding) : ViewHolder(binding.root){
-        val iv= binding.iv
-    }
-
+    inner class VH(val binding: PagerImgUploadBinding) : ViewHolder(binding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val layoutInflater= LayoutInflater.from(context)
-        val binding= PagerImgUploadBinding.inflate(layoutInflater, parent, false)
+        val binding= PagerImgUploadBinding.inflate(LayoutInflater.from(context), parent, false)
         return VH(binding)
     }
-
-    override fun getItemCount(): Int {
-        return imgs.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        Glide.with(context).load(imgs[position]).into(holder.iv)
+        val item = items[position]
+        val imageUri = "http://weare2024.dothome.co.kr/Tonight/board/${item}"
+        Glide.with(context).load(item).into(holder.binding.iv)
+
+//        Glide.with(context).load(items[position].imgs).into(holder.binding.iv)
     }
 }

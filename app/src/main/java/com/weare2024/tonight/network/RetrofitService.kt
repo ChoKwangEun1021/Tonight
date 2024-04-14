@@ -1,6 +1,7 @@
 package com.weare2024.tonight.network
 
 import com.weare2024.tonight.data.BoardDetailData
+import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.data.Images
 import com.weare2024.tonight.data.NaverLogin
 import okhttp3.MultipartBody
@@ -30,4 +31,7 @@ interface RetrofitService {
 
     @GET("/Tonight/board/selectBoardDetail.php")
     fun boardNoSend2(@Query("no") boardNo: Int) : Call<BoardDetailData>
+
+    @GET("/Tonight/comment/selectDB.php")
+    fun commentNoSend(@Query("no") boardNo: Int) : Call<List<CommentData>>
 }
