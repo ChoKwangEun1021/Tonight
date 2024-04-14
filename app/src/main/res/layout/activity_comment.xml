@@ -14,7 +14,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <EditText
-        android:id="@+id/et_search"
+        android:id="@+id/et_content"
         android:layout_width="310dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
@@ -27,16 +27,16 @@
         android:layout_below="@id/recycler_comment"/>
 
     <Button
-        android:id="@+id/btn_search"
+        android:id="@+id/btn_comment"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:padding="10dp"
         android:backgroundTint="@color/btnPrimaryColor"
-        android:text="검색"
+        android:text="완료"
         android:textColor="@color/white"
-        android:layout_toEndOf="@id/et_search"
+        android:layout_toEndOf="@id/et_content"
         android:layout_below="@id/recycler_comment"/>
 
 </RelativeLayout>

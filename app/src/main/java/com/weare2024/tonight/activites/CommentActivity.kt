@@ -3,6 +3,7 @@ package com.weare2024.tonight.activites
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.R
 import com.weare2024.tonight.adapter.CommentAdapter
@@ -23,8 +24,29 @@ class CommentActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.recyclerComment.adapter = CommentAdapter(this, items)
-
+        binding.btnComment.setOnClickListener { insertComment() }
         selectComment()
+    }
+
+    private fun insertComment() {
+        val boardNo = intent.getIntExtra("boardNo", 0)
+        val cmtUid = "uid"
+        val cmtNickname = "nickname"
+        val cmtContent = binding.etContent.text.toString()
+
+        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
+        val retrofitService = retrofit.create(RetrofitService::class.java)
+        retrofitService.commentInsert(boardNo, cmtUid, cmtNickname, cmtContent).enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, p1: Response<String>) {
+                val data = p1.body()
+                Log.d("success", "$data")
+            }
+
+            override fun onFailure(p0: Call<String>, p1: Throwable) {
+                Log.d("insertErr", "${p1.message}")
+            }
+
+        })
     }
 
     private fun selectComment() {
@@ -45,6 +67,7 @@ class CommentActivity : AppCompatActivity() {
                 }
 
                 binding.recyclerComment.adapter!!.notifyDataSetChanged()
+                //AlertDialog.Builder(this@CommentActivity).setMessage("${p1.body()} $boardNo").create().show()
             }
 
             override fun onFailure(p0: Call<List<CommentData>>, p1: Throwable) {

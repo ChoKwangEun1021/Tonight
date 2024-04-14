@@ -29,26 +29,23 @@ import retrofit2.Response
 class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
 
-    //    private val bs: View by lazy { binding.bs } //댓글 바텀시트
 //    private val bsb: BottomSheetBehavior<View> by lazy { BottomSheetBehavior.from(bs) }
     private val rl_title: View by lazy { binding.rlTitle }
     private val itemList = mutableMapOf<String, String>()
-    private var imgPath: String? = null
     private val imgs = mutableListOf<String>()
-    val vp: ViewPager2 by lazy { binding.viewPager }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.request.setOnClickListener { clickComment() }
-        binding.chat.setOnClickListener { clickChat() }
-//        binding.sendupload.setOnClickListener { clickSendUpload() }
+        binding.tvComment.setOnClickListener { clickComment() }
+//        binding.chat.setOnClickListener { clickChat() }
         binding.rlTitle.setOnClickListener { clickTitle() }
-//        itemList.add(SampleComment(R.drawable.profle,"잘생긴 오빠","누나 안녕하세요"))
-        binding.rl.background = null
+//        binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
+                } else if (item!!.itemId == R.id.send) {
+                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT).show()
                 }
                 return true
             }
@@ -82,14 +79,14 @@ class BoardDetailActivity : AppCompatActivity() {
                 val data = p1.body()
                 binding.nickname.text = data?.nickname
                 binding.tvReview.text = data?.content
-//                for (i in 0 until 3) {
-//                    imgs.add("http://weare2024.dothome.co.kr/Tonight/board/${data?.imgs?.get(i)}")
-//                }
-                imgs.add("https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg")
-                imgs.add("https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg")
-                imgs.add("https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg")
+                for (i in 0 until data?.imgs!!.size) {
+                    imgs.add("http://weare2024.dothome.co.kr/Tonight/board/${data.imgs[i]}")
+                }
+//                imgs.add("https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg")
+//                imgs.add("https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg")
+//                imgs.add("https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg")
                 binding.viewPager.adapter!!.notifyDataSetChanged()
-//                AlertDialog.Builder(this@BoardDetailActivity).setMessage("$data").create().show()
+//                AlertDialog.Builder(this@BoardDetailActivity).setMessage("${data?.imgs?.get(0)}").create().show()
             }
 
             override fun onFailure(p0: Call<BoardDetailData>, p1: Throwable) {
@@ -97,14 +94,6 @@ class BoardDetailActivity : AppCompatActivity() {
             }
 
         })
-    }
-
-    private fun insertData() {
-        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
-        val retrofitService = retrofit.create(RetrofitService::class.java)
-        itemList["uid"] = "uid"
-        itemList["nickname"] = "nickname"
-        itemList["comment"] = "comment"
     }
 
     private fun showBottomSheet() {
@@ -135,10 +124,6 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     private fun clickComment() {
-//        if (bsb.state == BottomSheetBehavior.STATE_COLLAPSED)  // 상태 확인
-//            bsb.state = BottomSheetBehavior.STATE_EXPANDED // 시트 열기
-//        else {bsb.state = BottomSheetBehavior.STATE_COLLAPSED}  // 시트 닫기
-
         val boardNo = intent.getIntExtra("boardNo", 0)
         val intent2 = Intent(this, CommentActivity::class.java)
         intent2.putExtra("boardNo", boardNo)
@@ -148,17 +133,6 @@ class BoardDetailActivity : AppCompatActivity() {
 
     private fun clickChat() {
         Toast.makeText(this, "채팅 채널로 연결 됩니다.", Toast.LENGTH_SHORT).show()
-    }
-
-    var sendupload: String? = null
-    private fun clickSendUpload() {
-        sendupload ?: return
-        val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
-        val retrofitService = retrofit.create(RetrofitService::class.java)
-        var nickname = G.nickname
-        var uid = G.uid
-//        val content = binding.et.text.toString()
-
     }
 
     private fun clickTitle() {

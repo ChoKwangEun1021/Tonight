@@ -18,20 +18,32 @@ import retrofit2.http.Query
 interface RetrofitService {
 
     @GET("/v1/nid/me")
-    fun getNidUserInfo(@Header("Authorization") authorization: String) : Call<NaverLogin>
+    fun getNidUserInfo(@Header("Authorization") authorization: String): Call<NaverLogin>
+
     @Multipart
     @POST("/Tonight/board/insertDB.php")
-    fun insertBoard(@PartMap dataPart: Map<String, String>, @Part fileParts: List<MultipartBody.Part>?) : Call<String>
+    fun insertBoard(
+        @PartMap dataPart: Map<String, String>,
+        @Part fileParts: List<MultipartBody.Part>?
+    ): Call<String>
 
     @GET("/Tonight/board/selectDB.php")
-    fun selectBoardImgs() : Call<List<Images>>
+    fun selectBoardImgs(): Call<List<Images>>
 
     @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend(@Query("no") boardNo: Int) : Call<String>
+    fun boardNoSend(@Query("no") boardNo: Int): Call<String>
 
     @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend2(@Query("no") boardNo: Int) : Call<BoardDetailData>
+    fun boardNoSend2(@Query("no") boardNo: Int): Call<BoardDetailData>
+
+    @GET("/Tonight/comment/insertDB.php")
+    fun commentInsert(
+        @Query("boardNo") boardNo: Int,
+        @Query("cmtUid") cmtUid: String,
+        @Query("cmtNickname") cmtNickname: String,
+        @Query("cmtContent") cmtContent: String
+    ): Call<String>
 
     @GET("/Tonight/comment/selectDB.php")
-    fun commentNoSend(@Query("no") boardNo: Int) : Call<List<CommentData>>
+    fun commentNoSend(@Query("no") boardNo: Int): Call<List<CommentData>>
 }
