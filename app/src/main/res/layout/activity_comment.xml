@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/milky_way"
+    tools:context=".activites.CommentActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:navigationIconTint="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tonight Comments"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hakgyoansim_bombanghak_r"
+            android:textStyle="bold"
+            android:layout_marginStart="70dp"
+            android:textSize="24sp" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <View
+        android:id="@+id/v"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_below="@id/toolbar"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/v"
+            android:layout_above="@id/et_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_vector_edittext_rounded_corner_rectangle"
+            android:ems="13"
+            android:hint="   댓글 달기"
+            android:imeOptions="actionDone"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"/>
+
+        <Button
+            android:id="@+id/btn_comment"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="10dp"
+            android:backgroundTint="@color/btnPrimaryColor"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@id/et_content"
+            android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
