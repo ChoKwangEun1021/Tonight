@@ -34,22 +34,13 @@ import com.weare2024.tonight.firebase.FBRef
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     lateinit var drawerLayout: DrawerLayout
-    private val spf by lazy {
-        activity?.getSharedPreferences(
-            "loginSave",
-            AppCompatActivity.MODE_PRIVATE
-        )
-    }
-    private val spf2 by lazy {
-        activity?.getSharedPreferences(
-            "userInfo",
-            AppCompatActivity.MODE_PRIVATE
-        )
-    }
+    private val spf by lazy { activity?.getSharedPreferences("loginSave", AppCompatActivity.MODE_PRIVATE) }
+    private val spf2 by lazy { activity?.getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE) }
     private val spfEdt by lazy { spf?.edit() }
     private val spf2Edt by lazy { spf2?.edit() }
     val tvDrawer by  lazy { view?.findViewById<TextView>(R.id.tv_drawer) }
     val ivDrawer by  lazy { view?.findViewById<ImageView>(R.id.iv_drawer) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,31 +50,29 @@ class ProfileFragment : Fragment() {
         return binding.root
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.toolbar.setOnClickListener { clickToolbar() }
-        val drawerLogout = binding.nav.setNavigationItemSelectedListener(object :
-            OnNavigationItemSelectedListener {
+        val drawerLogout = binding.nav.setNavigationItemSelectedListener(object :OnNavigationItemSelectedListener{
             override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-                if (p0.itemId == R.id.menu_aa) {
-                    Toast.makeText(requireContext(), "로그아웃 해라이 쉨이야.", Toast.LENGTH_SHORT).show()
-                    AlertDialog.Builder(requireContext()).setTitle("로그아웃").setMessage("로그아웃 하시겠습니까")
-                        .setPositiveButton("확인") { dialog, id ->
-                            FBAuth.auth.signOut()
-                            spfEdt?.putBoolean("isLogin", false)
-                            spf2Edt?.clear()
-                            spfEdt?.apply()
-                            spf2Edt?.apply()
-                            G.uid = ""
-                            G.nickname = ""
-                            startActivity(Intent(requireContext(), LoginActivity::class.java))
-                            activity?.finish()
+                if (p0.itemId == R.id.menu_aa){
+                    Toast.makeText(requireContext(), "로그아웃", Toast.LENGTH_SHORT).show()
+                    AlertDialog.Builder(requireContext()).setTitle("로그아웃").setMessage("로그아웃 하시겠습니까?").setPositiveButton("확인"){dialog , id  ->
+                        FBAuth.auth.signOut()
+                        spfEdt?.putBoolean("isLogin", false)
+                        spf2Edt?.clear()
+                        spfEdt?.apply()
+                        spf2Edt?.apply()
+                        G.uid =""
+                        G.nickname =""
+                        startActivity(Intent(requireContext(),LoginActivity::class.java))
+                        activity?.finish()
 
-                        }.setNegativeButton("취소") { dialog, id ->
-                            dialog.dismiss()
+                    }.setNegativeButton("취소"){ dialog ,id ->
+                        dialog.dismiss()
 
-                        }.create().show()
+                    }.create().show()
+
 
                 }  else if (p0.itemId == R.id.menu_change) {
                     startActivity(Intent(context, ChangeProfileActivity::class.java))

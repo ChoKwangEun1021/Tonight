@@ -22,6 +22,9 @@
             android:name=".activites.ChangeProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".activites.CommentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activites.SignupActivity2"
             android:exported="false" />
         <activity
@@ -82,6 +85,20 @@
                     android:scheme="@string/kakao_native_app_key" />
             </intent-filter>
         </activity>
+
+        <!-- 다른 앱에 공개할 파일의 경로를 제공하는 프로바이더 등록 -->
+<!--        <provider-->
+<!--            android:authorities="com.weare2024.tonight.activites"-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+
+<!--        &lt;!&ndash; 다른 앱에 제공할 경로의 범위를 지정 &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--            android:resource="@xml/paths"/>-->
+
+<!--        </provider>-->
 
     </application>
 

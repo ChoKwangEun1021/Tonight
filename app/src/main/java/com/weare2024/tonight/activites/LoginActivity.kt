@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_login_kakao -> {
-                clickKakao()
+                kakao()
             }
 
             R.id.btn_login_naver -> {
@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
         }
     }
-    
+
     private fun naver() {
         //네아로 SDK 초기화
         NaverIdLoginSDK.initialize(
@@ -123,16 +123,27 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                     FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
                         if (id != null) {
-//                            it.documents.get()
-//                            val nickname
-                            G.uid = id
-//                            G.nickname = nickname
-                            spfEdt.putBoolean("isLogin", true)
-                            spf2Edt.putString("uid", id)
-//                            spf2Edt.putString("nickname", nickname)
-                            spfEdt.apply()
-                            spf2Edt.apply()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            for (snap in it) {
+
+                                val userData = snap.toObject(UserData::class.java)
+                                userData?.apply {
+                                }
+                                G.uid = id
+                                G.nickname = userData.nickname
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", id)
+                                spf2Edt.putString("nickname", userData.nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "${G.nickname}",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+
+                            }
+
                         } else {
                             Toast.makeText(this@LoginActivity, "오류나써염", Toast.LENGTH_SHORT).show()
                         }
@@ -173,6 +184,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                             call: Call<NaverLogin>,
                             response: Response<NaverLogin>
                         ) {
+
                             val s = response.body()
                             val id = s?.response?.id
                             val email = s?.response?.email
@@ -202,7 +214,9 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                         }
 
                     })
+
                 }
+
             })
         }
     }
@@ -251,6 +265,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 }
             }
         }
+
     val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val intent = it.data
@@ -264,13 +279,14 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             intent1.putExtra("google_uid", uid)
             intent1.putExtra("google_email", googleEmail)
             intent1.putExtra("login_type", "google")
+            spfEdt.putBoolean("isLogin", true)
+            spfEdt.apply()
             startActivity(intent1)
             finish()
 
-
         }
 
-    fun clickKakao() {
+    fun kakao() {
         val kakaoToken = AuthApiClient.instance.hasToken()
         if (kakaoToken) {
 
@@ -297,32 +313,24 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                                         spf2Edt.putString("nickname", nickname)
                                         spfEdt.apply()
                                         spf2Edt.apply()
-
-                                        startActivity(
-                                            Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java
-                                            )
-                                        )
-                                        Toast.makeText(
-                                            this@LoginActivity,
-                                            "${G.nickname}",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
                                     }
                                 }
+                                startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                                Toast.makeText(this@LoginActivity, G.nickname,Toast.LENGTH_SHORT).show()
                             }
-
                         }
                     }
                 }
             }
 
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            } else {
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
 
-        } else /*("토큰이 없으면")*/ {
 
-            // 두개의 로그인 요청 콜백함수
+        } else {
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()

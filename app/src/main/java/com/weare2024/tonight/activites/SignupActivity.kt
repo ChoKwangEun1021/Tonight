@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.databinding.ActivitySignupBinding
+import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
 
 class SignupActivity : AppCompatActivity() {
@@ -31,10 +32,10 @@ class SignupActivity : AppCompatActivity() {
         password = binding.inputLayoutPassword.editText!!.text.toString()
         passwordConfirm = binding.inputLayoutPasswordConfirm.editText!!.text.toString()
         val ss = FBRef.userRef.whereEqualTo("email", email).get()
+        val uid = FBAuth.getUid()
         if (ss.toString() == email) {
             Toast.makeText(this, "중복", Toast.LENGTH_SHORT).show()
         } else {
-
             if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
                 Toast.makeText(this, "이메일 또는 비밀번호를 입력하지 않으셨습니다.", Toast.LENGTH_SHORT).show()
             } else if (password != passwordConfirm) {
@@ -42,10 +43,15 @@ class SignupActivity : AppCompatActivity() {
                 binding.inputLayoutPasswordConfirm.requestFocus()
                 return
             } else {
+
                 intent.putExtra("email", email)
                 intent.putExtra("password", password)
                 intent.putExtra("login_type", "email")
+                intent.putExtra("email_uid",uid)
                 startActivity(intent)
+
+                AlertDialog.Builder(this).setMessage("$password").create().show()
+
             }
         }
 
