@@ -35,17 +35,19 @@ class MyProfileActivity2 : AppCompatActivity() {
 
             val selectedNumber = numberPicker.value
 //            Toast.makeText(this, "선택된 숫자"+selectedNumber, Toast.LENGTH_SHORT).show()
-            if ((intent != null && intent.hasExtra("login_type"))) {
+            if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
                     "kakao" -> {
                         val uid = intent.getStringExtra("kakao_uid")
                         val nickname = intent.getStringExtra("nickname")
+                        val imguri = intent.getStringExtra("profileImgUri")
                         val gender = intent.getStringExtra("gender")
                         val intent = Intent(this, MyProfileActivity3::class.java)
                         val height = "${selectedNumber}cm"
 
                         intent.putExtra("kakao_uid", uid)
                         intent.putExtra("nickname", nickname)
+                        intent.putExtra("profileImgUri", imguri)
                         intent.putExtra("gender", gender)
                         intent.putExtra("height", height)
                         intent.putExtra("login_type", "kakao")
@@ -55,6 +57,7 @@ class MyProfileActivity2 : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         startActivity(intent)
+                        Log.d("dddd", "$imguri")
                     }
 
                     "naver" -> {
@@ -62,16 +65,17 @@ class MyProfileActivity2 : AppCompatActivity() {
                         val nickname = intent.getStringExtra("nickname")
                         val gender = intent.getStringExtra("gender")
                         val email = intent.getStringExtra("email")
-                        val intent = Intent(this,MyProfileActivity3::class.java)
+                        val intent = Intent(this, MyProfileActivity3::class.java)
                         val height = "${selectedNumber}cm"
 
-                        intent.putExtra("naver_uid",uid)
+                        intent.putExtra("naver_uid", uid)
                         intent.putExtra("email", email)
-                        intent.putExtra("nickname",nickname)
-                        intent.putExtra("gender",gender)
-                        intent.putExtra("height",height)
+                        intent.putExtra("nickname", nickname)
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("height", height)
                         intent.putExtra("login_type", "naver")
-                        Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "$uid,$nickname,$gender,$height", Toast.LENGTH_SHORT)
+                            .show()
 
                         startActivity(intent)
                     }
@@ -90,15 +94,35 @@ class MyProfileActivity2 : AppCompatActivity() {
                         intent.putExtra("gender", gender)
                         intent.putExtra("height", height)
                         intent.putExtra("login_type", "google")
-                        Toast.makeText(
-                            this,
-                            "$uid,$nickname,$gender,$height",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this,
+//                            "$uid,$nickname,$gender,$height",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                         startActivity(intent)
+                    }
+
+                    "email" -> {
+                        val email = intent.getStringExtra("email")
+                        val uid = intent.getStringExtra("email_uid")
+                        val nickname =intent.getStringExtra("nickname")
+                        val gender =intent.getStringExtra("gender")
+                        val height = "${selectedNumber}cm"
+                        val intent = Intent(this,MyProfileActivity3::class.java)
+
+                        intent.putExtra("email",email)
+                        intent.putExtra("email_uid",uid)
+                        intent.putExtra("nickname",nickname)
+                        intent.putExtra("gender",gender)
+                        intent.putExtra("height", height)
+                        intent.putExtra("login_type","email")
+                        startActivity(intent)
+
                     }
                 }
             }
         }
+
+
     }
 }
