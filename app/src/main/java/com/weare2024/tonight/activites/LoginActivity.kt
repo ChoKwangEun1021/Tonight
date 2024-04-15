@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             }
 
             R.id.btn_login_kakao -> {
-                clickKakao()
+                kakao()
             }
 
             R.id.btn_login_naver -> {
@@ -95,55 +95,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
-    //    fun naverBYheesoo(){
-//        //초기화
-//        NaverIdLoginSDK.initialize(this, getString(R.string.client_id), getString(R.string.client_secret), "Tonight")
-//
-//        //로그인 요청
-//        NaverIdLoginSDK.authenticate(this, object : OAuthLoginCallback{
-//            override fun onError(errorCode: Int, message: String) {
-//                Toast.makeText(this@LoginActivity, "네이버 로그인 실패", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onFailure(httpStatus: Int, message: String) {
-//                Toast.makeText(this@LoginActivity, "네이버 로그인 실패", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onSuccess() {
-//                //로그인 성공시 REST API로 사용자 정보 받아오기
-//                Toast.makeText(this@LoginActivity, "네이버로 로그인 합니다.", Toast.LENGTH_SHORT).show()
-//                val accessToken:String? = NaverIdLoginSDK.getAccessToken()
-//
-//                val retrofit= RetrofitHelper.getRetrofitInstance("https://openapi.naver.com")
-//                val retrofitApiService= retrofit.create(RetrofitService::class.java)
-//                val call= retrofitApiService.getNidUserInfo("Bearer $accessToken")
-//                call.enqueue(object : Callback<NaverLogin>{
-//                    override fun onResponse(p0: Call<NaverLogin>, p1: Response<NaverLogin>) {
-//
-//                        val s= p1.body()
-//                        val intent= Intent(this@LoginActivity, SignupActivity2::class.java)
-//                        val uid= s?.response?.id
-//                        val email= s?.response?.email
-//
-//                        intent.putExtra("naver_uid", uid)
-//                        intent.putExtra("naver_email", email)
-//                        intent.putExtra("login_type", "naver")
-//
-//                        startActivity(intent)
-//                        finish()
-//                    }
-//
-//                    override fun onFailure(p0: Call<NaverLogin>, p1: Throwable) {
-//                        Toast.makeText(this@LoginActivity, "${p1.message}", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                })
-//
-//
-//            }
-//
-//        })
-//    }
     private fun naver() {
         //네아로 SDK 초기화
         NaverIdLoginSDK.initialize(
@@ -172,16 +123,27 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                     FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
                         if (id != null) {
-//                            it.documents.get()
-//                            val nickname
-                            G.uid = id
-//                            G.nickname = nickname
-                            spfEdt.putBoolean("isLogin", true)
-                            spf2Edt.putString("uid", id)
-//                            spf2Edt.putString("nickname", nickname)
-                            spfEdt.apply()
-                            spf2Edt.apply()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            for (snap in it) {
+
+                                val userData = snap.toObject(UserData::class.java)
+                                userData?.apply {
+                                }
+                                G.uid = id
+                                G.nickname = userData.nickname
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", id)
+                                spf2Edt.putString("nickname", userData.nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "${G.nickname}",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+
+                            }
+
                         } else {
                             Toast.makeText(this@LoginActivity, "오류나써염", Toast.LENGTH_SHORT).show()
                         }
@@ -317,7 +279,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             finish()
         }
 
-    fun clickKakao() {
+    fun kakao() {
         val kakaoToken = AuthApiClient.instance.hasToken()
         if (kakaoToken) {
 
@@ -344,32 +306,24 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                                         spf2Edt.putString("nickname", nickname)
                                         spfEdt.apply()
                                         spf2Edt.apply()
-
-                                        startActivity(
-                                            Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java
-                                            )
-                                        )
-                                        Toast.makeText(
-                                            this@LoginActivity,
-                                            "${G.nickname}",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
                                     }
                                 }
+                                startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                                Toast.makeText(this@LoginActivity, G.nickname,Toast.LENGTH_SHORT).show()
                             }
-
                         }
                     }
                 }
             }
 
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            } else {
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+            }
 
-        } else /*("토큰이 없으면")*/ {
 
-            // 두개의 로그인 요청 콜백함수
+        } else {
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()
@@ -386,10 +340,8 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                             startActivity(intent)
                             finish()
-
                         }
                     }
-
                 }
             }
 

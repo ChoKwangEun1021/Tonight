@@ -146,31 +146,40 @@ class MyProfileActivity1 : AppCompatActivity() {
                 }
 
                 "email" -> {
-                    if (gendera == "남자"){
+                    if (gendera == "남자") {
                         val email = intent.getStringExtra("email")
                         val uid = intent.getStringExtra("email_uid")
-                        val nickname =intent.getStringExtra("nickname")
-                        val intent = Intent(this,MyProfileActivity2::class.java)
+                        val nickname = intent.getStringExtra("nickname")
+                        val password = intent.getStringExtra("password")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "남자"
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("email_uid", uid)
+                        intent.putExtra("login_type", "email")
+                        intent.putExtra("nickname", nickname)
                         intent.putExtra("email",email)
-                        intent.putExtra("gender",gender)
-                        intent.putExtra("email_uid",uid)
-                        intent.putExtra("login_type","email")
-                        intent.putExtra("nickname",nickname)
+                        intent.putExtra("password",password)
                         startActivity(intent)
-                    }else if (gendera == "여자"){
+//                        Toast.makeText(this, "$email $password $nickname $uid $gender", Toast.LENGTH_SHORT).show()
+                        AlertDialog.Builder(this).setMessage("$email $password $nickname $uid $gender")
+
+                    } else if (gendera == "여자") {
                         val email = intent.getStringExtra("email")
                         val uid = intent.getStringExtra("email_uid")
-                        val nickname =intent.getStringExtra("nickname")
-                        val intent = Intent(this,MyProfileActivity2::class.java)
+                        val nickname = intent.getStringExtra("nickname")
+                        val password = intent.getStringExtra("password")
+                        val intent = Intent(this, MyProfileActivity2::class.java)
                         val gender = "여자"
+                        intent.putExtra("gender", gender)
+                        intent.putExtra("email_uid", uid)
+                        intent.putExtra("login_type", "email")
+                        intent.putExtra("nickname", nickname)
                         intent.putExtra("email",email)
-                        intent.putExtra("gender",gender)
-                        intent.putExtra("email_uid",uid)
-                        intent.putExtra("login_type","email")
-                        intent.putExtra("nickname",nickname)
+                        intent.putExtra("password",password)
                         startActivity(intent)
-                    }else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(this, "$email $password $nickname $uid $gender", Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
 
                 }
             }
