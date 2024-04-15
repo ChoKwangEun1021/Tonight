@@ -1,8 +1,11 @@
 package com.weare2024.tonight.activites
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.R
@@ -25,6 +28,12 @@ class CommentActivity : AppCompatActivity() {
 
         binding.recyclerComment.adapter = CommentAdapter(this, items)
         binding.btnComment.setOnClickListener { insertComment() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
+        selectComment()
+    }
+
+    override fun onResume() {
+        super.onResume()
         selectComment()
     }
 
@@ -47,6 +56,12 @@ class CommentActivity : AppCompatActivity() {
             }
 
         })
+
+        binding.etContent.text.clear()
+        binding.etContent.clearFocus()
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.btnComment.windowToken, 0)
+        Toast.makeText(this, "댓글이 등록 되었습니다", Toast.LENGTH_SHORT).show()
     }
 
     private fun selectComment() {

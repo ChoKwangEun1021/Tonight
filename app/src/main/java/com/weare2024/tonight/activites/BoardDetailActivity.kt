@@ -82,9 +82,6 @@ class BoardDetailActivity : AppCompatActivity() {
                 for (i in 0 until data?.imgs!!.size) {
                     imgs.add("http://weare2024.dothome.co.kr/Tonight/board/${data.imgs[i]}")
                 }
-//                imgs.add("https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg")
-//                imgs.add("https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg")
-//                imgs.add("https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg")
                 binding.viewPager.adapter!!.notifyDataSetChanged()
 //                AlertDialog.Builder(this@BoardDetailActivity).setMessage("${data?.imgs?.get(0)}").create().show()
             }

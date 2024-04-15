@@ -10,9 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="nickname"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:fontFamily="@font/hakgyoansim_bombanghak_r"
         android:textSize="16sp"
+        android:textStyle="bold"
         android:layout_marginStart="12dp"/>
 
     <TextView
@@ -20,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="댓글달기"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_below="@id/tv_name"
         android:layout_alignStart="@id/tv_name"
         android:maxWidth="250dp"
