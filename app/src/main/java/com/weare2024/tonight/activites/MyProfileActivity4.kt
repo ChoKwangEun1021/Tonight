@@ -84,6 +84,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                             val nickname = intent.getStringExtra("nickname")
                             val gender = intent.getStringExtra("gender")
                             val height = intent.getStringExtra("height")
+                            val imguri = intent.getStringExtra("profileImgUri")
                             val year = intent.getIntExtra("year", 0)
                             val month = intent.getIntExtra("month", 1)
                             val day = intent.getIntExtra("day", 2)
@@ -98,6 +99,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("month", month)
                             intent.putExtra("day", day)
                             intent.putExtra("area", area)
+                            intent.putExtra("profileImgUri",imguri)
                             intent.putExtra("login_type", "naver")
 
                             Toast.makeText(
@@ -113,6 +115,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                             val nickname = intent.getStringExtra("nickname")
                             val gender = intent.getStringExtra("gender")
                             val height = intent.getStringExtra("height")
+                            val imguri = intent.getStringExtra("profileImgUri")
                             val year = intent.getIntExtra("year", 0)
                             val month = intent.getIntExtra("month", 1)
                             val day = intent.getIntExtra("day", 2)
@@ -126,6 +129,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("month", month)
                             intent.putExtra("day", day)
                             intent.putExtra("area", area)
+                            intent.putExtra("profileImgUri",imguri)
                             intent.putExtra("login_type", "google")
                             intent.putExtra("google_email",googleEmail)
                             Toast.makeText(
@@ -137,22 +141,22 @@ class MyProfileActivity4 : AppCompatActivity() {
                         }
                         "email"-> {
                             val email = intent.getStringExtra("email").toString()
-                            val uid = intent.getStringExtra("email_uid").toString()
                             val nickname =intent.getStringExtra("nickname").toString()
                             val gender =intent.getStringExtra("gender").toString()
                             val height = intent.getStringExtra("height").toString()
+                            val imguri = intent.getStringExtra("profileImgUri")
                             val birth = intent.getStringExtra("birth").toString()
                             val password = intent.getStringExtra("password")
                             val intent = Intent(this,MyProfileActivity5::class.java)
 
                             intent.putExtra("email",email)
-                            intent.putExtra("email_uid",uid)
                             intent.putExtra("nickname",nickname)
                             intent.putExtra("gender",gender)
                             intent.putExtra("height", height)
                             intent.putExtra("birth",birth)
                             intent.putExtra("password",password)
                             intent.putExtra("area", area)
+                            intent.putExtra("profileImgUri",imguri)
                             intent.putExtra("login_type","email")
                             startActivity(intent)
 //                            Toast.makeText(this, "$email $password $nickname $uid $gender $height $birth $area", Toast.LENGTH_SHORT).show()

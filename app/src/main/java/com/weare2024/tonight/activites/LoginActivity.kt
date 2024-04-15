@@ -363,4 +363,3 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 }
-//
