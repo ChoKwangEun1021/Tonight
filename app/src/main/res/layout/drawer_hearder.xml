@@ -5,25 +5,20 @@
     android:background="@color/white">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv"
+        android:id="@+id/iv_drawer"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@color/black"
         android:layout_margin="8dp"/>
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tv_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="nickname"
         android:textColor="@color/gray"
-        android:layout_below="@id/iv"
+        android:layout_below="@id/iv_drawer"
         android:layout_marginLeft="16dp"
         />
-
-
-
-
-
 
 </RelativeLayout>

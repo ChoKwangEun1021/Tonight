@@ -74,16 +74,29 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-                <data
-                    android:host="oauth"
+                <data android:host="oauth"
                     android:scheme="@string/kakao_native_app_key" />
             </intent-filter>
         </activity>
+
+        <!-- 다른 앱에 공개할 파일의 경로를 제공하는 프로바이더 등록 -->
+        <provider
+            android:authorities="aaa"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+        <!-- 다른 앱에 제공할 경로의 범위를 지정 -->
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/paths"/>
+
+        </provider>
+
     </application>
 
 </manifest>

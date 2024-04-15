@@ -26,12 +26,27 @@ import java.util.logging.LogManager
 class MyProfileActivity5 : AppCompatActivity() {
 
     private val binding by lazy { ActivityMyProfile5Binding.inflate(layoutInflater) }
-    lateinit var nickname: String
+    var nickname: String = ""
     private var imgUri: Uri? = null
 
     val ccc = grayColor()
     val aaa = bonColor()
     var job = ""
+    fun grayColor(): Int {
+        val r = 170
+        val g = 170
+        val b = 170
+        return Color.rgb(r, g, b)
+    }
+
+    fun bonColor(): Int {
+
+        val rr = 144
+        val gg = 215
+        val bb = 253
+        return Color.rgb(rr, gg, bb)
+    }
+
 
     private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
     private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
@@ -67,20 +82,19 @@ class MyProfileActivity5 : AppCompatActivity() {
     }
 
     private fun clickNext() {
-        val userRef = Firebase.firestore.collection("kakao_uid")
-
         if (job == "") {
             Toast.makeText(this, "직업을 선택해 주세요.", Toast.LENGTH_SHORT).show()
 
         } else {
             val nickname = intent.getStringExtra("nickname")
             val gender = intent.getStringExtra("gender")
+            val imguri = intent.getStringExtra("profileImgUri")
             val height = intent.getStringExtra("height")
             val year = intent.getIntExtra("year", 0)
             val month = intent.getIntExtra("month", 1)
             val day = intent.getIntExtra("day", 2)
             val birth = "$year.$month.$day"
-            val area = intent.getStringExtra("jj")
+            val area = intent.getStringExtra("area")
 
             if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
@@ -101,15 +115,21 @@ class MyProfileActivity5 : AppCompatActivity() {
                             user["area"] = area.toString()
                             user["work"] = job
 
-                            spfEdt.putString("uid", uid)
-                            spfEdt.putString("nickname", nickname)
+                            spfEdt.putBoolean("isLogin", true)
+                            spf2Edt.putString("uid", uid)
+                            spf2Edt.putString("nickname", nickname)
                             spfEdt.apply()
+                            spf2Edt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-                            FBRef.userRef.document(nickname.toString()).set(user).addOnSuccessListener {
-                                Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
+                            if (nickname != null) {
+                                FBRef.userRef.document(nickname).set(user)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
                             }
                         }
 
@@ -119,80 +139,170 @@ class MyProfileActivity5 : AppCompatActivity() {
 
                     }
 
-                    "naver" ->{
+                    "naver" -> {
+                        val uid = intent.getStringExtra("naver_uid")
+                        val naverEmail = intent.getStringExtra("naver_email")
 
-                    }
-                    "google" ->{
-                        val uid = intent.getStringExtra("google_uid")
-                        val googleEmail = intent.getStringExtra("google_email").toString()
-                        val gender = intent.getStringExtra("gender")
-                        val height = intent.getStringExtra("height")
-                        val year = intent.getIntExtra("year", 0)
-                        val month = intent.getIntExtra("month", 1)
-                        val day = intent.getIntExtra("day", 2)
-                        val jj = intent.getStringExtra("jj")
-                        Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
-
-
-
-                        FBRef.userRef.whereEqualTo("email", googleEmail).get().addOnSuccessListener {
+                        FBRef.userRef.whereEqualTo("email", naverEmail).get().addOnSuccessListener {
 
                             val user = mutableMapOf<String, String>()
                             user["uid"] = uid.toString()
-                            user["email"] = googleEmail
+                            user["email"] = naverEmail.toString()
                             user["nickname"] = nickname.toString()
                             user["gender"] = gender.toString()
                             user["height"] = height.toString()
-                            user["year"] = year.toString()
-                            user["month"] = month.toString()
-                            user["day"] = day.toString()
-                            user["jj"] = jj.toString()
+                            user["birth"] = birth
+                            user["area"] = area.toString()
+                            user["work"] = job
 
-                            spfEdt.putString("uid", uid)
-                            spfEdt.putString("nickname", nickname)
+                            spfEdt.putBoolean("isLogin", true)
+                            spf2Edt.putString("uid", uid)
+                            spf2Edt.putString("nickname", nickname)
                             spfEdt.apply()
+                            spf2Edt.apply()
 
                             G.uid = uid.toString()
                             G.nickname = nickname.toString()
 
-
-                            FBRef.userRef.document().set(user).addOnSuccessListener {
-                                Toast.makeText(this, "회원가입이 완료돼었습니다.", Toast.LENGTH_SHORT).show()
+                            if (nickname != null) {
+                                FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
+                                    Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
                         }
+
                         userProfileImgUpload()
-                        startActivity(Intent(this,MainActivity::class.java))
+                        startActivity(Intent(this, MainActivity::class.java))
                         finish()
 
                     }
 
+                    "google" -> {
+                        val uid = intent.getStringExtra("google_uid")
+                        val googleEmail = intent.getStringExtra("google_email").toString()
+
+                        Toast.makeText(this, "$googleEmail", Toast.LENGTH_SHORT).show()
+
+                        FBRef.userRef.whereEqualTo("email", googleEmail).get()
+                            .addOnSuccessListener {
+
+                                val user = mutableMapOf<String, String>()
+                                user["uid"] = uid.toString()
+                                user["email"] = googleEmail
+                                user["nickname"] = nickname.toString()
+                                user["gender"] = gender.toString()
+                                user["height"] = height.toString()
+                                user["birth"] = birth
+                                user["area"] = area.toString()
+                                user["work"] = job
+
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+
+                                G.uid = uid.toString()
+                                G.nickname = nickname.toString()
+
+
+                                if (nickname != null) {
+                                    FBRef.userRef.document(nickname).set(user)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "회원가입이 완료돼었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
+                            }
+                        userProfileImgUpload()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+
+                    }
+
+                    "email" -> {
+
+                        val email = intent.getStringExtra("email").toString()
+                        val uid = intent.getStringExtra("email_uid").toString()
+
+                        FBRef.userRef.whereEqualTo("email", email).get()
+                            .addOnSuccessListener {
+
+                                val user = mutableMapOf<String, String>()
+                                user["uid"] = uid
+                                user["email"] = email
+                                user["nickname"] = nickname.toString()
+                                user["gender"] = gender.toString()
+                                user["height"] = height.toString()
+                                user["birth"] = birth
+                                user["area"] = area.toString()
+                                user["work"] = job
+
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", uid)
+                                spf2Edt.putString("nickname", nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+
+                                G.uid = uid
+                                G.nickname = nickname.toString()
+                                if (nickname != null) {
+                                    FBRef.userRef.document(nickname).set(user)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this,
+                                                "회원가입이 완료돼었습니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                }
+
+                            }
+                        userProfileImgUpload()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+
+                    }
                 }
 
             } else {
                 Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
             }
 
-        }
 
+        }
     }
 
-    private fun userProfileImgUpload(){
+    private fun userProfileImgUpload() {
 
         var name = ""
-        if (intent != null && intent.hasExtra("login_type")){
-            when(intent.getStringExtra("login_type")){
-                "kakao" -> {
-                    name = intent.getStringExtra("kakao_uid").toString()
+        val profileImgUri = intent?.getStringExtra("profileImgUri")
+        if (profileImgUri != null) {
+            imgUri = Uri.parse(profileImgUri)
+            if (intent.hasExtra("login_type")) {
+                when (intent.getStringExtra("login_type")) {
+                    "kakao" -> {
+                        name = intent.getStringExtra("kakao_uid").toString()
 
-                    val imgRef:StorageReference = Firebase.storage.getReference("usersImg/$name")
+                        val imgRef: StorageReference =
+                            Firebase.storage.getReference("usersImg/$name")
 
-                    imgUri?.apply {
-                        imgRef.putFile(this).addOnSuccessListener {
+                        imgUri?.apply {
+                            imgRef.putFile(this).addOnSuccessListener {
 
+                            }
                         }
                     }
                 }
             }
+        } else {
+            // profileImgUri가 null인 경우 처리
+            // 예외를 throw하거나 오류를 기록하거나 다른 적절한 조치를 취할 수 있습니다
         }
 
     }
@@ -495,21 +605,6 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnCategoryOther.setBackgroundColor(ccc)
 
         job = "기타"
-    }
-
-    fun grayColor(): Int {
-        val r = 170
-        val g = 170
-        val b = 170
-        return Color.rgb(r, g, b)
-    }
-
-    fun bonColor(): Int {
-
-        val rr = 144
-        val gg = 215
-        val bb = 253
-        return Color.rgb(rr, gg, bb)
     }
 
 }

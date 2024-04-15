@@ -1,10 +1,13 @@
 package com.weare2024.tonight.activites
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -13,9 +16,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.loader.content.CursorLoader
 import androidx.viewpager2.widget.ViewPager2
-import com.weare2024.tonight.G
+import com.bumptech.glide.Glide
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
 import com.weare2024.tonight.network.RetrofitHelper
@@ -34,6 +38,8 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class NewPostActivity : AppCompatActivity() {
 
@@ -43,20 +49,19 @@ class NewPostActivity : AppCompatActivity() {
     private var imgPath2 = mutableListOf<String>()
     private val files = mutableListOf<MultipartBody.Part>()
 
+    private val imgs: MutableList<Uri?> = mutableListOf()
+    private val pager: ViewPager2 by lazy { binding.pager }
+
+    private var imgUri: Uri? =null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.buttonPost.setOnClickListener {
-            insertData()
-//            Toast.makeText(this, "새 게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
-        }
-//        AlertDialog.Builder(this).setMessage("${G.uid}\n${G.nickname}").create().show()
-        binding.ivPost.setOnClickListener { imageUpload() }
+        binding.buttonPost.setOnClickListener { insertData() }
+        binding.ivPost.setOnClickListener { dialog() }
     }
 
-    val imgs: MutableList<Uri?> = mutableListOf()
-    val pager: ViewPager2 by lazy { binding.pager }
     private fun insertData() {
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
@@ -84,6 +89,38 @@ class NewPostActivity : AppCompatActivity() {
         })
     }
 
+    private fun dialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("업로드 방식을 선택하세요")
+            .setPositiveButton("갤러리", DialogInterface.OnClickListener { dialog, which ->
+//                Toast.makeText(this, "갤러리 앱 실행", Toast.LENGTH_SHORT).show()
+                imageUpload()
+            })
+            .setNegativeButton("사진 찍기", DialogInterface.OnClickListener { dialog, which ->
+                Toast.makeText(this, "카메라 앱 실행", Toast.LENGTH_SHORT).show()
+                camera()
+            })
+        builder.show()
+    }
+
+    private fun camera() {
+        val intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        setPhotoUri()
+        imgUri?.let { intent.putExtra(MediaStore.EXTRA_OUTPUT, it) }
+
+        resultLauncher2.launch(intent)
+    }
+
+    private val resultLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == RESULT_OK){
+            imgs.add(imgUri)
+            imgPath = getRealPathFromUri(result.data?.data!!)
+            imgPath2.add(imgPath!!)
+//            Glide.with(this).load(imgUri).into(binding.ivPost) //페이저로 넣어야할지 확인 필요
+        }
+    }
+
     private fun imageUpload() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -109,11 +146,11 @@ class NewPostActivity : AppCompatActivity() {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
                 pager.adapter = PagerAdapter(this, imgs)
-//                Log.d("imgsUri", "$imgs")
             }
         }
     private val pickMultipleLauncher =
-        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uris: List<Uri> ->
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
+                uris: List<Uri> ->
             if (uris.isNotEmpty()) {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
@@ -123,7 +160,6 @@ class NewPostActivity : AppCompatActivity() {
                     imgPath2.add(imgPath!!)
                 }
                 pager.adapter = PagerAdapter(this, imgs)
-//                Log.d("imgsUri", "$imgs")
             }
         }
 
@@ -154,5 +190,16 @@ class NewPostActivity : AppCompatActivity() {
         inputStream.close()
         outputStream.close()
         return file.absolutePath
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun setPhotoUri(){
+        val path: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+        val fileName: String = "IMG_" + sdf.format(Date()) + "jpg"
+        val file = File(path, fileName)
+
+//        AlertDialog.Builder(this).setMessage(file.toString()).create().show()
+        imgUri= FileProvider.getUriForFile(this, "aaa", file)
     }
 }
