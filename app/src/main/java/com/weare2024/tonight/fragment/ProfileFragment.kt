@@ -48,6 +48,8 @@ class ProfileFragment : Fragment() {
     }
     private val spfEdt by lazy { spf?.edit() }
     private val spf2Edt by lazy { spf2?.edit() }
+    val tvDrawer by  lazy { view?.findViewById<TextView>(R.id.tv_drawer) }
+    val ivDrawer by  lazy { view?.findViewById<ImageView>(R.id.iv_drawer) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,54 +88,6 @@ class ProfileFragment : Fragment() {
                 }  else if (p0.itemId == R.id.menu_change) {
                     startActivity(Intent(context, ChangeProfileActivity::class.java))
                     return true
-//                    // 닉네임 수정 메뉴가 선택된 경우
-//                    Toast.makeText(requireContext(), "닉네임수정이래", Toast.LENGTH_SHORT).show()
-//                    val input = EditText(requireContext())
-//                    AlertDialog.Builder(requireContext())
-//                        .setTitle("새로운 닉네임 입력")
-//                        .setMessage("새로운 닉네임을 입력하세요:")
-//                        .setView(input)
-//                        .setPositiveButton("확인") { dialog, id ->
-//                            val newNickname = input.text.toString()
-//                            val currentUserUid = FBAuth.getUid()
-//
-//                            if (currentUserUid != null && currentUserUid.isNotEmpty()) {
-//                                val userDocRef = FBRef.userRef.document(currentUserUid)
-//                                userDocRef.update("nickname", newNickname)
-//                                    .addOnSuccessListener {
-//                                        Toast.makeText(
-//                                            requireContext(),
-//                                            "닉네임을 변경했습니다.",
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//                                    }
-//                                    .addOnFailureListener { e ->
-//                                        // 실패 이유를 로그로 출력합니다.
-//                                        Log.e("Firestore", "닉네임 변경 실패: ${e.message}", e)
-//                                        Toast.makeText(
-//                                            requireContext(),
-//                                            "닉네임 변경에 실패했습니다.",
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//                                    }
-//                            } else {
-//                                Log.e("Firestore", "currentUserUid가 null 또는 비어 있습니다.")
-//                                Toast.makeText(
-//                                    requireContext(),
-//                                    "사용자 정보를 찾을 수 없습니다.",
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                            }
-//                        }
-//                } else if (p0.itemId == R.id.menu_changeimg) {
-//                    // 프로필 이미지 변경 메뉴가 선택된 경우
-//                    Toast.makeText(requireContext(), "프사 수정이래", Toast.LENGTH_SHORT).show()
-//                    AlertDialog.Builder(requireContext()).setTitle("프로필 이미지 수정").setMessage("프로필 이미지를 수정하시겠습니까?")
-//                        .setPositiveButton("확인") { dialog, id ->
-//                            // 프로필 이미지 수정 로직을 넣으세요
-//                        }.setNegativeButton("취소") { dialog, id ->
-//                            dialog.dismiss()
-//                        }.create().show()
                 }
                 return false
             }
@@ -142,12 +96,11 @@ class ProfileFragment : Fragment() {
 
         //닉네임, 프로필이미지 불러오기
         FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
-            binding.tv.text = ""
             for (snap in it) {
                 val userData: UserData? = snap.toObject(UserData::class.java)
                 userData?.apply {
 
-                    binding.tv.append(nickname)
+                    tvDrawer?.text = nickname
 
                     val uri = profileImgUri
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + uri)
@@ -164,8 +117,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun clickToolbar() {
-        val tvDrawer = view?.findViewById<TextView>(R.id.tv_drawer)
-        val ivDrawer = view?.findViewById<ImageView>(R.id.iv_drawer)
+
 
         drawerLayout = binding.drawerLayout
 
