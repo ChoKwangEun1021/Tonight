@@ -1,13 +1,11 @@
 package com.weare2024.tonight.adapter
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.weare2024.tonight.data.BoardDetailData
 import com.weare2024.tonight.databinding.PagerImgUploadBinding
 
 class BoardDetailPagerAdapter (val context: Context, val items: List<String>) : Adapter<BoardDetailPagerAdapter.VH>() {
@@ -21,9 +19,6 @@ class BoardDetailPagerAdapter (val context: Context, val items: List<String>) : 
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
-        val imageUri = "http://weare2024.dothome.co.kr/Tonight/board/${item}"
         Glide.with(context).load(item).into(holder.binding.iv)
-
-//        Glide.with(context).load(items[position].imgs).into(holder.binding.iv)
     }
 }
