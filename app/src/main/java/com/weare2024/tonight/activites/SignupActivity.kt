@@ -32,7 +32,6 @@ class SignupActivity : AppCompatActivity() {
         password = binding.inputLayoutPassword.editText!!.text.toString()
         passwordConfirm = binding.inputLayoutPasswordConfirm.editText!!.text.toString()
         val ss = FBRef.userRef.whereEqualTo("email", email).get()
-        val uid = FBAuth.getUid()
         if (ss.toString() == email) {
             Toast.makeText(this, "중복", Toast.LENGTH_SHORT).show()
         } else {
@@ -47,7 +46,6 @@ class SignupActivity : AppCompatActivity() {
                 intent.putExtra("email", email)
                 intent.putExtra("password", password)
                 intent.putExtra("login_type", "email")
-                intent.putExtra("email_uid",uid)
                 startActivity(intent)
 
                 AlertDialog.Builder(this).setMessage("$password").create().show()
