@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activites.BoardDetailActivity">
 
     <LinearLayout
@@ -26,17 +27,21 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_main"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/profle" />
 
                 <TextView
                     android:id="@+id/nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/iv_main"
+                    android:layout_marginStart="12dp"
+                    android:layout_toEndOf="@id/iv_main"
                     android:text="닉네임"
+                    android:fontFamily="@font/hakgyoansim_bombanghak_r"
+                    android:layout_marginTop="10dp"
                     android:textSize="18sp" />
+
             </RelativeLayout>
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -51,88 +56,49 @@
             android:id="@+id/tv_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:background="#B3FFFFFF"
             android:maxLines="3"
-            android:text="하이하이 여기 maxlines 3줄" />
+            android:text="게시글 내용" />
 
-        <RelativeLayout
-            android:id="@+id/rl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/iv"
-            android:backgroundTint="@color/white">
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="댓글 모두 보기"
+            android:layout_marginStart="10dp"
+            android:background="?attr/selectableItemBackground"/>
 
-            <ImageView
-                android:id="@+id/request"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="70dp"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/baseline_request" />
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rl"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@id/tv_review">-->
 
-            <ImageView
-                android:id="@+id/chat"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="70dp"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/baseline_send_24" />
-        </RelativeLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/request"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginLeft="70dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:src="@drawable/baseline_request" />-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--            <ImageView-->
+<!--                android:id="@+id/chat"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="70dp"-->
+<!--                android:background="?attr/selectableItemBackground"-->
+<!--                android:src="@drawable/baseline_send_24" />-->
+<!--        </RelativeLayout>-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_comment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="?attr/actionBarItemBackground"
-        android:orientation="vertical"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:hint="닉네임님에게 댓글 추가하기" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/sendupload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_gravity="end"
-                android:src="@drawable/baseline_forward_24" />
-        </RelativeLayout>
     </LinearLayout>
 
     <!-- 버튼 - 엔터 이벤트 구현 -->

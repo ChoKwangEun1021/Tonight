@@ -184,6 +184,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                             call: Call<NaverLogin>,
                             response: Response<NaverLogin>
                         ) {
+
                             val s = response.body()
                             val id = s?.response?.id
                             val email = s?.response?.email
@@ -213,7 +214,9 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                         }
 
                     })
+
                 }
+
             })
         }
     }
@@ -262,6 +265,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 }
             }
         }
+
     val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val intent = it.data
@@ -275,8 +279,11 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             intent1.putExtra("google_uid", uid)
             intent1.putExtra("google_email", googleEmail)
             intent1.putExtra("login_type", "google")
+            spfEdt.putBoolean("isLogin", true)
+            spfEdt.apply()
             startActivity(intent1)
             finish()
+
         }
 
     fun kakao() {
@@ -340,8 +347,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                             startActivity(intent)
                             finish()
+
                         }
                     }
+
                 }
             }
 
