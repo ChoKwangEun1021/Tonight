@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -141,6 +142,7 @@ class MyProfileActivity4 : AppCompatActivity() {
                             val gender =intent.getStringExtra("gender").toString()
                             val height = intent.getStringExtra("height").toString()
                             val birth = intent.getStringExtra("birth").toString()
+                            val password = intent.getStringExtra("password")
                             val intent = Intent(this,MyProfileActivity5::class.java)
 
                             intent.putExtra("email",email)
@@ -149,9 +151,11 @@ class MyProfileActivity4 : AppCompatActivity() {
                             intent.putExtra("gender",gender)
                             intent.putExtra("height", height)
                             intent.putExtra("birth",birth)
+                            intent.putExtra("password",password)
                             intent.putExtra("area", area)
                             intent.putExtra("login_type","email")
                             startActivity(intent)
+//                            Toast.makeText(this, "$email $password $nickname $uid $gender $height $birth $area", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

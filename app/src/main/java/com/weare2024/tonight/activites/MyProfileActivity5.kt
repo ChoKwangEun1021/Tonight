@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -95,6 +96,7 @@ class MyProfileActivity5 : AppCompatActivity() {
             val day = intent.getIntExtra("day", 2)
             val birth = "$year.$month.$day"
             val area = intent.getStringExtra("area")
+            val password = intent.getStringExtra("password")
 
             if (intent != null && intent.hasExtra("login_type")) {
                 when (intent.getStringExtra("login_type")) {
@@ -229,52 +231,52 @@ class MyProfileActivity5 : AppCompatActivity() {
                         val email = intent.getStringExtra("email").toString()
                         val uid = intent.getStringExtra("email_uid").toString()
 
-                        FBRef.userRef.whereEqualTo("email", email).get()
-                            .addOnSuccessListener {
+                        if (password != null) {
+                            FBAuth.auth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener {
 
-                                val user = mutableMapOf<String, String>()
-                                user["uid"] = uid
-                                user["email"] = email
-                                user["nickname"] = nickname.toString()
-                                user["gender"] = gender.toString()
-                                user["height"] = height.toString()
-                                user["birth"] = birth
-                                user["area"] = area.toString()
-                                user["work"] = job
+                                    if (it.isSuccessful) {
+                                        FBRef.userRef.whereEqualTo("email", email).get()
+                                            .addOnSuccessListener {
 
-                                spfEdt.putBoolean("isLogin", true)
-                                spf2Edt.putString("uid", uid)
-                                spf2Edt.putString("nickname", nickname)
-                                spfEdt.apply()
-                                spf2Edt.apply()
+                                                val user = mutableMapOf<String, String>()
+                                                user["uid"] = uid
+                                                user["email"] = email
+                                                user["nickname"] = nickname.toString()
+                                                user["gender"] = gender.toString()
+                                                user["height"] = height.toString()
+                                                user["birth"] = birth
+                                                user["password"] = password.toString()
+                                                user["area"] = area.toString()
+                                                user["work"] = job
 
-                                G.uid = uid
-                                G.nickname = nickname.toString()
-                                if (nickname != null) {
-                                    FBRef.userRef.document(nickname).set(user)
-                                        .addOnSuccessListener {
-                                            Toast.makeText(
-                                                this,
-                                                "회원가입이 완료돼었습니다.",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
+                                                spfEdt.putBoolean("isLogin", true)
+                                                spf2Edt.putString("uid", uid)
+                                                spf2Edt.putString("nickname", nickname)
+                                                spfEdt.apply()
+                                                spf2Edt.apply()
 
+                                                G.uid = uid
+                                                G.nickname = nickname.toString()
+                                                if (nickname != null) {
+                                                    FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
+                                                        Toast.makeText(this, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+                                            }
+                                        userProfileImgUpload()
+                                        startActivity(Intent(this, MainActivity::class.java))
+                                        finish()
+
+
+                                    } else {
+                                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-
-                            }
-                        userProfileImgUpload()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-
+                        }
                     }
                 }
-
-            } else {
-                Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
             }
-
-
         }
     }
 

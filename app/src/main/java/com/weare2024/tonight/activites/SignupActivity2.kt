@@ -25,10 +25,6 @@ class SignupActivity2 : AppCompatActivity() {
     private val binding by lazy { ActivitySignup2Binding.inflate(layoutInflater) }
     private var imgUri: Uri? = null
 
-    private val spf by lazy { getSharedPreferences("loginSave", MODE_PRIVATE) }
-    private val spf2 by lazy { getSharedPreferences("userInfo", MODE_PRIVATE) }
-    private val spfEdt by lazy { spf.edit() }
-    private val spf2Edt by lazy { spf2.edit() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -38,24 +34,22 @@ class SignupActivity2 : AppCompatActivity() {
     }
 
     private fun clickRegister() {
-        val email = intent.getStringExtra("email").toString()
-        val password = intent.getStringExtra("password").toString()
         val nickname = binding.inputLayoutNickName.editText!!.text.toString()
 
         if (intent != null && intent.hasExtra("login_type")) {
-            when(intent.getStringExtra("login_type")) {
+            when (intent.getStringExtra("login_type")) {
 
                 "kakao" -> {
 
                     val uid = intent.getStringExtra("kakao_uid")
                     val intent = Intent(this, MyProfileActivity1::class.java)
-                    Log.d("이미지","$imgUri")
+                    Log.d("이미지", "$imgUri")
                     intent.putExtra("kakao_uid", uid)
                     intent.putExtra("nickname", nickname)
                     intent.putExtra("profileImgUri", imgUri.toString())
                     intent.putExtra("login_type", "kakao")
                     startActivity(intent)
-                    Log.d("aaaa","$imgUri")
+                    Log.d("aaaa", "$imgUri")
 
                 }
 
@@ -75,57 +69,47 @@ class SignupActivity2 : AppCompatActivity() {
                 "google" -> {
                     val uid = intent.getStringExtra("google_uid")
                     val googleEmail = intent.getStringExtra("google_email")
-                    val intent = Intent(this,MyProfileActivity1::class.java)
-                    intent.putExtra("google_uid",uid)
-                    intent.putExtra("nickname",nickname)
-                    intent.putExtra("google_email",googleEmail)
+                    val intent = Intent(this, MyProfileActivity1::class.java)
+                    intent.putExtra("google_uid", uid)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("google_email", googleEmail)
                     intent.putExtra("login_type", "google")
                     startActivity(intent)
                     Toast.makeText(this, "$uid,$nickname", Toast.LENGTH_SHORT).show()
                 }
 
                 "email" -> {
-                    val email = intent.getStringExtra("email").toString()
-                    val password = intent.getStringExtra("password").toString()
                     val nickname = binding.inputLayoutNickName.editText!!.text.toString()
+                    val password = intent.getStringExtra("password").toString()
+                    val email = intent.getStringExtra("email").toString()
+                    val uid = intent.getStringExtra("email_uid")
+                    val intent = Intent(this, MyProfileActivity1::class.java)
 
-                    FBAuth.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                        val uid = FBAuth.getUid()
+                    intent.putExtra("email", email)
+                    intent.putExtra("password", password)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("email_uid", uid)
+                    intent.putExtra("login_type", "email")
+                    startActivity(intent)
 
+                    AlertDialog.Builder(this).setMessage("$email $password $nickname $uid")
 
-                        if (it.isSuccessful) {
-                            FBRef.userRef.whereEqualTo("email", email).get().addOnSuccessListener {
-                                val intent =Intent(this,MyProfileActivity1::class.java)
-                                intent.putExtra("email_uid",uid)
-                                intent.putExtra("login_type","email")
-                                intent.putExtra("nickname",nickname)
-
-                                startActivity(Intent(this, MyProfileActivity1::class.java))
-                            }
-
-                        } else {
-                            Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
-                        }
-
-
-                    }
                 }
             }
 
         }
 
 
-
     }
 
-    private fun clickImage(){
-        if (binding.cvProfile.drawable is VectorDrawable){
+    private fun clickImage() {
+        if (binding.cvProfile.drawable is VectorDrawable) {
             Toast.makeText(this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show()
             return
-        }else if (binding.inputLayoutNickName.editText!!.text.toString().isNullOrEmpty() ){
+        } else if (binding.inputLayoutNickName.editText!!.text.toString().isNullOrEmpty()) {
             Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
             return
-        }else{
+        } else {
             Toast.makeText(this, "이미지 선택 완료", Toast.LENGTH_SHORT).show()
             clickRegister()
         }
@@ -139,41 +123,42 @@ class SignupActivity2 : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            imgUri = it.data?.data
-            Glide.with(this).load(imgUri).into(binding.cvProfile)
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                imgUri = it.data?.data
+                Glide.with(this).load(imgUri).into(binding.cvProfile)
+            }
         }
-    }
 
-//    private fun userProfileImgUpload() {
-//        var name = ""
-//
-//        if (intent != null && intent.hasExtra("login_type")) {
-//            when (intent.getStringExtra("login_type")) {
-//                "kakao" -> {
-//                }
-//
-//                "naver" -> {
-//                }
-//
-//                "google" -> {
-//                }
-//
-//                "email" -> {
-//                    name = FBAuth.getUid()
-//
-//                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
-//
-//                    imgUri?.apply {
-//                        imgRef.putFile(this).addOnSuccessListener {
-//                            Log.d("img upload", "이미지 업로드 성공")
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//    }
+    private fun userProfileImgUpload() {
+        var name = ""
+
+        if (intent != null && intent.hasExtra("login_type")) {
+            when (intent.getStringExtra("login_type")) {
+                "kakao" -> {
+                }
+
+                "naver" -> {
+                }
+
+                "google" -> {
+                }
+
+                "email" -> {
+                    name = FBAuth.getUid()
+
+                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
+
+                    imgUri?.apply {
+                        imgRef.putFile(this).addOnSuccessListener {
+                            Log.d("img upload", "이미지 업로드 성공")
+                        }
+                    }
+                }
+
+            }
+        }
+
+    }
 }

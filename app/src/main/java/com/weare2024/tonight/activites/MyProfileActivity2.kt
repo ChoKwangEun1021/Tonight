@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -107,6 +108,7 @@ class MyProfileActivity2 : AppCompatActivity() {
                         val uid = intent.getStringExtra("email_uid")
                         val nickname =intent.getStringExtra("nickname")
                         val gender =intent.getStringExtra("gender")
+                        val password = intent.getStringExtra("password")
                         val height = "${selectedNumber}cm"
                         val intent = Intent(this,MyProfileActivity3::class.java)
 
@@ -115,8 +117,11 @@ class MyProfileActivity2 : AppCompatActivity() {
                         intent.putExtra("nickname",nickname)
                         intent.putExtra("gender",gender)
                         intent.putExtra("height", height)
+                        intent.putExtra("password",password)
                         intent.putExtra("login_type","email")
                         startActivity(intent)
+//                        Toast.makeText(this, "$email $password $nickname $uid $gender $height", Toast.LENGTH_SHORT).show()
+                        AlertDialog.Builder(this).setMessage("$email $password $nickname $uid $gender $height")
 
                     }
                 }

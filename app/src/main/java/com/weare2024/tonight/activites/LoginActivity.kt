@@ -123,16 +123,27 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
                     FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
                         if (id != null) {
-//                            it.documents.get()
-//                            val nickname
-                            G.uid = id
-//                            G.nickname = nickname
-                            spfEdt.putBoolean("isLogin", true)
-                            spf2Edt.putString("uid", id)
-//                            spf2Edt.putString("nickname", nickname)
-                            spfEdt.apply()
-                            spf2Edt.apply()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            for (snap in it) {
+
+                                val userData = snap.toObject(UserData::class.java)
+                                userData?.apply {
+                                }
+                                G.uid = id
+                                G.nickname = userData.nickname
+                                spfEdt.putBoolean("isLogin", true)
+                                spf2Edt.putString("uid", id)
+                                spf2Edt.putString("nickname", userData.nickname)
+                                spfEdt.apply()
+                                spf2Edt.apply()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "${G.nickname}",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+
+                            }
+
                         } else {
                             Toast.makeText(this@LoginActivity, "오류나써염", Toast.LENGTH_SHORT).show()
                         }
@@ -207,7 +218,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 }
 
             })
-        }//else
+        }
     }
 
     fun google() {
@@ -302,23 +313,11 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                                         spf2Edt.putString("nickname", nickname)
                                         spfEdt.apply()
                                         spf2Edt.apply()
-
-                                        startActivity(
-                                            Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java
-                                            )
-                                        )
-                                        Toast.makeText(
-                                            this@LoginActivity,
-                                            "${G.nickname}",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
                                     }
                                 }
+                                startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                                Toast.makeText(this@LoginActivity, G.nickname,Toast.LENGTH_SHORT).show()
                             }
-
                         }
                     }
                 }
@@ -332,8 +331,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
 
 
         } else {
-
-            // 두개의 로그인 요청 콜백함수
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()
@@ -366,3 +363,4 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 }
+//

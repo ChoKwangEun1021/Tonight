@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityMyProfile3Binding
@@ -112,6 +113,7 @@ class MyProfileActivity3 : AppCompatActivity() {
                         val nickname =intent.getStringExtra("nickname").toString()
                         val gender =intent.getStringExtra("gender").toString()
                         val height = intent.getStringExtra("height").toString()
+                        val password = intent.getStringExtra("password")
                         val intent = Intent(this,MyProfileActivity4::class.java)
 
                         intent.putExtra("email",email)
@@ -120,8 +122,11 @@ class MyProfileActivity3 : AppCompatActivity() {
                         intent.putExtra("gender",gender)
                         intent.putExtra("height", height)
                         intent.putExtra("birth",birth)
+                        intent.putExtra("password",password)
                         intent.putExtra("login_type","email")
                         startActivity(intent)
+//                        Toast.makeText(this, "$email $password $nickname $uid $gender $height $birth", Toast.LENGTH_SHORT).show()
+                        AlertDialog.Builder(this).setMessage("$email $password $nickname $uid $gender $height $birth")
                     }
 
 
