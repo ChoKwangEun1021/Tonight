@@ -59,6 +59,7 @@ class SignupActivity2 : AppCompatActivity() {
                     val intent = Intent(this, MyProfileActivity1::class.java)
                     intent.putExtra("naver_uid", uid)
                     intent.putExtra("naver_email", naverEmail)
+                    intent.putExtra("profileImgUri", imgUri.toString())
                     intent.putExtra("nickname", nickname)
                     intent.putExtra("login_type", "naver")
                     startActivity(intent)
@@ -73,6 +74,7 @@ class SignupActivity2 : AppCompatActivity() {
                     intent.putExtra("google_uid", uid)
                     intent.putExtra("nickname", nickname)
                     intent.putExtra("google_email", googleEmail)
+                    intent.putExtra("profileImgUri", imgUri.toString())
                     intent.putExtra("login_type", "google")
                     startActivity(intent)
                     Toast.makeText(this, "$uid,$nickname", Toast.LENGTH_SHORT).show()
@@ -82,17 +84,16 @@ class SignupActivity2 : AppCompatActivity() {
                     val nickname = binding.inputLayoutNickName.editText!!.text.toString()
                     val password = intent.getStringExtra("password").toString()
                     val email = intent.getStringExtra("email").toString()
-                    val uid = intent.getStringExtra("email_uid")
                     val intent = Intent(this, MyProfileActivity1::class.java)
 
                     intent.putExtra("email", email)
                     intent.putExtra("password", password)
                     intent.putExtra("nickname", nickname)
-                    intent.putExtra("email_uid", uid)
+                    intent.putExtra("profileImgUri", imgUri.toString())
                     intent.putExtra("login_type", "email")
                     startActivity(intent)
 
-                    AlertDialog.Builder(this).setMessage("$email $password $nickname $uid")
+//                    AlertDialog.Builder(this).setMessage("$email $password $nickname $uid")
 
                 }
             }
@@ -130,35 +131,4 @@ class SignupActivity2 : AppCompatActivity() {
                 Glide.with(this).load(imgUri).into(binding.cvProfile)
             }
         }
-
-    private fun userProfileImgUpload() {
-        var name = ""
-
-        if (intent != null && intent.hasExtra("login_type")) {
-            when (intent.getStringExtra("login_type")) {
-                "kakao" -> {
-                }
-
-                "naver" -> {
-                }
-
-                "google" -> {
-                }
-
-                "email" -> {
-                    name = FBAuth.getUid()
-
-                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
-
-                    imgUri?.apply {
-                        imgRef.putFile(this).addOnSuccessListener {
-                            Log.d("img upload", "이미지 업로드 성공")
-                        }
-                    }
-                }
-
-            }
-        }
-
-    }
-}
+   }

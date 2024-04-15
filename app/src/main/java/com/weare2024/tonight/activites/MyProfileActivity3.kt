@@ -75,6 +75,7 @@ class MyProfileActivity3 : AppCompatActivity() {
                         intent.putExtra("year", year)
                         intent.putExtra("month", month)
                         intent.putExtra("day", day)
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("login_type", "naver")
 
                         Toast.makeText(
@@ -97,6 +98,7 @@ class MyProfileActivity3 : AppCompatActivity() {
                         intent.putExtra("month", month)
                         intent.putExtra("day", day)
                         intent.putExtra("login_type", "google")
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("google_email", googleEmail)
                         Toast.makeText(
                             this,
@@ -109,7 +111,6 @@ class MyProfileActivity3 : AppCompatActivity() {
 
                     "email" -> {
                         val email = intent.getStringExtra("email").toString()
-                        val uid = intent.getStringExtra("email_uid").toString()
                         val nickname =intent.getStringExtra("nickname").toString()
                         val gender =intent.getStringExtra("gender").toString()
                         val height = intent.getStringExtra("height").toString()
@@ -117,16 +118,16 @@ class MyProfileActivity3 : AppCompatActivity() {
                         val intent = Intent(this,MyProfileActivity4::class.java)
 
                         intent.putExtra("email",email)
-                        intent.putExtra("email_uid",uid)
                         intent.putExtra("nickname",nickname)
                         intent.putExtra("gender",gender)
                         intent.putExtra("height", height)
                         intent.putExtra("birth",birth)
                         intent.putExtra("password",password)
+                        intent.putExtra("profileImgUri",imguri)
                         intent.putExtra("login_type","email")
                         startActivity(intent)
 //                        Toast.makeText(this, "$email $password $nickname $uid $gender $height $birth", Toast.LENGTH_SHORT).show()
-                        AlertDialog.Builder(this).setMessage("$email $password $nickname $uid $gender $height $birth")
+//                        AlertDialog.Builder(this).setMessage("$email $password $nickname $uid $gender $height $birth")
                     }
 
 

@@ -229,18 +229,18 @@ class MyProfileActivity5 : AppCompatActivity() {
                     "email" -> {
 
                         val email = intent.getStringExtra("email").toString()
-                        val uid = intent.getStringExtra("email_uid").toString()
 
                         if (password != null) {
                             FBAuth.auth.createUserWithEmailAndPassword(email, password)
                                 .addOnCompleteListener {
+
 
                                     if (it.isSuccessful) {
                                         FBRef.userRef.whereEqualTo("email", email).get()
                                             .addOnSuccessListener {
 
                                                 val user = mutableMapOf<String, String>()
-                                                user["uid"] = uid
+                                                user["uid"] = FBAuth.getUid()
                                                 user["email"] = email
                                                 user["nickname"] = nickname.toString()
                                                 user["gender"] = gender.toString()
@@ -251,12 +251,12 @@ class MyProfileActivity5 : AppCompatActivity() {
                                                 user["work"] = job
 
                                                 spfEdt.putBoolean("isLogin", true)
-                                                spf2Edt.putString("uid", uid)
+                                                spf2Edt.putString("uid", FBAuth.getUid())
                                                 spf2Edt.putString("nickname", nickname)
                                                 spfEdt.apply()
                                                 spf2Edt.apply()
 
-                                                G.uid = uid
+                                                G.uid = FBAuth.getUid()
                                                 G.nickname = nickname.toString()
                                                 if (nickname != null) {
                                                     FBRef.userRef.document(nickname).set(user).addOnSuccessListener {
@@ -300,6 +300,45 @@ class MyProfileActivity5 : AppCompatActivity() {
                             }
                         }
                     }
+                    "naver" -> {
+                        name = intent.getStringExtra("naver_uid").toString()
+
+                        val imgRef: StorageReference =
+                            Firebase.storage.getReference("usersImg/$name")
+
+                        imgUri?.apply {
+                            imgRef.putFile(this).addOnSuccessListener {
+
+                            }
+                        }
+                    }
+
+                    "google" -> {
+                        name = intent.getStringExtra("google_uid").toString()
+
+                        val imgRef: StorageReference =
+                            Firebase.storage.getReference("usersImg/$name")
+
+                        imgUri?.apply {
+                            imgRef.putFile(this).addOnSuccessListener {
+
+                            }
+                        }
+                    }
+
+                    "email" -> {
+                        name = FBAuth.getUid()
+
+                        val imgRef: StorageReference =
+                            Firebase.storage.getReference("usersImg/$name")
+
+                        imgUri?.apply {
+                            imgRef.putFile(this).addOnSuccessListener {
+
+                            }
+                        }
+                    }
+
                 }
             }
         } else {
