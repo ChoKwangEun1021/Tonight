@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         val drawerLogout = binding.nav.setNavigationItemSelectedListener(object :OnNavigationItemSelectedListener{
             override fun onNavigationItemSelected(p0: MenuItem): Boolean {
                 if (p0.itemId == R.id.menu_aa){
-                    Toast.makeText(requireContext(), "로그아웃할거에욤", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "로그아웃 해라이 쉨이야.", Toast.LENGTH_SHORT).show()
                     AlertDialog.Builder(requireContext()).setTitle("로그아웃").setMessage("로그아웃 하시겠습니까").setPositiveButton("확인"){dialog , id  ->
                         FBAuth.auth.signOut()
                         spfEdt?.putBoolean("isLogin", false)
