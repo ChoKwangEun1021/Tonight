@@ -5,6 +5,7 @@
     <group android:id="@+id/g1">
 
         <item android:id="@+id/menu_aa" android:title="로그아웃"/>
+        <item android:id="@+id/menu_change" android:title="회원정보 수정"/>
 
     </group>
 
