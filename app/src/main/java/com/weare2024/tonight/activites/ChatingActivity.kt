@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.ChatAdapter
 import com.weare2024.tonight.databinding.ActivityChatingBinding
@@ -43,7 +44,7 @@ class ChatingActivity : AppCompatActivity() {
         binding.recyclerView.adapter = ChatAdapter(this, msgItem)
 
 
-        FBRef.chatRef.document("sas").collection(G.nickname).addSnapshotListener { value, error ->
+        FBRef.chatRef.document("sas").collection("chat").addSnapshotListener { value, error ->
             value?.documentChanges?.forEach {
                 val snapshot = it.document
                 val item = snapshot.toObject(ChatData::class.java)
@@ -79,38 +80,29 @@ class ChatingActivity : AppCompatActivity() {
             "MSG_" + (SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(Date()))
         // Firestore에 메시지 저장
 
-        FBRef.chatRef.document("sas").collection(G.nickname).document().set(item).addOnSuccessListener {
+        FBRef.chatRef.document("sas").collection("chat").document(t).set(item).addOnSuccessListener {
             Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
         }
-        FBRef.chatRef.document("sas").collection(G.nickname).document()
+        FBRef.chatRef.document("sas").collection("chat")
             .addSnapshotListener { snap, e ->
-//                if (e != null) {
-//                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-//                }
-//                if (snap != null) {
-//                    val itemList: ArrayList<ChatData> = ArrayList()
-//                    for (snapshot in snap.)
-//                }
+                if (e != null) {
+                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                }
+                if (snap != null) {
+                    val itemList: ArrayList<ChatData> = ArrayList()
+                    for (snapshot in snap.documents){
+                        val mssg = snapshot.toObject(ChatData::class.java)
+                        if (mssg != null){
+                            itemList.add(mssg)
+                        }
+                    }
+                }
 
 
             }
 
-//        db.collection("chat").document("빵빵아").collection("옥지얌")
-//            .orderBy("timestamp", Query.Direction.DESCENDING)
-//            .addSnapshotListener { snapshot, e ->
-//                if (e != null) {
-//                    return@addSnapshotListener
-//                }
-//                if (snapshot != null) {
-//                    val messagesList = ArrayList<ChatData>()
-//                    for (doc in snapshot.documents) {
-//                        val message = doc.toObject(ChatData::class.java)
-//                        if (message != null) {
-//                            messagesList.add(message)
-//                        }
-//                    }
 
 
         val inputMethodManager =
