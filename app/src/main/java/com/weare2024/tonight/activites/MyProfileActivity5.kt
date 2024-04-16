@@ -268,7 +268,6 @@ class MyProfileActivity5 : AppCompatActivity() {
                                         startActivity(Intent(this, MainActivity::class.java))
                                         finish()
 
-
                                     } else {
                                         Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
                                     }

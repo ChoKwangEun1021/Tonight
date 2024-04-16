@@ -24,7 +24,6 @@ import com.google.firebase.storage.storage
 import com.weare2024.tonight.G
 import com.weare2024.tonight.G.Companion.uid
 import com.weare2024.tonight.R
-import com.weare2024.tonight.activites.ChangeProfileActivity
 import com.weare2024.tonight.activites.LoginActivity
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.databinding.FragmentProfileBinding
@@ -38,8 +37,6 @@ class ProfileFragment : Fragment() {
     private val spf2 by lazy { activity?.getSharedPreferences("userInfo", AppCompatActivity.MODE_PRIVATE) }
     private val spfEdt by lazy { spf?.edit() }
     private val spf2Edt by lazy { spf2?.edit() }
-    val tvDrawer by  lazy { view?.findViewById<TextView>(R.id.tv_drawer) }
-    val ivDrawer by  lazy { view?.findViewById<ImageView>(R.id.iv_drawer) }
 
 
     override fun onCreateView(
@@ -85,11 +82,12 @@ class ProfileFragment : Fragment() {
 
         //닉네임, 프로필이미지 불러오기
         FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
+            binding.tv.text = ""
             for (snap in it) {
                 val userData: UserData? = snap.toObject(UserData::class.java)
                 userData?.apply {
 
-                    tvDrawer?.text = nickname
+                    binding.tv.text = nickname
 
                     val uri = profileImgUri
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + uri)
@@ -106,7 +104,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun clickToolbar() {
-
+        val tvDrawer = view?.findViewById<TextView>(R.id.tv_drawer)
+        val ivDrawer = view?.findViewById<ImageView>(R.id.iv_drawer)
 
         drawerLayout = binding.drawerLayout
 
@@ -120,7 +119,7 @@ class ProfileFragment : Fragment() {
 //                    tvDrawer?.append(nickname)
                     tvDrawer?.text = nickname
 
-                    val uri = profileImgUri
+                    val uri = G.uid
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$uri")
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {

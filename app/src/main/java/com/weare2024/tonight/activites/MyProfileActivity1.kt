@@ -54,6 +54,7 @@ class MyProfileActivity1 : AppCompatActivity() {
 
         if (intent != null && intent.hasExtra("login_type")){
             when(intent.getStringExtra("login_type")) {
+
                 "kakao" ->{
                     if (gendera == "남자") {
                         val uid = intent.getStringExtra("kakao_uid")
@@ -84,6 +85,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         startActivity(intent)
                     } else Toast.makeText(this, "성별을 선택해 주세요", Toast.LENGTH_SHORT).show()
                 }
+
                 "naver" ->{
                     if (gendera == "남자") {
                         val uid = intent.getStringExtra("naver_uid")
