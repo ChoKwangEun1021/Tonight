@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.adapter.CommentAdapter
 import com.weare2024.tonight.data.BoardDetailData
@@ -39,8 +40,8 @@ class CommentActivity : AppCompatActivity() {
 
     private fun insertComment() {
         val boardNo = intent.getIntExtra("boardNo", 0)
-        val cmtUid = "uid"
-        val cmtNickname = "nickname"
+        val cmtUid = G.uid
+        val cmtNickname = G.nickname
         val cmtContent = binding.etContent.text.toString()
 
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
@@ -78,7 +79,7 @@ class CommentActivity : AppCompatActivity() {
                 val items2: List<CommentData>? = p1.body()
                 items2?.forEach {
                     items.add(0, it)
-                    binding.recyclerComment.adapter!!.notifyItemInserted(0)
+                    binding.recyclerComment.adapter!!.notifyItemInserted(items.size - 1)
                 }
 
                 binding.recyclerComment.adapter!!.notifyDataSetChanged()

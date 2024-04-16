@@ -20,6 +20,7 @@ import androidx.core.content.FileProvider
 import androidx.loader.content.CursorLoader
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.PagerAdapter
 import com.weare2024.tonight.databinding.ActivityNewPostBinding
 import com.weare2024.tonight.network.RetrofitHelper
@@ -65,8 +66,8 @@ class NewPostActivity : AppCompatActivity() {
     private fun insertData() {
         val retrofit = RetrofitHelper.getRetrofitInstance("http://weare2024.dothome.co.kr")
         val retrofitService = retrofit.create(RetrofitService::class.java)
-        boardList["uid"] = "uid"
-        boardList["nickname"] = "nickname"
+        boardList["uid"] = G.uid
+        boardList["nickname"] = G.nickname
         boardList["content"] = binding.textPost.text.toString()
         for (i in 0 until imgPath2.size) {
             val file = File(imgPath2[i])
@@ -148,6 +149,7 @@ class NewPostActivity : AppCompatActivity() {
                 pager.adapter = PagerAdapter(this, imgs)
             }
         }
+
     private val pickMultipleLauncher =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
                 uris: List<Uri> ->
