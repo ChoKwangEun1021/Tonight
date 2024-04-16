@@ -84,7 +84,7 @@ class ProfileFragment : Fragment() {
                 val userData: UserData? = snap.toObject(UserData::class.java)
                 userData?.apply {
 
-                    binding.tv.append(nickname)
+                    binding.tv.text = nickname
 
                     val uri = profileImgUri
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + uri)
@@ -116,7 +116,7 @@ class ProfileFragment : Fragment() {
 //                    tvDrawer?.append(nickname)
                     tvDrawer?.text = nickname
 
-                    val uri = profileImgUri
+                    val uri = G.uid
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$uri")
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {
