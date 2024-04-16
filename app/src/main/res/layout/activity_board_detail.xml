@@ -13,85 +13,91 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/menu_detail">
+
             <RelativeLayout
                 android:id="@+id/rl_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_main"
+                    android:id="@+id/cv_profile"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/profle" />
 
                 <TextView
-                    android:id="@+id/nickname"
+                    android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_toEndOf="@id/iv_main"
-                    android:text="닉네임"
-                    android:fontFamily="@font/hakgyoansim_bombanghak_r"
                     android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/cv_profile"
+                    android:fontFamily="@font/hakgyoansim_bombanghak_r"
+                    android:text="닉네임"
                     android:textSize="18sp" />
 
             </RelativeLayout>
+
         </com.google.android.material.appbar.MaterialToolbar>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:background="#81FFFFFF"/>
+            android:background="#81FFFFFF" />
+
         <TextView
-            android:id="@+id/tv_review"
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:background="#B3FFFFFF"
             android:maxLines="3"
-            android:text="게시글 내용" />
+            android:text="게시글 내용"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="댓글 모두 보기"
             android:layout_marginStart="10dp"
-            android:background="?attr/selectableItemBackground"/>
+            android:layout_marginTop="4dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="댓글 모두 보기" />
 
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rl"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_below="@id/tv_review">-->
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/rl"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@id/tv_review">-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/request"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_alignParentLeft="true"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_marginLeft="70dp"-->
-<!--                android:background="?attr/selectableItemBackground"-->
-<!--                android:src="@drawable/baseline_request" />-->
+        <!--            <ImageView-->
+        <!--                android:id="@+id/request"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="50dp"-->
+        <!--                android:layout_alignParentLeft="true"-->
+        <!--                android:layout_alignParentTop="true"-->
+        <!--                android:layout_marginLeft="70dp"-->
+        <!--                android:background="?attr/selectableItemBackground"-->
+        <!--                android:src="@drawable/baseline_request" />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/chat"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_alignParentTop="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_marginRight="70dp"-->
-<!--                android:background="?attr/selectableItemBackground"-->
-<!--                android:src="@drawable/baseline_send_24" />-->
-<!--        </RelativeLayout>-->
+        <!--            <ImageView-->
+        <!--                android:id="@+id/chat"-->
+        <!--                android:layout_width="30dp"-->
+        <!--                android:layout_height="50dp"-->
+        <!--                android:layout_alignParentTop="true"-->
+        <!--                android:layout_alignParentRight="true"-->
+        <!--                android:layout_marginRight="70dp"-->
+        <!--                android:background="?attr/selectableItemBackground"-->
+        <!--                android:src="@drawable/baseline_send_24" />-->
+        <!--        </RelativeLayout>-->
 
     </LinearLayout>
 

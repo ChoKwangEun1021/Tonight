@@ -2,24 +2,27 @@ package com.weare2024.tonight.activites
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.weare2024.tonight.G
+import com.google.firebase.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.storage
 import com.weare2024.tonight.R
 import com.weare2024.tonight.adapter.BoardDetailPagerAdapter
 import com.weare2024.tonight.data.BoardDetailData
 import com.weare2024.tonight.databinding.ActivityBoardDetailBinding
+import com.weare2024.tonight.databinding.CustomDialogProfileImgBinding
 import com.weare2024.tonight.network.RetrofitHelper
 import com.weare2024.tonight.network.RetrofitService
 import retrofit2.Call
@@ -28,24 +31,20 @@ import retrofit2.Response
 
 class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
-
-//    private val bsb: BottomSheetBehavior<View> by lazy { BottomSheetBehavior.from(bs) }
-    private val rl_title: View by lazy { binding.rlTitle }
-    private val itemList = mutableMapOf<String, String>()
     private val imgs = mutableListOf<String>()
+    private var profileImgUri = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.tvComment.setOnClickListener { clickComment() }
-//        binding.chat.setOnClickListener { clickChat() }
         binding.rlTitle.setOnClickListener { clickTitle() }
-//        binding.rl.background = null
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
                 } else if (item.itemId == R.id.send) {
-                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 return true
             }
@@ -77,8 +76,16 @@ class BoardDetailActivity : AppCompatActivity() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(p0: Call<BoardDetailData>, p1: Response<BoardDetailData>) {
                 val data = p1.body()
-                binding.nickname.text = data?.nickname
-                binding.tvReview.text = data?.content
+                binding.tvNickname.text = data?.nickname
+                binding.tvContent.text = data?.content
+                profileImgUri = data?.uid.toString()
+                val imgRef: StorageReference =
+                    Firebase.storage.getReference("usersImg/${data?.uid}")
+                imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
+                    override fun onSuccess(p0: Uri?) {
+                        Glide.with(this@BoardDetailActivity).load(p0).into(binding.cvProfile)
+                    }
+                })
                 for (i in 0 until data?.imgs!!.size) {
                     imgs.add("http://weare2024.dothome.co.kr/Tonight/board/${data.imgs[i]}")
                 }
@@ -129,11 +136,15 @@ class BoardDetailActivity : AppCompatActivity() {
     }
 
     private fun clickTitle() {
-        val imageView = ImageView(this@BoardDetailActivity)
-        imageView.setImageResource(R.drawable.baseline_image_post_sample)
-        val builder = AlertDialog.Builder(this@BoardDetailActivity)
-        builder.setView(imageView)
-        val alertDialog = builder.create()
-        alertDialog.show()
+
+        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/${profileImgUri}")
+        imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
+            override fun onSuccess(p0: Uri?) {
+                AlertDialog.Builder(this@BoardDetailActivity)
+                    .setView(R.layout.custom_dialog_profile_img).create().show()
+
+            }
+        })
+
     }
 }
