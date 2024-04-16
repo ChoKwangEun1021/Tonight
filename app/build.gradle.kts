@@ -70,8 +70,6 @@ dependencies {
 
     implementation("com.navercorp.nid:oauth:5.9.1")
 
-    implementation("com.navercorp.nid:oauth:5.9.1") // jdk 11 코틀린 네아로
-
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 

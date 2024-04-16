@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="kakao_native_app_key">kakaob15e1a17c1084b4e7e5aa66b7670358b</string>
-    <string name="kakao_native_app_key_activity">b15e1a17c1084b4e7e5aa66b7670358b</string>
-    <string name="client_id">qyLkzH1t2kJgb7lm6CgW</string>
-    <string name="client_secret">lqp9Lnoc1o</string>
-</resources>
