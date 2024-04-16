@@ -13,18 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/menu_detail">
-
             <RelativeLayout
                 android:id="@+id/rl_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_main"
                     android:layout_width="50dp"
@@ -43,15 +40,12 @@
                     android:textSize="18sp" />
 
             </RelativeLayout>
-
         </com.google.android.material.appbar.MaterialToolbar>
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:background="#81FFFFFF" />
-
+            android:background="#81FFFFFF"/>
         <TextView
             android:id="@+id/tv_review"
             android:layout_width="match_parent"

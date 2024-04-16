@@ -6,8 +6,7 @@
     android:padding="16dp"
     android:layout_marginRight="40dp"
     android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/bg_other_chatgbox">
+    android:layout_marginBottom="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ciriv"
@@ -16,6 +15,7 @@
         android:src="@color/black"
         app:civ_border_width="1dp"
         android:layout_alignParentLeft="true"/>
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -23,8 +23,9 @@
         android:text="name"
         android:layout_toRightOf="@id/ciriv"
         android:layout_marginRight="16dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"/>
+
     <TextView
         android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
@@ -35,19 +36,17 @@
         android:textColor="@color/black"
         android:layout_alignLeft="@id/tv_name"
         android:layout_below="@id/tv_name"
-        android:maxWidth="250dp"
-        />
+        android:maxWidth="250dp" />
+
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="16:28"
         android:textSize="12sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_toRightOf="@id/tv_msg"
         android:layout_alignBottom="@id/tv_msg"
-        android:layout_marginRight="8dp"
-        />
-
+        android:layout_marginRight="8dp"/>
 
 </RelativeLayout>

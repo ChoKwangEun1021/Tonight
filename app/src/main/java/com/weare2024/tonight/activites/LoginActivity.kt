@@ -39,6 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.common.util.Utility
 import com.weare2024.tonight.data.UserData
 
 
@@ -135,13 +136,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                                 spf2Edt.putString("nickname", userData.nickname)
                                 spfEdt.apply()
                                 spf2Edt.apply()
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "${G.nickname}",
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-
+                                Toast.makeText(this@LoginActivity, "${G.nickname}", Toast.LENGTH_SHORT).show()
                             }
 
                         } else {
@@ -184,18 +179,13 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                             call: Call<NaverLogin>,
                             response: Response<NaverLogin>
                         ) {
-
                             val s = response.body()
                             val id = s?.response?.id
                             val email = s?.response?.email
 
                             FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
                                 if (id != null) {
-                                    startActivity(
-                                        Intent(
-                                            this@LoginActivity,
-                                            MainActivity::class.java
-                                        )
+                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java)
                                     )
                                 } else {
                                     val intent2 =
@@ -289,10 +279,10 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     fun kakao() {
         val kakaoToken = AuthApiClient.instance.hasToken()
         if (kakaoToken) {
-
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
-                    Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "${error.message}", Toast.LENGTH_SHORT).show()
+                    Log.d("kakaoErr", "${error.message}")
                 } else {
                     Toast.makeText(this, "카카오로그인 성공", Toast.LENGTH_SHORT).show()
 
@@ -334,7 +324,8 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
             // 두개의 로그인 요청 콜백함수
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
-                    Toast.makeText(this, "카카오로그인 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "${error.message}", Toast.LENGTH_SHORT).show()
+                    Log.d("kakaoErr", "${error.message}")
                 } else {
                     Toast.makeText(this, "카카오로그인 성공", Toast.LENGTH_SHORT).show()
 

@@ -122,5 +122,3 @@ class ChatingActivity : AppCompatActivity() {
 
     }
 }
-
-

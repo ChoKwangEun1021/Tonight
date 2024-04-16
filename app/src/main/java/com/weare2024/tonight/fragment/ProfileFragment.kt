@@ -24,6 +24,7 @@ import com.google.firebase.storage.storage
 import com.weare2024.tonight.G
 import com.weare2024.tonight.G.Companion.uid
 import com.weare2024.tonight.R
+import com.weare2024.tonight.activites.ChangeProfileActivity
 import com.weare2024.tonight.activites.LoginActivity
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.databinding.FragmentProfileBinding
@@ -71,6 +72,9 @@ class ProfileFragment : Fragment() {
                     }.create().show()
 
 
+                }  else if (p0.itemId == R.id.menu_change) {
+                    startActivity(Intent(context, ChangeProfileActivity::class.java))
+                    return true
                 }
                 return false
             }
@@ -84,9 +88,10 @@ class ProfileFragment : Fragment() {
                 val userData: UserData? = snap.toObject(UserData::class.java)
                 userData?.apply {
 
-                    binding.tv.append(nickname)
+                    binding.tv.text = nickname
 
-                    val uri = profileImgUri
+                    val uri = uid
+                    Toast.makeText(context, "$uri", Toast.LENGTH_SHORT).show()
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + uri)
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {
@@ -106,7 +111,7 @@ class ProfileFragment : Fragment() {
 
         drawerLayout = binding.drawerLayout
 
-        drawerLayout.openDrawer(GravityCompat.START)
+        drawerLayout.openDrawer(GravityCompat.END)
 
         FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
             tvDrawer?.text = ""
@@ -116,7 +121,7 @@ class ProfileFragment : Fragment() {
 //                    tvDrawer?.append(nickname)
                     tvDrawer?.text = nickname
 
-                    val uri = profileImgUri
+                    val uri = uid
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$uri")
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {

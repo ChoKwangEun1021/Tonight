@@ -106,7 +106,6 @@ class MyProfileActivity3 : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         startActivity(intent)
-
                     }
 
                     "email" -> {
