@@ -24,6 +24,7 @@ import com.google.firebase.storage.storage
 import com.weare2024.tonight.G
 import com.weare2024.tonight.G.Companion.uid
 import com.weare2024.tonight.R
+import com.weare2024.tonight.activites.ChangeProfileActivity
 import com.weare2024.tonight.activites.LoginActivity
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.databinding.FragmentProfileBinding

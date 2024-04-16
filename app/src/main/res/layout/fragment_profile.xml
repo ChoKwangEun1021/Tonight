@@ -38,7 +38,7 @@
                     android:layout_height="120dp"
                     android:src="@color/gray"/>
                 <TextView
-                    android:id="@+id/tv_nickname"
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
