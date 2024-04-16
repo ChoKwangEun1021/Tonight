@@ -43,7 +43,7 @@ class ChatingActivity : AppCompatActivity() {
         binding.recyclerView.adapter = ChatAdapter(this, msgItem)
 
 
-        FBRef.chatRef.addSnapshotListener { value, error ->
+        FBRef.chatRef.document("sas").collection(G.nickname).addSnapshotListener { value, error ->
             value?.documentChanges?.forEach {
                 val snapshot = it.document
                 val item = snapshot.toObject(ChatData::class.java)
@@ -79,12 +79,12 @@ class ChatingActivity : AppCompatActivity() {
             "MSG_" + (SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(Date()))
         // Firestore에 메시지 저장
 
-        FBRef.chatRef.document("sas").collection("채팅방").document().set(item).addOnSuccessListener {
+        FBRef.chatRef.document("sas").collection(G.nickname).document().set(item).addOnSuccessListener {
             Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
         }
-        FBRef.chatRef.document("sas").collection("채팅방").document()
+        FBRef.chatRef.document("sas").collection(G.nickname).document()
             .addSnapshotListener { snap, e ->
 //                if (e != null) {
 //                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
@@ -124,5 +124,3 @@ class ChatingActivity : AppCompatActivity() {
 }
 
 
-}
-}
