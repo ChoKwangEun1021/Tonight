@@ -47,6 +47,7 @@ class MyProfileActivity1 : AppCompatActivity() {
         val imguri = intent.getStringExtra("profileImgUri")
         Log.d("pppp","$imguri")
 
+
     }
 
     fun clickNext() {
