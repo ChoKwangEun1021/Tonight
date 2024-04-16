@@ -319,8 +319,9 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
 
+        } else /*("토큰이 없으면")*/ {
 
-        } else {
+            // 두개의 로그인 요청 콜백함수
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Toast.makeText(this, "${error.message}", Toast.LENGTH_SHORT).show()
@@ -354,3 +355,4 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 }
+//

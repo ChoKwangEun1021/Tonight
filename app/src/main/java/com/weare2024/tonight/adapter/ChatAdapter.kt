@@ -39,14 +39,14 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
             vh.binding.tvName.text = item.nickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load(item.profileUrl).into(vh.binding.ciriv)
+            Glide.with(context).load("users/"+item.uid).into(vh.binding.ciriv)
 
         } else {
             val vh = holder as VH2
             vh.binding.tvName.text = item.nickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load(item.profileUrl).into(vh.binding.ciriv)
+            Glide.with(context).load("users/"+item.uid).into(vh.binding.ciriv)
 
         }
 
