@@ -8,135 +8,126 @@
     android:orientation="vertical"
     tools:context=".fragment.ProfileFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="?actionBarSize"
-        android:layout_alignParentRight="true"
-        app:navigationIcon="@drawable/my_profile_setting" />
-
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="end">
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_gravity="end"
+                app:navigationIcon="@drawable/my_profile_setting"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv"
-                        android:layout_width="150dp"
-                        android:layout_height="200dp"
-                        android:src="@color/black" />
-                </com.google.android.material.card.MaterialCardView>
-
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#00000000">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@color/gray"/>
                 <TextView
                     android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@id/card"
+                    android:layout_toRightOf="@id/iv"
                     android:fontFamily="@font/hakgyoansim_bombanghak_r"
-                    android:text="이름"
-                    android:textSize="30sp" />
+                    android:text="닉네임"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"/>
             </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <HorizontalScrollView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="200dp"
-                        android:layout_height="250dp"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="200dp"
-                        android:layout_height="250dp"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="200dp"
-                        android:layout_height="250dp"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="200dp"
-                        android:layout_height="250dp"
-                        android:layout_margin="16dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:layout_width="200dp"
+                    android:layout_height="250dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/white"/>
 
 
-                </LinearLayout>
-            </HorizontalScrollView>
+<!--                <HorizontalScrollView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        <com.google.android.material.card.MaterialCardView-->
+<!--                            android:layout_width="200dp"-->
+<!--                            android:layout_height="250dp"-->
+<!--                            android:layout_margin="16dp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:src="@color/white" />-->
+<!--                        </com.google.android.material.card.MaterialCardView>-->
+
+<!--                        <com.google.android.material.card.MaterialCardView-->
+<!--                            android:layout_width="200dp"-->
+<!--                            android:layout_height="250dp"-->
+<!--                            android:layout_margin="16dp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:src="@color/white" />-->
+<!--                        </com.google.android.material.card.MaterialCardView>-->
+
+<!--                        <com.google.android.material.card.MaterialCardView-->
+<!--                            android:layout_width="200dp"-->
+<!--                            android:layout_height="250dp"-->
+<!--                            android:layout_margin="16dp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:src="@color/white" />-->
+<!--                        </com.google.android.material.card.MaterialCardView>-->
+
+<!--                        <com.google.android.material.card.MaterialCardView-->
+<!--                            android:layout_width="200dp"-->
+<!--                            android:layout_height="250dp"-->
+<!--                            android:layout_margin="16dp">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:src="@color/white" />-->
+<!--                        </com.google.android.material.card.MaterialCardView>-->
 
 
-        </RelativeLayout>
-    </LinearLayout>
+<!--                    </LinearLayout>-->
+<!--                </HorizontalScrollView>-->
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
+            android:layout_gravity="end"
             app:menu="@menu/drawer_nav"
-            app:headerLayout="@layout/drawer_hearder"
-            />
-
+            app:headerLayout="@layout/drawer_hearder"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
