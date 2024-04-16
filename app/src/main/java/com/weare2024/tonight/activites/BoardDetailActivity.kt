@@ -44,7 +44,7 @@ class BoardDetailActivity : AppCompatActivity() {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
-                } else if (item!!.itemId == R.id.send) {
+                } else if (item.itemId == R.id.send) {
                     Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT).show()
                 }
                 return true
@@ -126,10 +126,6 @@ class BoardDetailActivity : AppCompatActivity() {
         intent2.putExtra("boardNo", boardNo)
         startActivity(intent2)
 
-    }
-
-    private fun clickChat() {
-        Toast.makeText(this, "채팅 채널로 연결 됩니다.", Toast.LENGTH_SHORT).show()
     }
 
     private fun clickTitle() {

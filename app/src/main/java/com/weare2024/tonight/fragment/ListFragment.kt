@@ -23,7 +23,8 @@ import retrofit2.Response
 
 class ListFragment : Fragment() {
 
-    var items: ArrayList<Images> = ArrayList()
+//    var items: ArrayList<Images> = ArrayList()
+    var items = mutableListOf<Images>()
 
     private lateinit var binding: FragmentListBinding
 
