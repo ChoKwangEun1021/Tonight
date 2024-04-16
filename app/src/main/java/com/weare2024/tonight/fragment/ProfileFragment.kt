@@ -86,7 +86,8 @@ class ProfileFragment : Fragment() {
 
                     binding.tv.text = nickname
 
-                    val uri = profileImgUri
+                    val uri = uid
+                    Toast.makeText(context, "$uri", Toast.LENGTH_SHORT).show()
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + uri)
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {
@@ -106,7 +107,7 @@ class ProfileFragment : Fragment() {
 
         drawerLayout = binding.drawerLayout
 
-        drawerLayout.openDrawer(GravityCompat.START)
+        drawerLayout.openDrawer(GravityCompat.END)
 
         FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
             tvDrawer?.text = ""
@@ -116,7 +117,7 @@ class ProfileFragment : Fragment() {
 //                    tvDrawer?.append(nickname)
                     tvDrawer?.text = nickname
 
-                    val uri = G.uid
+                    val uri = uid
                     val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$uri")
                     imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {

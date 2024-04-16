@@ -53,7 +53,7 @@ class NewPostActivity : AppCompatActivity() {
     private val imgs: MutableList<Uri?> = mutableListOf()
     private val pager: ViewPager2 by lazy { binding.pager }
 
-    private var imgUri: Uri? =null
+    private var imgUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,15 +113,6 @@ class NewPostActivity : AppCompatActivity() {
         resultLauncher2.launch(intent)
     }
 
-    private val resultLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-        if (result.resultCode == RESULT_OK){
-            imgs.add(imgUri)
-            imgPath = getRealPathFromUri(result.data?.data!!)
-            imgPath2.add(imgPath!!)
-//            Glide.with(this).load(imgUri).into(binding.ivPost) //페이저로 넣어야할지 확인 필요
-        }
-    }
-
     private fun imageUpload() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pickMultipleLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -131,6 +122,7 @@ class NewPostActivity : AppCompatActivity() {
         )
     }
 
+    //imageUpload()의 resultLauncer
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.data?.data != null) {
@@ -164,6 +156,18 @@ class NewPostActivity : AppCompatActivity() {
                 pager.adapter = PagerAdapter(this, imgs)
             }
         }
+
+    //camera()의 resultLauncer
+    private val resultLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        if (it.resultCode == RESULT_OK){
+            Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+//            imgs.add(imgUri)
+//            imgPath = getRealPathFromUri(result.data?.data!!)
+//            imgPath2.add(imgPath!!)
+            Glide.with(this).load(imgUri).into(binding.ivPost) //페이저로 넣어야할지 확인 필요
+        } else{
+            Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()}
+    }
 
     private fun getRealPathFromUri(uri: Uri): String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
@@ -201,7 +205,7 @@ class NewPostActivity : AppCompatActivity() {
         val fileName: String = "IMG_" + sdf.format(Date()) + "jpg"
         val file = File(path, fileName)
 
-//        AlertDialog.Builder(this).setMessage(file.toString()).create().show()
-        imgUri= FileProvider.getUriForFile(this, "aaa", file)
+        AlertDialog.Builder(this).setMessage(file.toString()).create().show()
+        imgUri= FileProvider.getUriForFile(this, "com.weare2024.tonight.activites", file)
     }
 }
