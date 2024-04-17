@@ -12,12 +12,13 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.storage
 import com.weare2024.tonight.activites.ChatingActivity
 import com.weare2024.tonight.data.LastChatData
+import com.weare2024.tonight.data.UserData
 
 
 import com.weare2024.tonight.databinding.RecyclerViewChatListBinding
 
 
-class ChatListAdapter(var context: Context, var lastChatData: MutableList<LastChatData>) :Adapter<ChatListAdapter.VH>() {
+class ChatListAdapter(var context: Context, var lastChatData: MutableList<UserData>) :Adapter<ChatListAdapter.VH>() {
     inner class VH(var binding: RecyclerViewChatListBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

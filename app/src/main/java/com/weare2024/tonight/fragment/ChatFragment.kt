@@ -49,14 +49,9 @@ class ChatFragment : Fragment() {
                             chatSnapshot.documents.forEach { chatDocument ->
                                 val chatData = chatDocument.toObject(ChatList::class.java)
                                 chatData?.let {
-                                    users.forEach {
-                                        if (it.message != "") {
-                                            val sw = LastChatData(it.message, it.nickname, it.uid)
-                                            lastItem.add(sw)
-                                        }
-                                    }
+                                        listItem.add(it)
                                 }
-                                binding.recyclerView.adapter =ChatListAdapter(requireContext(), userws)
+                                binding.recyclerView.adapter =ChatListAdapter(requireContext(), users)
                             }
 
                         }
