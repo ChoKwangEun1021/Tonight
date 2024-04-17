@@ -32,10 +32,7 @@ interface RetrofitService {
     fun selectBoardImgs(): Call<List<Images>>
 
     @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend(@Query("no") boardNo: Int): Call<String>
-
-    @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend2(@Query("no") boardNo: Int): Call<BoardDetailData>
+    fun boardNoSend(@Query("no") boardNo: Int): Call<BoardDetailData>
 
     @GET("/Tonight/comment/insertDB.php")
     fun commentInsert(

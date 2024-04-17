@@ -3,12 +3,14 @@ package com.weare2024.tonight.activites
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
@@ -37,7 +39,7 @@ class BoardDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.tvComment.setOnClickListener { clickComment() }
-        binding.rlTitle.setOnClickListener { clickTitle() }
+        binding.rlTitle.setOnClickListener { clickProfile() }
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
@@ -59,20 +61,7 @@ class BoardDetailActivity : AppCompatActivity() {
         val retrofitService = retrofit.create(RetrofitService::class.java)
         val boardNo = intent.getIntExtra("boardNo", 0)
 
-//        Toast.makeText(this, "$boardNo", Toast.LENGTH_SHORT).show()
-//        retrofitService.boardNoSend(boardNo).enqueue(object : Callback<String> {
-//            override fun onResponse(p0: Call<String>, p1: Response<String>) {
-//                val s = p1.body()
-//                AlertDialog.Builder(this@BoardDetailActivity).setMessage("$s").create().show()
-//            }
-//
-//            override fun onFailure(p0: Call<String>, p1: Throwable) {
-//                Log.d("qwer", "${p1.message}")
-//            }
-//
-//        })
-
-        retrofitService.boardNoSend2(boardNo).enqueue(object : Callback<BoardDetailData> {
+        retrofitService.boardNoSend(boardNo).enqueue(object : Callback<BoardDetailData> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(p0: Call<BoardDetailData>, p1: Response<BoardDetailData>) {
                 val data = p1.body()
@@ -135,16 +124,18 @@ class BoardDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun clickTitle() {
+    private fun clickProfile() {
 
         val imgRef: StorageReference = Firebase.storage.getReference("usersImg/${profileImgUri}")
-        imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
-            override fun onSuccess(p0: Uri?) {
-                AlertDialog.Builder(this@BoardDetailActivity)
-                    .setView(R.layout.custom_dialog_profile_img).create().show()
+        imgRef.downloadUrl.addOnSuccessListener {
 
-            }
-        })
+            val bulider = AlertDialog.Builder(this@BoardDetailActivity)
+            bulider.setView(R.layout.custom_dialog_profile_img)
+            val dialog = bulider.create()
+            dialog.show()
+            val iv = dialog.findViewById<ImageView>(R.id.iv_profile_dialog)
+            Glide.with(this@BoardDetailActivity).load(it).into(iv!!)
 
+        }
     }
 }

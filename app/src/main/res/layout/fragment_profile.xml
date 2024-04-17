@@ -24,19 +24,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="?actionBarSize"
                 android:layout_gravity="end"
-                app:navigationIcon="@drawable/my_profile_setting"/>
+                app:navigationIcon="@drawable/baseline_settings_24"
+                app:navigationIconTint="@color/white" />
 
             <RelativeLayout
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="24dp"
                 android:layout_gravity="center"
                 android:backgroundTint="#00000000">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:src="@color/gray"/>
+                    android:layout_marginStart="16dp"
+                    android:src="@color/gray" />
+
                 <TextView
                     android:id="@+id/tv"
                     android:layout_width="wrap_content"
@@ -47,80 +50,33 @@
                     android:fontFamily="@font/hakgyoansim_bombanghak_r"
                     android:text="닉네임"
                     android:textColor="@color/white"
-                    android:textSize="30sp"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    android:textSize="30sp" />
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp"
+                    android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:padding="50dp"
-                    android:clipToPadding="false"
+                    android:layout_below="@id/iv"
                     android:clipChildren="false"
-                    android:layout_centerHorizontal="true" />
+                    android:clipToPadding="false"
+                    android:padding="40dp" />
 
-<!--                <HorizontalScrollView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="horizontal">-->
-
-<!--                        <com.google.android.material.card.MaterialCardView-->
-<!--                            android:layout_width="200dp"-->
-<!--                            android:layout_height="250dp"-->
-<!--                            android:layout_margin="16dp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@color/white" />-->
-<!--                        </com.google.android.material.card.MaterialCardView>-->
-
-<!--                        <com.google.android.material.card.MaterialCardView-->
-<!--                            android:layout_width="200dp"-->
-<!--                            android:layout_height="250dp"-->
-<!--                            android:layout_margin="16dp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@color/white" />-->
-<!--                        </com.google.android.material.card.MaterialCardView>-->
-
-<!--                        <com.google.android.material.card.MaterialCardView-->
-<!--                            android:layout_width="200dp"-->
-<!--                            android:layout_height="250dp"-->
-<!--                            android:layout_margin="16dp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@color/white" />-->
-<!--                        </com.google.android.material.card.MaterialCardView>-->
-
-<!--                        <com.google.android.material.card.MaterialCardView-->
-<!--                            android:layout_width="200dp"-->
-<!--                            android:layout_height="250dp"-->
-<!--                            android:layout_margin="16dp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent"-->
-<!--                                android:src="@color/white" />-->
-<!--                        </com.google.android.material.card.MaterialCardView>-->
-
-
-<!--                    </LinearLayout>-->
-<!--                </HorizontalScrollView>-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="ffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdf"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:layout_below="@id/view_pager"/>-->
 
             </RelativeLayout>
+
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -128,10 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            app:menu="@menu/drawer_nav"
-            app:headerLayout="@layout/drawer_hearder"/>
+            app:headerLayout="@layout/drawer_hearder"
+            app:menu="@menu/drawer_nav" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
-
 
 </LinearLayout>
