@@ -43,7 +43,7 @@ class ChatFragment : Fragment() {
                 user?.let { users.add(it) }
                 users.forEach { user ->
                     val userUid = user.uid
-                    FBRef.chatRef.document("sas").collection(G.uid + userUid)
+                    FBRef.testRef.document("chatRoom").collection(G.uid + userUid)
                         .get()
                         .addOnSuccessListener { chatSnapshot ->
                             chatSnapshot.documents.forEach { chatDocument ->

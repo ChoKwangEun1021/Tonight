@@ -10,7 +10,7 @@ class FBRef {
         val fs = Firebase.firestore
 
         val userRef = fs.collection("users")
-        val boardRef = fs.collection("board")
+        val testRef = fs.collection("test")
         val chatRef = fs.collection("chat")
     }
 }
