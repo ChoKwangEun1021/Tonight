@@ -18,7 +18,7 @@
     <!--        android:textAlignment="center"/>-->
 
     <com.yuyakaido.android.cardstackview.CardStackView
-        android:id="@+id/recycler_view"
+        android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
@@ -36,8 +36,9 @@
             android:src="@drawable/cancel"
             app:civ_border_color="@color/gray"
             app:civ_border_width="2dp"
-            android:layout_marginStart="55dp"
-            app:civ_circle_background_color="@color/white" />
+            android:layout_marginStart="57dp"
+            app:civ_circle_background_color="@color/white"
+            android:background="?attr/selectableItemBackground"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/reset"
@@ -48,6 +49,7 @@
             android:src="@drawable/reset"
             app:civ_border_color="@color/gray"
             app:civ_border_width="2dp"
+            android:background="?attr/selectableItemBackground"
             app:civ_circle_background_color="@color/white" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -59,7 +61,8 @@
             android:src="@drawable/like"
             app:civ_border_color="@color/gray"
             app:civ_border_width="2dp"
-            app:civ_circle_background_color="#FFB7B7" />
+            app:civ_circle_background_color="#FFB7B7"
+            android:background="?attr/selectableItemBackground"/>
 
     </RelativeLayout>
 

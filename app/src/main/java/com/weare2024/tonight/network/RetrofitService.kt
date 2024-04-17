@@ -4,6 +4,7 @@ import com.weare2024.tonight.data.BoardDetailData
 import com.weare2024.tonight.data.CommentData
 import com.weare2024.tonight.data.Images
 import com.weare2024.tonight.data.NaverLogin
+import com.weare2024.tonight.data.ProfileImages
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -31,10 +32,7 @@ interface RetrofitService {
     fun selectBoardImgs(): Call<List<Images>>
 
     @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend(@Query("no") boardNo: Int): Call<String>
-
-    @GET("/Tonight/board/selectBoardDetail.php")
-    fun boardNoSend2(@Query("no") boardNo: Int): Call<BoardDetailData>
+    fun boardNoSend(@Query("no") boardNo: Int): Call<BoardDetailData>
 
     @GET("/Tonight/comment/insertDB.php")
     fun commentInsert(
@@ -46,4 +44,8 @@ interface RetrofitService {
 
     @GET("/Tonight/comment/selectDB.php")
     fun commentNoSend(@Query("no") boardNo: Int): Call<List<CommentData>>
+
+    @GET("/Tonight/profile/selectDB.php")
+    fun selectProfileImgs(@Query("uid") uid: String): Call<List<ProfileImages>>
+
 }
