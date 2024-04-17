@@ -48,7 +48,7 @@ class SignupActivity : AppCompatActivity() {
                 intent.putExtra("login_type", "email")
                 startActivity(intent)
 
-                AlertDialog.Builder(this).setMessage("$password").create().show()
+//                AlertDialog.Builder(this).setMessage("$password").create().show()
 
             }
         }

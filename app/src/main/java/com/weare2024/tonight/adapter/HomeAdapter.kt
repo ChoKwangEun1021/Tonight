@@ -22,8 +22,8 @@ class HomeAdapter(val context: Context, val itemList: List<HomeData>) : Adapter<
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemList[position]
 
-        Glide.with(context).load(item.profileImg).into(holder.binding.ivProfile)
-        holder.binding.tvNickName.text = item.nickName
+        Glide.with(context).load(item.uid).into(holder.binding.ivProfile)
+        holder.binding.tvNickName.text = item.nickname
         holder.binding.tvAge.text = item.age
         holder.binding.tvArea.text = item.area
     }
