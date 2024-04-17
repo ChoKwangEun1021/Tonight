@@ -6,29 +6,18 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.weare2024.tonight.G
 import com.weare2024.tonight.R
 import com.weare2024.tonight.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.toObject
-import com.google.firebase.ktx.Firebase
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.weare2024.tonight.data.NaverLogin
@@ -39,7 +28,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.common.util.Utility
 import com.weare2024.tonight.data.UserData
 
 
@@ -51,7 +39,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
     private val spfEdt by lazy { spf.edit() }
     private val spf2Edt by lazy { spf2.edit() }
     lateinit var firebaseAuth: FirebaseAuth
-    lateinit var googleApiClient: GoogleApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +107,6 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                 ) {
                     val s = response.body()
                     val id = s?.response?.id
-                    val email = s?.response?.email
 
                     FBRef.userRef.whereEqualTo("uid", id).get().addOnSuccessListener {
                         if (id != null) {
@@ -140,7 +126,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
                             }
 
                         } else {
-                            Toast.makeText(this@LoginActivity, "오류나써염", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, "파이어베이스 불러오기 오류", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -355,4 +341,3 @@ class LoginActivity : AppCompatActivity(), OnClickListener {
         }
     }
 }
-//

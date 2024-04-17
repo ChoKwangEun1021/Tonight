@@ -3,10 +3,12 @@ package com.weare2024.tonight.activites
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.ActivityEmailLoginBinding
 import com.weare2024.tonight.firebase.FBAuth
+import com.weare2024.tonight.firebase.FBRef
 
 class EmailLoginActivity : AppCompatActivity() {
     private val binding by lazy { ActivityEmailLoginBinding.inflate(layoutInflater) }
@@ -20,26 +22,35 @@ class EmailLoginActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.btnLogin.setOnClickListener { clickLogin() }
+
     }
 
     private fun clickLogin() {
         val email = binding.inputLayoutEmail.editText!!.text.toString()
         val password = binding.inputLayoutPassword.editText!!.text.toString()
-        val nickname = getSharedPreferences("nickname", MODE_PRIVATE).toString()
+        var nickname = ""
 
         FBAuth.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             val uid = FBAuth.getUid()
             if (it.isSuccessful) {
-                spfEdt.putBoolean("isLogin", true)
-                spf2Edt.putString("uid", uid)
-                spf2Edt.putString("nickname", nickname)
-                spfEdt.apply()
-                spf2Edt.apply()
-                G.uid = uid
-                G.nickname = "asas"
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+
+                FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener { qs ->
+                    for (data in qs) {
+                        nickname = data.data["nickname"].toString()
+                    }
+                    spfEdt.putBoolean("isLogin", true)
+                    spf2Edt.putString("uid", uid)
+                    spf2Edt.putString("nickname", nickname)
+                    spfEdt.apply()
+                    spf2Edt.apply()
+                    G.uid = uid
+                    G.nickname = nickname
+//                    AlertDialog.Builder(this).setMessage("${nickname}").create().show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                }
+
             } else {
                 Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
