@@ -131,35 +131,4 @@ class SignupActivity2 : AppCompatActivity() {
                 Glide.with(this).load(imgUri).into(binding.cvProfile)
             }
         }
-
-    private fun userProfileImgUpload() {
-        var name = ""
-
-        if (intent != null && intent.hasExtra("login_type")) {
-            when (intent.getStringExtra("login_type")) {
-                "kakao" -> {
-                }
-
-                "naver" -> {
-                }
-
-                "google" -> {
-                }
-
-                "email" -> {
-                    name = FBAuth.getUid()
-
-                    val imgRef: StorageReference = Firebase.storage.getReference("usersImg/$name")
-
-                    imgUri?.apply {
-                        imgRef.putFile(this).addOnSuccessListener {
-                            Log.d("img upload", "이미지 업로드 성공")
-                        }
-                    }
-                }
-
-            }
-        }
-
-    }
 }

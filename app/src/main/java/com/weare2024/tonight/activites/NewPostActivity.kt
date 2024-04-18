@@ -59,8 +59,24 @@ class NewPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.buttonPost.setOnClickListener { insertData() }
+        binding.buttonPost.setOnClickListener { complete() }
         binding.ivPost.setOnClickListener { dialog() }
+    }
+
+    private fun complete() {
+        if (binding.pager.adapter == null) {
+            AlertDialog.Builder(this).setTitle("사진 선택").setMessage("사진을 선택 해주세요!!")
+                .setPositiveButton("확인") { dialog, id ->
+                    dialog.dismiss()
+                }.create().show()
+        } else if (binding.textPost.text.isNullOrEmpty()) {
+            AlertDialog.Builder(this).setTitle("게시글 내용").setMessage("게시글 내용을 입력 해주세요!!")
+                .setPositiveButton("확인") { dialog, id ->
+                    dialog.dismiss()
+                }.create().show()
+        } else {
+            insertData()
+        }
     }
 
     private fun insertData() {
@@ -78,9 +94,9 @@ class NewPostActivity : AppCompatActivity() {
         }
         retrofitService.insertBoard(boardList, files).enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, p1: Response<String>) {
-                val s = p1.body()
+                val data = p1.body()
                 Toast.makeText(this@NewPostActivity, "게시글 작성이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-//                AlertDialog.Builder(this@NewPostActivity).setMessage("$s").create().show()
+                Log.d("success", "$data")
                 finish()
             }
 
@@ -88,6 +104,8 @@ class NewPostActivity : AppCompatActivity() {
                 Log.d("aaaa", "${p1.message}")
             }
         })
+
+
     }
 
     private fun dialog() {
@@ -99,13 +117,13 @@ class NewPostActivity : AppCompatActivity() {
             })
             .setNegativeButton("사진 찍기", DialogInterface.OnClickListener { dialog, which ->
                 Toast.makeText(this, "카메라 앱 실행", Toast.LENGTH_SHORT).show()
-                camera()
+//                camera()
             })
         builder.show()
     }
 
     private fun camera() {
-        val intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         setPhotoUri()
         imgUri?.let { intent.putExtra(MediaStore.EXTRA_OUTPUT, it) }
@@ -143,8 +161,7 @@ class NewPostActivity : AppCompatActivity() {
         }
 
     private val pickMultipleLauncher =
-        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) {
-                uris: List<Uri> ->
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uris: List<Uri> ->
             if (uris.isNotEmpty()) {
                 binding.ivPost.visibility = View.GONE
                 pager.visibility = View.VISIBLE
@@ -158,16 +175,18 @@ class NewPostActivity : AppCompatActivity() {
         }
 
     //camera()의 resultLauncer
-    private val resultLauncher2 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == RESULT_OK){
-            Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+    private val resultLauncher2 =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
 //            imgs.add(imgUri)
 //            imgPath = getRealPathFromUri(result.data?.data!!)
 //            imgPath2.add(imgPath!!)
-            Glide.with(this).load(imgUri).into(binding.ivPost) //페이저로 넣어야할지 확인 필요
-        } else{
-            Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()}
-    }
+                Glide.with(this).load(imgUri).into(binding.ivPost) //페이저로 넣어야할지 확인 필요
+            } else {
+                Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     private fun getRealPathFromUri(uri: Uri): String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
@@ -199,13 +218,14 @@ class NewPostActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun setPhotoUri(){
-        val path: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+    private fun setPhotoUri() {
+        val path: File =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val sdf = SimpleDateFormat("yyyyMMddHHmmss")
         val fileName: String = "IMG_" + sdf.format(Date()) + "jpg"
         val file = File(path, fileName)
 
         AlertDialog.Builder(this).setMessage(file.toString()).create().show()
-        imgUri= FileProvider.getUriForFile(this, "com.weare2024.tonight.activites", file)
+        imgUri = FileProvider.getUriForFile(this, "com.weare2024.tonight.activites", file)
     }
 }

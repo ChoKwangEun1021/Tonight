@@ -34,7 +34,7 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = chatDataItem[position]
-        if (item.nickname == G.nickname) {
+        if (item.uid == G.uid) {
             val vh = holder as VH1
             vh.binding.tvName.text = item.nickname
             vh.binding.tvMsg.text = item.message

@@ -1,49 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="16dp">
 
-    <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Tonight user"
+                android:textSize="50sp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/jihoonc"
+                android:fontFamily="@font/hakgyoansim_bombanghak_r"/>
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:scaleType="fitXY"
+                android:layout_below="@id/title"
+                android:src="@drawable/catd" />
+
+            <TextView
+                android:id="@+id/tv_nick_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_profile"
+                android:text="닉네임"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="27"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_toEndOf="@id/tv_nick_name"
+                android:layout_below="@id/iv_profile"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/tv_nick_name" />
+
+            <TextView
+                android:id="@+id/tv_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="직종"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@id/tv_area" />
+
+        </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/left_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <ImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/catd" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/cancel"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_nick_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_profile"
-            android:text="닉네임"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginStart="20sp"/>
-
-        <TextView
-            android:id="@+id/tv_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="27"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_toEndOf="@id/tv_nick_name"
-            android:layout_below="@id/iv_profile"
-            android:layout_marginStart="10dp"/>
-
-        <TextView
-            android:id="@+id/tv_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="서울"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginStart="20sp"
-            android:layout_below="@id/tv_nick_name" />
-    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/right_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/like"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 </com.google.android.material.card.MaterialCardView>
