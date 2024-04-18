@@ -35,6 +35,7 @@ class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
     private val imgs = mutableListOf<String>()
     private var profileImgUri = ""
+    private var nickName = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -45,6 +46,10 @@ class BoardDetailActivity : AppCompatActivity() {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
                 } else if (item.itemId == R.id.send) {
+                    val intent = Intent(this@BoardDetailActivity,ChatingActivity::class.java)
+                    intent.putExtra("yourUid",profileImgUri)
+                    intent.putExtra("yourNickname",nickName)
+                    startActivity(intent)
                     Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -68,6 +73,7 @@ class BoardDetailActivity : AppCompatActivity() {
                 binding.tvNickname.text = data?.nickname
                 binding.tvContent.text = data?.content
                 profileImgUri = data?.uid.toString()
+                nickName = data?.nickname.toString()
                 val imgRef: StorageReference =
                     Firebase.storage.getReference("usersImg/${data?.uid}")
                 imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {

@@ -49,7 +49,7 @@ class ChatFragment : Fragment() {
                             chatSnapshot.documents.forEach { chatDocument ->
                                 val chatData = chatDocument.toObject(ChatList::class.java)
                                 chatData?.let {
-                                        listItem.add(it)
+                                    listItem.add(it)
                                 }
                                 binding.recyclerView.adapter =ChatListAdapter(requireContext(), users)
                             }

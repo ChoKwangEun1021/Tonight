@@ -3,6 +3,7 @@ package com.weare2024.tonight.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -11,6 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.storage
 import com.weare2024.tonight.activites.ChatingActivity
+import com.weare2024.tonight.data.ChatList
 import com.weare2024.tonight.data.LastChatData
 import com.weare2024.tonight.data.UserData
 
@@ -36,6 +38,10 @@ class ChatListAdapter(var context: Context, var lastChatData: MutableList<UserDa
 
         val last = lastChatData[position]
 
+        if (last.message== ""){
+            holder.itemView.layoutParams.height = 0
+            holder.itemView.visibility = View.GONE
+        }
         holder.binding.tvNickName.text = last.nickname
         holder.binding.tvLastText.text = last.message
         val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + last.uid)
