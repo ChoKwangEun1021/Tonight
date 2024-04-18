@@ -10,15 +10,19 @@ import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.storage
+import com.weare2024.tonight.G
 import com.weare2024.tonight.activites.ChatingActivity
+import com.weare2024.tonight.data.ChatList
+import com.weare2024.tonight.data.HomeData
 import com.weare2024.tonight.data.LastChatData
 import com.weare2024.tonight.data.UserData
 
 
 import com.weare2024.tonight.databinding.RecyclerViewChatListBinding
+import com.weare2024.tonight.firebase.FBRef
 
 
-class ChatListAdapter(var context: Context, var lastChatData: MutableList<UserData>) :Adapter<ChatListAdapter.VH>() {
+class ChatListAdapter(var context: Context, var lastChatData: MutableList<ChatList>) :Adapter<ChatListAdapter.VH>() {
     inner class VH(var binding: RecyclerViewChatListBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -36,17 +40,26 @@ class ChatListAdapter(var context: Context, var lastChatData: MutableList<UserDa
 
         val last = lastChatData[position]
 
-        holder.binding.tvNickName.text = last.nickname
+//        holder.binding.tvNickName.text = last.nickname
         holder.binding.tvLastText.text = last.message
-        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + last.uid)
-        imgRef.downloadUrl.addOnSuccessListener {
-            Glide.with(context).load(it).into(holder.binding.civ)
-        }
+
+//        for (i in 0 until lastChatData.size) {
+//            if (FBRef.testRef.document(G.uid).get().isSuccessful) {
+//
+//            } else if (FBRef.testRef.document("yourUid").collection(G.uid).get().isSuccessful) {
+//
+//            }
+//        }
+
+//        val imgRef: StorageReference = Firebase.storage.getReference("usersImg/" + last.uid)
+//        imgRef.downloadUrl.addOnSuccessListener {
+//            Glide.with(context).load(it).into(holder.binding.civ)
+//        }
 
         holder.binding.root.setOnClickListener {
 
             val intent = Intent(context, ChatingActivity::class.java)
-            intent.putExtra("yourUid", last.uid)
+//            intent.putExtra("yourUid", last.uid)
 
             context.startActivity(intent)
         }

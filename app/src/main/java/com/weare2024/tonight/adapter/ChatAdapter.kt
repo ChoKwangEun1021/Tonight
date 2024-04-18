@@ -10,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.RecyclerViewMyChatBinding
 import com.weare2024.tonight.databinding.RecyclerViewOtherChatBinding
@@ -25,7 +26,13 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData2>) : Ada
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val laoutInflater = LayoutInflater.from(context)
 
-        return if (viewType == 0) VH1(RecyclerViewMyChatBinding.inflate(laoutInflater,parent,false))
+        return if (viewType == 0) VH1(
+            RecyclerViewMyChatBinding.inflate(
+                laoutInflater,
+                parent,
+                false
+            )
+        )
         else VH2(RecyclerViewOtherChatBinding.inflate(laoutInflater, parent, false))
     }
 
@@ -36,19 +43,25 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData2>) : Ada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = chatDataItem[position]
 
-        if (item.yourUid == G.uid) {
+        if (item.myUid == G.uid) {
             val vh = holder as VH1
-            vh.binding.tvName.text = item.nickname
+            vh.binding.tvName.text = G.nickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load("users/"+item.yourUid).into(vh.binding.ciriv)
+            val imgRef = Firebase.storage.getReference("users/${item.myUid}")
+            imgRef.downloadUrl.addOnSuccessListener {
+                Glide.with(context).load(it).into(vh.binding.ciriv)
+            }
 
         } else {
             val vh = holder as VH2
-            vh.binding.tvName.text = item.nickname
+            vh.binding.tvName.text = item.yourNickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load("users/"+item.yourUid).into(vh.binding.ciriv)
+            val imgRef = Firebase.storage.getReference("users/${item.yourUid}")
+            imgRef.downloadUrl.addOnSuccessListener {
+                Glide.with(context).load(it).into(vh.binding.ciriv)
+            }
 
         }
 
