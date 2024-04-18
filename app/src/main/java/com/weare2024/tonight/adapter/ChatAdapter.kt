@@ -14,9 +14,10 @@ import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.RecyclerViewMyChatBinding
 import com.weare2024.tonight.databinding.RecyclerViewOtherChatBinding
 import com.weare2024.tonight.data.ChatData
+import com.weare2024.tonight.data.ChatData2
 import com.weare2024.tonight.firebase.FBRef
 
-class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adapter<ViewHolder>() {
+class ChatAdapter(var context: Context, var chatDataItem: List<ChatData2>) : Adapter<ViewHolder>() {
 
     inner class VH1(val binding: RecyclerViewMyChatBinding) : ViewHolder(binding.root)
     inner class VH2(val binding: RecyclerViewOtherChatBinding) : ViewHolder(binding.root)
@@ -34,19 +35,20 @@ class ChatAdapter(var context: Context, var chatDataItem: List<ChatData>) : Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = chatDataItem[position]
-        if (item.uid == G.uid) {
+
+        if (item.yourUid == G.uid) {
             val vh = holder as VH1
             vh.binding.tvName.text = item.nickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load("users/"+item.uid).into(vh.binding.ciriv)
+            Glide.with(context).load("users/"+item.yourUid).into(vh.binding.ciriv)
 
         } else {
             val vh = holder as VH2
             vh.binding.tvName.text = item.nickname
             vh.binding.tvMsg.text = item.message
             vh.binding.tvTime.text = item.time
-            Glide.with(context).load("users/"+item.uid).into(vh.binding.ciriv)
+            Glide.with(context).load("users/"+item.yourUid).into(vh.binding.ciriv)
 
         }
 

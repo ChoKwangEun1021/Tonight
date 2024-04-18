@@ -43,20 +43,15 @@ class ChatFragment : Fragment() {
                 user?.let { users.add(it) }
                 users.forEach { user ->
                     val userUid = user.uid
-                    FBRef.chatRef.document("sas").collection(G.uid + userUid)
+                    FBRef.testRef.document("chatRoom").collection(G.uid + userUid)
                         .get()
                         .addOnSuccessListener { chatSnapshot ->
                             chatSnapshot.documents.forEach { chatDocument ->
                                 val chatData = chatDocument.toObject(ChatList::class.java)
                                 chatData?.let {
-                                    users.forEach {
-                                        if (it.message != "") {
-                                            val sw = LastChatData(it.message, it.nickname, it.uid)
-                                            lastItem.add(sw)
-                                        }
-                                    }
+                                        listItem.add(it)
                                 }
-                                binding.recyclerView.adapter =ChatListAdapter(requireContext(), userws)
+                                binding.recyclerView.adapter =ChatListAdapter(requireContext(), users)
                             }
 
                         }

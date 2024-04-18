@@ -18,6 +18,7 @@ import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.ChatAdapter
 import com.weare2024.tonight.databinding.ActivityChatingBinding
 import com.weare2024.tonight.data.ChatData
+import com.weare2024.tonight.data.ChatData2
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.firebase.FBRef
 import java.text.SimpleDateFormat
@@ -29,34 +30,49 @@ class ChatingActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityChatingBinding
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChatingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var youruid = intent.getStringExtra("yourUid") ?: "에러!"
-        val msgItem: MutableList<ChatData> = mutableListOf()
+        val yourUid = intent.getStringExtra("yourUid") ?: "에러!"
+        val yourNickname = intent.getStringExtra("yourNickname") ?: "에러!"
+        val msgItem: MutableList<ChatData2> = mutableListOf()
 
 
-        binding.toolvar.title = G.nickname
-        binding.toolvar.subtitle = G.nickname
+        binding.toolvar.title = yourNickname
+        binding.toolvar.subtitle = yourNickname
         binding.btnSend.setOnClickListener { btnSend() }
         binding.recyclerView.adapter = ChatAdapter(this, msgItem)
 
-
-        FBRef.chatRef.document("sas").collection(G.uid + youruid)
+        FBRef.testRef.document("chatRoom").collection(G.uid + yourUid)
             .addSnapshotListener { value, error ->
                 value?.documentChanges?.forEach {
                     val snapshot = it.document
-                    val item = snapshot.toObject(ChatData::class.java)
-                    item?.apply {
-                        msgItem.add(this)
-                        binding.recyclerView.adapter!!.notifyItemInserted(msgItem.size - 1)
-                        binding.recyclerView.scrollToPosition(msgItem.size - 1)
-                    }
+                    val item = snapshot.toObject(ChatData2::class.java)
+                    msgItem.add(item)
+                    binding.recyclerView.adapter!!.notifyItemInserted(msgItem.size - 1)
+                    binding.recyclerView.scrollToPosition(msgItem.size - 1)
                 }
             }
+
+//        FBRef.testRef.document("chatRoom").collection(G.uid + youruid)
+//            .addSnapshotListener { snap, e ->
+//                if (e != null) {
+//                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+//                }
+//                if (snap != null) {
+//                    val itemList: ArrayList<ChatData2> = ArrayList()
+//                    for (snapshot in snap.documents) {
+//                        val mssg = snapshot.toObject(ChatData2::class.java)
+//                        if (mssg != null) {
+//                            itemList.add(mssg)
+//                        }
+//
+//                    }
+//                }
+//
+//
+//            }
 
     }
 
@@ -74,69 +90,35 @@ class ChatingActivity : AppCompatActivity() {
         if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 12) {
             o = "오후"
         }
-        val item = ChatData(uid, nickname, msg, o + time, image)
+        val item = ChatData2(uid, nickname, msg, o + time)
 
         val t =
             "MSG_" + (SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(Date()))
         // Firestore에 메시지 저장
 
-        FBRef.chatRef.document("sas").collection(G.uid + youruid).document(t).set(item)
+        FBRef.testRef.document("chatRoom").collection(G.uid + youruid).document(t).set(item)
             .addOnSuccessListener {
                 Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
-            Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
-        }
-        FBRef.chatRef.document("sas").collection(G.uid + youruid)
-            .addSnapshotListener { snap, e ->
-                if (e != null) {
-                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-                }
-                if (snap != null) {
-                    val itemList: ArrayList<ChatData> = ArrayList()
-                    for (snapshot in snap.documents) {
-                        val mssg = snapshot.toObject(ChatData::class.java)
-                        if (mssg != null) {
-                            itemList.add(mssg)
-
-                        }
-
-                    }
-                }
-
-
+                Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
             }
-        FBRef.chatRef.document("sas").collection(youruid + G.uid).document(t).set(item)
+
+
+        FBRef.testRef.document("chatRoom").collection(youruid + G.uid).document(t).set(item)
             .addOnSuccessListener {
                 Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
-            Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
-        }
-        FBRef.chatRef.document("sas").collection(youruid + G.uid)
-            .addSnapshotListener { snap, e ->
-                if (e != null) {
-                    Toast.makeText(this@ChatingActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-                }
-                if (snap != null) {
-                    val itemList: ArrayList<ChatData> = ArrayList()
-                    for (snapshot in snap.documents) {
-                        val mssg = snapshot.toObject(ChatData::class.java)
-                        if (mssg != null) {
-                            itemList.add(mssg)
-                        }
-                    }
-                }
-
-
+                Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
             }
 
-        FBRef.userRef.document(yourNickname).update("message",binding.et.text.toString()?:"")
+        FBRef.userRef.document(yourNickname).update("message", binding.et.text.toString() ?: "")
 
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         binding.et.clearFocus()
         binding.et.text.clear()
-
+        binding.recyclerView.adapter!!.notifyDataSetChanged()
 
     }
 }
