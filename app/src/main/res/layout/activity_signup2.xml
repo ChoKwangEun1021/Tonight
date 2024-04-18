@@ -62,4 +62,10 @@
         style="@style/Widget.MaterialComponents.Button"
         android:padding="16dp"/>
 
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_register"/>
+
 </RelativeLayout>
