@@ -69,6 +69,7 @@ dependencies {
 
     implementation(libs.play.services.tflite.acceleration.service)
     implementation(libs.play.services.mlkit.face.detection)
+    implementation(libs.objects.detection)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -97,6 +98,9 @@ dependencies {
     implementation("androidx.camera:camera-video:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
     implementation("androidx.camera:camera-extensions:$cameraxVersion")
+
+
+
 
 
 }

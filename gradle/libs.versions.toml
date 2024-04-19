@@ -30,6 +30,7 @@ cameraCore = "1.4.0-alpha04"
 cameraCamera2 = "1.4.0-alpha04"
 playServicesTfliteAccelerationService = "16.0.0-beta01"
 playServicesMlkitFaceDetection = "17.1.0"
+objectDetection = "17.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,7 @@ androidx-camera-core = { group = "androidx.camera", name = "camera-core", versio
 androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraCamera2" }
 play-services-tflite-acceleration-service = { group = "com.google.android.gms", name = "play-services-tflite-acceleration-service", version.ref = "playServicesTfliteAccelerationService" }
 play-services-mlkit-face-detection = { group = "com.google.android.gms", name = "play-services-mlkit-face-detection", version.ref = "playServicesMlkitFaceDetection" }
+objects-detection = { group = "com.google.mlkit", name = "object-detection", version.ref = "objectDetection" }
 
 
 [plugins]

@@ -60,7 +60,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val uid = intent.getStringExtra("kakao_uid")
                         val nickname = intent.getStringExtra("nickname")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "남자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("kakao_uid", uid)
@@ -74,7 +74,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val uid = intent.getStringExtra("kakao_uid")
                         val nickname = intent.getStringExtra("nickname")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "여자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("kakao_uid", uid)
@@ -92,7 +92,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val nickname = intent.getStringExtra("nickname")
                         val email = intent.getStringExtra("naver_email")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "남자"
 
                         intent.putExtra("gender", gender)
@@ -108,7 +108,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val nickname = intent.getStringExtra("nickname")
                         val imguri = intent.getStringExtra("profileImgUri")
                         val email = intent.getStringExtra("email")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "여자"
 
                         intent.putExtra("gender", gender)
@@ -129,7 +129,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val uid = intent.getStringExtra("google_uid")
                         val nickname = intent.getStringExtra("nickname")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "남자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("google_uid", uid)
@@ -144,7 +144,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val uid = intent.getStringExtra("google_uid")
                         val nickname = intent.getStringExtra("nickname")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "여자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("google_uid", uid)
@@ -162,7 +162,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val nickname = intent.getStringExtra("nickname")
                         val password = intent.getStringExtra("password")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "남자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("login_type", "email")
@@ -179,7 +179,7 @@ class MyProfileActivity1 : AppCompatActivity() {
                         val nickname = intent.getStringExtra("nickname")
                         val password = intent.getStringExtra("password")
                         val imguri = intent.getStringExtra("profileImgUri")
-                        val intent = Intent(this, MyProfileActivity2::class.java)
+                        val intent = Intent(this, CameraXActivity::class.java)
                         val gender = "여자"
                         intent.putExtra("gender", gender)
                         intent.putExtra("login_type", "email")

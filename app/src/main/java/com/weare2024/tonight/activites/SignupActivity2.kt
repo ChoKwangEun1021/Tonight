@@ -116,14 +116,14 @@ class SignupActivity2 : AppCompatActivity() {
             } else if (aa != 0) {
 //            Toast.makeText(this, "사람이 아닙니다.", Toast.LENGTH_SHORT).show()
                 Toast.makeText(this, "$aa", Toast.LENGTH_SHORT).show()
-
+                clickRegister()
             } else if (aa ==0){
                 Toast.makeText(this,  "확인버튼을 다시눌러주세요", Toast.LENGTH_SHORT).show()
 //            clickRegister()
 
             }else {
                 Toast.makeText(this, "이미지 선택 완료.", Toast.LENGTH_SHORT).show()
-//            clickRegister()
+
 
             }
         }else{
