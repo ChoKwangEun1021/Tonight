@@ -1,26 +1,18 @@
 package com.weare2024.tonight.activites
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.util.Base64Utils
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import com.weare2024.tonight.G
 import com.weare2024.tonight.adapter.ChatAdapter
 import com.weare2024.tonight.databinding.ActivityChatingBinding
-import com.weare2024.tonight.data.ChatData
 import com.weare2024.tonight.data.ChatData2
+import com.weare2024.tonight.data.ChatList
+import com.weare2024.tonight.data.ChatList2
+import com.weare2024.tonight.data.ChatRoomInfo
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.firebase.FBRef
 import java.security.DigestException
@@ -33,6 +25,9 @@ import java.util.Locale
 class ChatingActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityChatingBinding
+//    lateinit var chatData: ChatList
+    lateinit var chatData: ChatData2
+    lateinit var roomInfo: ChatRoomInfo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChatingBinding.inflate(layoutInflater)
@@ -47,15 +42,41 @@ class ChatingActivity : AppCompatActivity() {
         val ab = getSign(s)
         val ac = getSign(s2)
 
-        val combinedHash1 = getSign(sortedHash(ab,ac))
+        val combinedHash = getSign(sortedHash(ab,ac)).replace("/", "")
 
+        if (intent != null && intent.hasExtra("chat_type")) {
+            when(intent.getStringExtra("chat_type")) {
+                "board" -> {
+                    if (G.nickname != yourNickname) {
+                        binding.toolvar.title = yourNickname
+                        binding.toolvar.subtitle = yourNickname
+                    } else {
+                        binding.toolvar.title = G.nickname
+                        binding.toolvar.subtitle = G.nickname
+                    }
+                }
 
-        binding.toolvar.title = yourNickname
-        binding.toolvar.subtitle = yourNickname
+                "chatList" -> {
+                    val data = intent.getStringExtra("data")
+                    data.also {
+//                        chatData = Gson().fromJson(it, ChatList::class.java)
+//                        AlertDialog.Builder(this).setMessage("$chatData").create().show()
+                        if (G.nickname != yourNickname) {
+                            binding.toolvar.title = yourNickname
+                            binding.toolvar.subtitle = yourNickname
+                        } else {
+                            binding.toolvar.title = G.nickname
+                            binding.toolvar.subtitle = G.nickname
+                        }
+                    }
+                }
+            }
+
+        }
         binding.btnSend.setOnClickListener { btnSend() }
         binding.recyclerView.adapter = ChatAdapter(this, msgItem)
 
-        FBRef.testRef.document("chatRoom").collection(combinedHash1)
+        FBRef.testRef.document(combinedHash).collection(G.uid)
             .addSnapshotListener { value, error ->
                 value?.documentChanges?.forEach {
                     val snapshot = it.document
@@ -101,7 +122,7 @@ class ChatingActivity : AppCompatActivity() {
         if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= 12) {
             o = "오후"
         }
-        val item = ChatData2(G.uid, yourUid, yourNickname, msg, o + time)
+        val item = ChatData2(G.uid, G.nickname, msg, o + time)
 
         val t =
             "MSG_" + (SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA).format(Date()))
@@ -111,32 +132,37 @@ class ChatingActivity : AppCompatActivity() {
         val ab = getSign(s)
         val ac = getSign(s2)
 
-        val combinedHash1 = getSign(sortedHash(ab,ac))
+        val combinedHash = getSign(sortedHash(ab,ac)).replace("/", "")
 //        val combinedHash2 = getSign(sortedHash(ac,ab))
 
-        FBRef.testRef.document("chatRoom").collection(combinedHash1).document(t).set(item)
+//        AlertDialog.Builder(this).setMessage("$combinedHash1\n$combinedHash2").create().show()
+//        val chatRoom = mutableMapOf<ChatRoomInfo, String>()
+        
+//        roomInfo = ChatRoomInfo(combinedHash, yourUid, G.uid, yourNickname, G.nickname)
+//        val item2 = ChatList2(roomInfo, item)
+        FBRef.testRef.document(combinedHash).set(item)
             .addOnSuccessListener {
-                Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
+                FBRef.testRef.document(combinedHash).get().addOnSuccessListener {
+                    it.reference.collection(G.uid).document(t).set(item).addOnSuccessListener {  }
+                    it.reference.collection(yourUid).document(t).set(item).addOnSuccessListener {  }
+                }
+                Toast.makeText(this, "성공", Toast.LENGTH_SHORT).show()
+//                FBRef.testRef.document(combinedHash).collection(G.uid).document(t).set(item)
+//                    .addOnSuccessListener {
+//                    }.addOnFailureListener {
+//                        Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
+//                    }
+//                FBRef.testRef.document(combinedHash).collection(yourUid).document(t).set(item)
+//                    .addOnSuccessListener {
+//                    }.addOnFailureListener {
+//                        Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
+//                    }
+
             }.addOnFailureListener {
                 Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
             }
 
-//        FBRef.testRef.document(youruid).collection(G.uid).document(t).set(item)
-//            .addOnSuccessListener {
-//                Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
-//            }.addOnFailureListener {
-//                Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
-//            }
-
-
-//        FBRef.testRef.document("chatRoom").collection(youruid + G.uid).document(t).set(item)
-//            .addOnSuccessListener {
-//                Toast.makeText(this@ChatingActivity, "성공", Toast.LENGTH_SHORT).show()
-//            }.addOnFailureListener {
-//                Toast.makeText(this@ChatingActivity, "${it.message}실패", Toast.LENGTH_SHORT).show()
-//            }
-
-        FBRef.userRef.document(yourNickname).update("message", binding.et.text.toString() ?: "")
+//        FBRef.userRef.document(yourNickname).update("message", binding.et.text.toString() ?: "")
 
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

@@ -1,5 +1,6 @@
 package com.weare2024.tonight.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +13,10 @@ import com.google.android.gms.common.util.Base64Utils
 import com.weare2024.tonight.G
 import com.weare2024.tonight.activites.MainActivity
 import com.weare2024.tonight.adapter.ChatListAdapter
+import com.weare2024.tonight.data.ChatData2
 import com.weare2024.tonight.data.ChatList
+import com.weare2024.tonight.data.ChatList2
+import com.weare2024.tonight.data.ChatRoomInfo
 import com.weare2024.tonight.data.LastChatData
 import com.weare2024.tonight.data.UserData
 
@@ -23,12 +27,9 @@ import java.security.MessageDigest
 
 class ChatFragment : Fragment() {
     private lateinit var binding: FragmentChatBinding
-
-    var d = 0
-    val user: MutableList<UserData> = mutableListOf()
-    val listItem = mutableListOf<ChatList>()
-
-    //    val lastItem = mutableListOf<LastChatData>()
+    private lateinit var roomInfo: ChatRoomInfo
+    private val listItem = mutableListOf<ChatList2>()
+    private val combinedHash = mutableListOf<String>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +41,7 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+//        binding.recyclerView.adapter = ChatListAdapter(requireContext(), listItem)
         getChatList()
 //        FBRef.userRef.get().addOnSuccessListener { userSnapshot ->
 //            val users = mutableListOf<UserData>()
@@ -67,11 +69,11 @@ class ChatFragment : Fragment() {
 //
 //            }
 //
-//
 //        }
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getChatList() {
         val ma = activity as MainActivity
         val uids = ma.uids
@@ -81,39 +83,34 @@ class ChatFragment : Fragment() {
             val s2 = uids[i] + G.uid
             val ab = getSign(s)
             val ac = getSign(s2)
+            val chatKey = getSign(sortedHash(ab,ac)).replace("/", "")
+            combinedHash.add(chatKey)
 
-            val combinedHash1 = getSign(sortedHash(ab,ac))
+            FBRef.testRef.document(combinedHash[i]).get().addOnSuccessListener {
+//                roomInfo = ChatRoomInfo(it.data?.get("roomName").toString(), it.data?.get("yourUid").toString(), it.data?.get("myUid").toString(), it.data?.get("yourNickname").toString(), it.data?.get("myNickname").toString())
+//                roomInfo = ChatRoomInfo(it.data)
+                AlertDialog.Builder(requireContext()).setMessage("${it.data}").create().show()
+                it.reference.collection(G.uid).get().addOnSuccessListener {it2 ->
+                    val data = it2.documents
 
-            if (FBRef.testRef.document("chatRoom").collection(combinedHash1).get().isSuccessful) {
-                FBRef.testRef.document("chatRoom").collection(combinedHash1).get().addOnSuccessListener {
-                    val data = it.documents
                     data.forEach { snap ->
-                        listItem.add(ChatList(snap["myUid"].toString(), snap["yourUid"].toString(), snap["yourNickname"].toString(), snap["message"].toString(), snap["time"].toString()))
+                        listItem.add(ChatList2(roomInfo, ChatData2(snap["yourUid"].toString(), snap["yourNickname"].toString(), snap["message"].toString(), snap["time"].toString())))
+
+//                        binding.recyclerView.adapter!!.notifyItemInserted(0)
+//                        binding.recyclerView.adapter!!.notifyDataSetChanged()
                     }
                 }
+
+//                AlertDialog.Builder(requireContext()).setMessage("${it?.data?.get("roomName")}").create().show()
+//                val data = it.documents
+//                data.forEach { snap ->
+//                    listItem.add(ChatList2(snap["yourUid"].toString(), snap["yourNickname"].toString(), snap["message"].toString(), snap["time"].toString()))
+//                    AlertDialog.Builder(requireContext()).setMessage("$listItem").create().show()
+//                    binding.recyclerView.adapter!!.notifyItemInserted(0)
+//                    binding.recyclerView.adapter!!.notifyDataSetChanged()
+//                }
             }
         }
-//
-//        AlertDialog.Builder(requireContext()).setMessage("${uids}").create().show()
-
-//        for (i in 0 until uids.size) {
-//            FBRef.testRef.document(G.uid).collection(uids[i]).get().addOnSuccessListener {
-//                val a = it.toObjects(ChatList::class.java)
-//                it.documents.forEach {
-//                    listItem.add(ChatList(it["yourUid"].toString(), it["time"].toString(), it["message"].toString()))
-//                }
-//                AlertDialog.Builder(requireContext()).setMessage("${listItem.size}").create().show()
-//                val data = it.data
-//                it.reference.collection("wwDw1wOZ7mYfRiTfYj1hX0BTfC23").get().addOnSuccessListener {
-//                    for (data in it) {
-//                        AlertDialog.Builder(requireContext()).setMessage("${data.id}\n${data.data}").create().show()
-//                    }
-//                }
-//                Toast.makeText(requireContext(), "실행 테스트", Toast.LENGTH_SHORT).show()
-//                AlertDialog.Builder(requireContext()).setMessage("${data.id}\n${data.data}").create().show()
-//                Log.d("qwer", "${data.id}\n${data.data}")
-//            }
-//        }
 
     }
 

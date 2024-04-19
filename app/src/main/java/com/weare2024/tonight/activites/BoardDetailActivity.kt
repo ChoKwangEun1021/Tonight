@@ -52,6 +52,7 @@ class BoardDetailActivity : AppCompatActivity() {
                     val intent = Intent(this@BoardDetailActivity, ChatingActivity::class.java)
                     intent.putExtra("yourUid", yourUid)
                     intent.putExtra("yourNickname", yourNickname)
+                    intent.putExtra("chat_type", "board")
                     startActivity(intent)
 //                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT)
 //                        .show()
