@@ -1,33 +1,21 @@
 package com.weare2024.tonight.activites
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.weare2024.tonight.G
-import com.weare2024.tonight.R
 import com.weare2024.tonight.data.UserData
 import com.weare2024.tonight.databinding.ActivityChangeProfileBinding
-import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
 
 class ChangeProfileActivity : AppCompatActivity() {
@@ -38,30 +26,26 @@ class ChangeProfileActivity : AppCompatActivity() {
     val uid = G.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
         binding.btn.setOnClickListener { clickBtn() }
         binding.iv.setOnClickListener { getImage() }
-
 
         FBRef.userRef.whereEqualTo("uid", uid).get().addOnSuccessListener {
             for ( snap in it ){
                 val userData : UserData? = snap.toObject(UserData::class.java)
                 userData?.apply {
                     val uri = uid
+//                    binding.inputLayoutNickName.editText!!.text = nickname
                     val imgRef = Firebase.storage.getReference("usersImg/$uri")
-                    imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri>{
-                        override fun onSuccess(p0: Uri?) {
-                            Glide.with(this@ChangeProfileActivity).load(p0).into(binding.iv)
-                        }
-                    })
+                    imgRef.downloadUrl.addOnSuccessListener {profile ->
+                        Glide.with(this@ChangeProfileActivity).load(profile).into(binding.iv)
+                    }
 
                 }
             }
         }
     }
     private fun clickBtn() {
-
 
         if (uid.isNotEmpty()) {
             // 사용자의 UID로 해당 사용자를 식별하여 Firestore에서 사용자 문서 가져오기
@@ -89,7 +73,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             val imgRef = Firebase.storage.getReference("usersImg/$uri")
             imgUri?.apply {
                 imgRef.putFile(this).addOnSuccessListener {
-
+                    Toast.makeText(this@ChangeProfileActivity, "이미지 수정 완료", Toast.LENGTH_SHORT).show()
                 }
             }
             finish()

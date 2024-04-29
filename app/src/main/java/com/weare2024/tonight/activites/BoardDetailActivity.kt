@@ -3,6 +3,7 @@ package com.weare2024.tonight.activites
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -35,18 +36,26 @@ class BoardDetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityBoardDetailBinding.inflate(layoutInflater) }
     private val imgs = mutableListOf<String>()
     private var profileImgUri = ""
+    private var yourUid = ""
+    private var yourNickname = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.tvComment.setOnClickListener { clickComment() }
         binding.rlTitle.setOnClickListener { clickProfile() }
+        binding.toolbar.menu.findItem(R.id.send).isVisible
         binding.toolbar.setOnMenuItemClickListener(object : OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 if (item!!.itemId == R.id.more112) {
                     showBottomSheet()
                 } else if (item.itemId == R.id.send) {
-                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT)
-                        .show()
+                    val intent = Intent(this@BoardDetailActivity, ChatingActivity::class.java)
+                    intent.putExtra("yourUid", yourUid)
+                    intent.putExtra("yourNickname", yourNickname)
+                    intent.putExtra("chat_type", "board")
+                    startActivity(intent)
+//                    Toast.makeText(this@BoardDetailActivity, "채팅 액티비티 이동", Toast.LENGTH_SHORT)
+//                        .show()
                 }
                 return true
             }
@@ -68,6 +77,8 @@ class BoardDetailActivity : AppCompatActivity() {
                 binding.tvNickname.text = data?.nickname
                 binding.tvContent.text = data?.content
                 profileImgUri = data?.uid.toString()
+                yourUid = data?.uid.toString()
+                yourNickname = data?.nickname.toString()
                 val imgRef: StorageReference =
                     Firebase.storage.getReference("usersImg/${data?.uid}")
                 imgRef.downloadUrl.addOnSuccessListener(object : OnSuccessListener<Uri> {
