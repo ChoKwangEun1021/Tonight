@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding=true
+        mlModelBinding = true
     }
 }
 
@@ -54,9 +55,26 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.converter.scalars)
     implementation(libs.firebase.common.ktx)
+
+    implementation(libs.tensorflow.lite.metadata)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.gpu)
+
+    implementation(libs.androidx.camera.extensions)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+
+    implementation(libs.play.services.tflite.acceleration.service)
+    implementation(libs.play.services.mlkit.face.detection)
+    implementation(libs.objects.detection)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-firestore-ktx")
@@ -72,6 +90,17 @@ dependencies {
 
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    val cameraxVersion = "1.3.1"
+    implementation("androidx.camera:camera-core:$cameraxVersion")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-video:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("androidx.camera:camera-extensions:$cameraxVersion")
+
+
+
 
 
 }

@@ -1,7 +1,8 @@
 package com.weare2024.tonight.activites
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
@@ -13,17 +14,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
+import com.google.mlkit.vision.face.FaceDetector
+import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.weare2024.tonight.G
 import com.weare2024.tonight.databinding.ActivitySignup2Binding
-import com.weare2024.tonight.firebase.FBAuth
 import com.weare2024.tonight.firebase.FBRef
+import com.weare2024.tonight.ml.Modelperson
+import org.tensorflow.lite.support.image.TensorImage
 
 class SignupActivity2 : AppCompatActivity() {
     private val binding by lazy { ActivitySignup2Binding.inflate(layoutInflater) }
     private var imgUri: Uri? = null
+    var aa = 0
+    var asa = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,26 +98,37 @@ class SignupActivity2 : AppCompatActivity() {
                     intent.putExtra("login_type", "email")
                     startActivity(intent)
 
-//                    AlertDialog.Builder(this).setMessage("$email $password $nickname $uid")
-
                 }
             }
-
         }
-
-
     }
 
     private fun clickImage() {
-        if (binding.cvProfile.drawable is VectorDrawable) {
-            Toast.makeText(this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show()
+        if (asa ==1){
+
+            mlKit()
+            if (binding.cvProfile.drawable is VectorDrawable) {
+                Toast.makeText(this, "사진을 선택해 주세요", Toast.LENGTH_SHORT).show()
+                return
+            } else if (binding.inputLayoutNickName.editText!!.text.toString().isNullOrEmpty()) {
+                Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
+                return
+            } else if (aa != 0) {
+//            Toast.makeText(this, "사람이 아닙니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "$aa", Toast.LENGTH_SHORT).show()
+                clickRegister()
+            } else if (aa ==0){
+                Toast.makeText(this,  "확인버튼을 다시눌러주세요", Toast.LENGTH_SHORT).show()
+//            clickRegister()
+
+            }else {
+                Toast.makeText(this, "이미지 선택 완료.", Toast.LENGTH_SHORT).show()
+
+
+            }
+        }else{
+            Toast.makeText(this@SignupActivity2, "fuckyou", Toast.LENGTH_SHORT).show()
             return
-        } else if (binding.inputLayoutNickName.editText!!.text.toString().isNullOrEmpty()) {
-            Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show()
-            return
-        } else {
-            Toast.makeText(this, "이미지 선택 완료", Toast.LENGTH_SHORT).show()
-            clickRegister()
         }
     }
 
@@ -121,6 +137,7 @@ class SignupActivity2 : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) Intent(MediaStore.ACTION_PICK_IMAGES) else Intent(
                 Intent.ACTION_OPEN_DOCUMENT
             ).setType("image/*")
+        asa =1
         resultLauncher.launch(intent)
     }
 
@@ -131,4 +148,36 @@ class SignupActivity2 : AppCompatActivity() {
                 Glide.with(this).load(imgUri).into(binding.cvProfile)
             }
         }
+
+    private fun MachineLearning() {
+        val model: Modelperson = Modelperson.newInstance(this)
+        val bm: Bitmap = (binding.cvProfile.drawable as BitmapDrawable).bitmap
+        val image: TensorImage = TensorImage.fromBitmap(bm)
+        val outputs = model.process(image)
+        for (category in outputs.probabilityAsCategoryList) {
+            binding.tvTest.append("${category.label} : ${category.displayName} - ${category.score}\n")
+        }
+
+    }
+
+
+    private fun mlKit() {
+
+        val options: FaceDetectorOptions = FaceDetectorOptions.Builder()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE) // 정확도 위주
+            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL) // 눈, 귀 , 코 , 뺨, 입술 같은 얼굴 특징
+            .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL) // 얼굴 특징의 윤곽을 감지할지 여부
+            .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL) // 얼굴이 "웃고 있음" 또는 "눈을 뜨고 있음" 같은 카테고리를 분류
+            .build()
+        val faceDetector: FaceDetector = FaceDetection.getClient(options)
+        val bm: Bitmap = (binding.cvProfile.drawable as BitmapDrawable).bitmap
+        val image: InputImage = InputImage.fromBitmap(bm, 0)
+
+        faceDetector.process(image).addOnSuccessListener {
+            binding.tvTest.text = "감지된 얼굴 갯수 ${it.size}\n\n"
+            aa = it.size
+        }
+        AlertDialog.Builder(this).setMessage("$aa").create().show()
+    }
+
 }

@@ -73,6 +73,7 @@ class MyProfileActivity5 : AppCompatActivity() {
         binding.btnResearch.setOnClickListener { Research() }
         binding.btnPublicOfficial.setOnClickListener { PublicOfficial() }
         binding.btnCeo.setOnClickListener { Ceo() }
+        
         binding.btnSoldier.setOnClickListener { Soldier() }
         binding.btnJobSeeker.setOnClickListener { JobSeeker() }
         binding.btnCategoryOther.setOnClickListener { CategoryOther() }
