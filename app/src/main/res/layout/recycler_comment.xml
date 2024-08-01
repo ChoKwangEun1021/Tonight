@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nickname"
+        android:textColor="@color/white"
+        android:fontFamily="@font/hakgyoansim_bombanghak_r"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="12dp"/>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="댓글달기"
+        android:textColor="@color/white"
+        android:layout_below="@id/tv_name"
+        android:layout_alignStart="@id/tv_name"
+        android:maxWidth="250dp"
+        android:layout_marginTop="4dp"/>
+
+</RelativeLayout>

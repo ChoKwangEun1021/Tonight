@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/bs112"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_peekHeight="500dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/actionBarItemBackground">
+
+            <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_112"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="신고하기"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="2dp"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/singo_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나체 이미지 또는 성적 행위"/>
+        <TextView
+            android:id="@+id/singo_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사기 또는 거짓"/>
+        <TextView
+            android:id="@+id/singo_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="스팸"/>
+        <TextView
+            android:id="@+id/singo_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="혐오발언 또는 상징"/>
+        <TextView
+            android:id="@+id/singo_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="도용"/>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

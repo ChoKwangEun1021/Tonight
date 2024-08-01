@@ -1,15 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical"
     tools:context=".fragment.ProfileFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PROFILE FRAGMENT"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
-    
-</RelativeLayout>
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_gravity="end"
+                app:navigationIcon="@drawable/baseline_settings_24"
+                app:navigationIconTint="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#00000000">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@color/gray" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@id/iv"
+                    android:fontFamily="@font/hakgyoansim_bombanghak_r"
+                    android:text="닉네임"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_below="@id/iv"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:padding="40dp" />
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="ffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdf-->
+<!--ffdffdfffdffdfffdffdf"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:layout_below="@id/view_pager"/>-->
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            app:headerLayout="@layout/drawer_hearder"
+            app:menu="@menu/drawer_nav" />
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>

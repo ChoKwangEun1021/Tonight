@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activites.MyProfileActivity2"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bg_profile_2"
+    >
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="000님, 환영해요\n 이제 키를 입력해 볼까요?"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:textColor="@color/sghin1"/>
+
+  <NumberPicker
+      android:id="@+id/number"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="24dp"
+      android:layout_marginLeft="24dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_next2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="다음"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/sghin1"/>
+
+    </RelativeLayout>
+
+
+
+    <!-- pr용 주석 -->
+
+</LinearLayout>
